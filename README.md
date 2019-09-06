@@ -2,12 +2,12 @@
 
 # CUSRL_Avionics
 
-This is the repository for the Avionics team of the [Sounding Rocket Laboratory]("https://www.colorado.edu/studentgroups/cobra/") at the University of Colorado, Boulder. 
+This is the repository for the Avionics team of the [Sounding Rocket Laboratory](https://www.colorado.edu/studentgroups/cobra/ "CU Sounding Rocket Laboratory Website") at the University of Colorado, Boulder. 
 
 
 ## Team Members
-* [Lyon Foster]("https://github.com/LyonFoster")
-* [Jason Popich]("https://github.com/japopich")
-* [Carter Mak]("https://github.com/cartermak")
+* [Lyon Foster](https://github.com/LyonFoster "LyonFoster")
+* [Jason Popich](https://github.com/japopich "japopich")
+* [Carter Mak](https://github.com/cartermak "cartermak")
 * [Michael Pogrebitskiy]("")
 * [Nikolas Provost]("")
