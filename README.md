@@ -5,4 +5,4 @@
 This is the repository for the Avionics team of the Sounding Rocket Laboratory at the University of Colorado, Boulder. 
 
 
-Team Members: Lyon Foster, Jason Popich, Carter Mak
+Team Members: Lyon Foster, Jason Popich, Carter Mak, Michael Pogrebitskiy
