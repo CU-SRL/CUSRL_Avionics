@@ -4,4 +4,3 @@ src/include
 src/test
 src/.gitignore
 src/.travis.yml
-src/platformio.ini
