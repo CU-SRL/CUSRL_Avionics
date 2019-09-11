@@ -4,8 +4,6 @@
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BNO055.h>
 
-//TESTING
-
 void setup() {
   // put your setup code here, to run once:
     pinMode(13, OUTPUT);
