@@ -23,18 +23,18 @@
 // ThreadController that will controll all threads
 ThreadController thread_control = ThreadController();
 
-/* Set the delay between fresh samples */
-uint16_t BNO055_SAMPLERATE_DELAY_MS = 10;
-
 // Check I2C device address and correct line below (by default address is 0x29 or 0x28)
 //                                   id, address
 Adafruit_BNO055 bno = Adafruit_BNO055(55, 0x28);
+Adafruit_MPL3115A2 baro = Adafruit_MPL3115A2();
 
 //Threads (as a pointer)
-Thread* ThreadOne = new Thread();
-Thread* ThreadTwo = new Thread();
-Thread* ThreadBlink = new Thread();
+Thread* ThreadBNO055 = new Thread();
+Thread* ThreadMPL3115A2 = new Thread();
 
+
+// This function is used in conjunction with BNO055
+// This function prints the data to serial.
 void printEvent(sensors_event_t* event) {
   Serial.println();
   Serial.print(event->type);
@@ -68,6 +68,8 @@ void printEvent(sensors_event_t* event) {
   Serial.println(z);
 }
 
+// This function calls BNO055 specific functions
+// for Orientation Data, Angular Velocity Data, and Linear Acceleration Data
 void BNO055()
 {
 	//could add VECTOR_ACCELEROMETER, VECTOR_MAGNETOMETER,VECTOR_GRAVITY...
@@ -83,58 +85,56 @@ void BNO055()
   int8_t boardTemp = bno.getTemp();
   Serial.print(F("temperature: "));
   Serial.println(boardTemp);
-
-  delay(10);
 }
 
-void TestAsyncFuncTwo()
+// This function calls MPL3115A2 specific functions
+// for Altimeter, Temperature, and Pressure.
+void MPL3115A2()
 {
-}
+  float pascals = baro.getPressure();
+  Serial.print(pascals/3377); Serial.println(" Inches (Hg)");
 
-void blink()
-{
-  	// put your main code here, to run repeatedly:
-  	digitalWrite(13, LOW); // RX LED on
-  	delay(333);
-  	digitalWrite(13, HIGH); // RX LED off
-  	delay(333);
+  float altm = baro.getAltitude();
+  Serial.print(altm); Serial.println(" meters");
+
+  float tempC = baro.getTemperature();
+  Serial.print(tempC); Serial.println("*C");
 }
 
 void setup() {
   // put your setup code here, to run once:
 	pinMode(13, OUTPUT);
-    Serial.begin(115200);
+  Serial.begin(115200);
 
-  /* Initialise the sensor */
+  /* Initialise the sensor BNO055 */
   if (!bno.begin())
   {
-    /* There was a problem detecting the BNO055 ... check your connections */
-    Serial.print("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
-    while (1);
+    Serial.print("Couldn't find sensor - BNO055");
+    return;
   }
-  // When Configuring threads you have to give it what function to run.
-  // Configure ThreadOne
-	ThreadOne->onRun(BNO055);
-	ThreadOne->setInterval(10);
+
+  /* Initialise the sensor MPL3115A2 */
+  if (!baro.begin()) 
+  {
+    Serial.println("Couldnt find sensor - MPL3115A2");
+    return;
+  }
+
+  // Configure ThreadBNO055
+	ThreadBNO055->onRun(BNO055);
+	ThreadBNO055->setInterval(10);
 
   	// Configure ThreadTwo
-	ThreadBlink->onRun(blink);
-	ThreadBlink->setInterval(250);
+	ThreadMPL3115A2->onRun(MPL3115A2);
+	ThreadMPL3115A2->setInterval(250);
 
 	// Adds both threads to the controller
-	thread_control.add(ThreadOne);
-	//thread_control.add(ThreadTwo);
-    thread_control.add(ThreadBlink);
+	thread_control.add(ThreadBNO055);
+  thread_control.add(ThreadMPL3115A2);
 }
 
 void loop() {
-
   // run ThreadController
 	// this will check every thread inside ThreadController,
-	// if it should run. If yes, he will run it;
 	thread_control.run();
-
-  // Rest of code
-	float h = 3.1415;
-	h/=2;
 }
