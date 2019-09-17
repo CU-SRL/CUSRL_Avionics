@@ -122,11 +122,11 @@ void setup() {
 
   // Configure ThreadBNO055
 	ThreadBNO055->onRun(BNO055);
-	ThreadBNO055->setInterval(10);
+	ThreadBNO055->setInterval(100);
 
   	// Configure ThreadTwo
 	ThreadMPL3115A2->onRun(MPL3115A2);
-	ThreadMPL3115A2->setInterval(250);
+	ThreadMPL3115A2->setInterval(15);
 
 	// Adds both threads to the controller
 	thread_control.add(ThreadBNO055);
