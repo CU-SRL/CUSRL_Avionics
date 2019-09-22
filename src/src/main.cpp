@@ -11,130 +11,200 @@
 /*                                                             */
 /***************************************************************/
 
-#include <Arduino.h>
-#include <Wire.h>
-#include <Adafruit_MPL3115A2.h>
-#include <Adafruit_Sensor.h>
-#include <Adafruit_BNO055.h>
-#include "Thread.h"
-#include <ThreadController.h>
-#include <utility/imumaths.h>
+#include "dataStructs.hpp"
+
+// ========== DEFINE SOME VARS ==========
+
+// Pin assignments
+int speakerPin = 2;
+int flashPin = 29;
+
+// Intervals
+int interval_IMU = 250;
+int interval_BAROM = 1000;
+
+// ========== PROTOTHREADING ===========
 
 // ThreadController that will controll all threads
 ThreadController thread_control = ThreadController();
 
+//Threads (as a pointer)
+Thread* ThreadIMU = new Thread();
+Thread* ThreadBAROM = new Thread();
+
+// ========== SENSORS AND DATA ==========
+
 // Check I2C device address and correct line below (by default address is 0x29 or 0x28)
 //                                   id, address
-Adafruit_BNO055 bno = Adafruit_BNO055(55, 0x28);
-Adafruit_MPL3115A2 baro = Adafruit_MPL3115A2();
+// Initializes IMU and barometer
+Adafruit_BNO055 IMU = Adafruit_BNO055(55, 0x28);
+Adafruit_MPL3115A2 BAROM = Adafruit_MPL3115A2();
 
-//Threads (as a pointer)
-Thread* ThreadBNO055 = new Thread();
-Thread* ThreadMPL3115A2 = new Thread();
+// Variables to store sensor data
+sensors_event_t event;
+IMUdata imu_data;
+BAROMdata barom_data;
 
+// ========== FLASH CHIP ==========
 
-// This function is used in conjunction with BNO055
-// This function prints the data to serial.
-void printEvent(sensors_event_t* event) {
-  Serial.println();
-  Serial.print(event->type);
-  double x = -1000000, y = -1000000 , z = -1000000; //dumb values, easy to spot problem
-  if (event->type == SENSOR_TYPE_ACCELEROMETER) {
-    x = event->acceleration.x;
-    y = event->acceleration.y;
-    z = event->acceleration.z;
-  }
-  else if (event->type == SENSOR_TYPE_ORIENTATION) {
-    x = event->orientation.x;
-    y = event->orientation.y;
-    z = event->orientation.z;
-  }
-  else if (event->type == SENSOR_TYPE_MAGNETIC_FIELD) {
-    x = event->magnetic.x;
-    y = event->magnetic.y;
-    z = event->magnetic.z;
-  }
-  else if ((event->type == SENSOR_TYPE_GYROSCOPE) || (event->type == SENSOR_TYPE_ROTATION_VECTOR)) {
-    x = event->gyro.x;
-    y = event->gyro.y;
-    z = event->gyro.z;
-  }
+// Initialize flash chip
+SPIFlash flash(flashPin);
 
-  Serial.print(": x= ");
-  Serial.print(x);
-  Serial.print(" | y= ");
-  Serial.print(y);
-  Serial.print(" | z= ");
-  Serial.println(z);
+uint32_t addr_IMU;
+uint32_t addr_BAROM;
+
+uint32_t imuDataSize;
+uint32_t baromDataSize;
+
+void thread_IMU() {
+    // Get data and store it to the imu_data struct
+    IMU.getEvent(&event,Adafruit_BNO055::VECTOR_LINEARACCEL);
+    imu_data.accelerometer[0] = event.acceleration.x;
+    imu_data.accelerometer[1] = event.acceleration.y;
+    imu_data.accelerometer[2] = event.acceleration.z;
+
+    IMU.getEvent(&event,Adafruit_BNO055::VECTOR_GYROSCOPE);
+    imu_data.gyroscope[0] = event.gyro.x;
+    imu_data.gyroscope[1] = event.gyro.y;
+    imu_data.gyroscope[2] = event.gyro.z;
+
+    IMU.getEvent(&event,Adafruit_BNO055::VECTOR_EULER);
+    imu_data.orientation[0] = event.orientation.x;
+    imu_data.orientation[1] = event.orientation.y;
+    imu_data.orientation[2] = event.orientation.z;
+    
+    IMU.getEvent(&event,Adafruit_BNO055::VECTOR_MAGNETOMETER);
+    imu_data.magnetometer[0] = event.magnetic.x;
+    imu_data.magnetometer[1] = event.magnetic.y;
+    imu_data.magnetometer[2] = event.magnetic.z;
+
+    // Print data to console (REMOVE)
+    // Serial.print("IMU Data: ");
+    // Serial.print(" x: ");
+    // Serial.print(imu_data.accelerometer[0]);
+    // Serial.print(" | ");
+    // Serial.print("IMU Data: ");
+    // Serial.print(" y: ");
+    // Serial.print(imu_data.accelerometer[1]);
+    // Serial.print(" | ");
+    // Serial.print("IMU Data: ");
+    // Serial.print(" z: ");
+    // Serial.print(imu_data.accelerometer[2]);
+    // Serial.println("");
+
+    // Write data struct to flash chip
+    if (!flash.writeAnything(addr_IMU+=imuDataSize,imu_data)) {
+        Serial.println("Error writing data to flash.");
+    }
+    tone(speakerPin,3000,50);
+    delay(50);
 }
 
-// This function calls BNO055 specific functions
-// for Orientation Data, Angular Velocity Data, and Linear Acceleration Data
-void BNO055()
-{
-	//could add VECTOR_ACCELEROMETER, VECTOR_MAGNETOMETER,VECTOR_GRAVITY...
-  sensors_event_t orientationData , angVelocityData , linearAccelData;
-  bno.getEvent(&orientationData, Adafruit_BNO055::VECTOR_EULER);
-  bno.getEvent(&angVelocityData, Adafruit_BNO055::VECTOR_GYROSCOPE);
-  bno.getEvent(&linearAccelData, Adafruit_BNO055::VECTOR_LINEARACCEL);
+void thread_BAROM() {
+    // Write data to struct
+    unsigned long t[4];
+    t[0] = millis();
+    barom_data.altitude = BAROM.getAltitude();
+    t[1] = millis();
+    barom_data.pressure = BAROM.getPressure();
+    t[2] = millis();
+    barom_data.temperature = BAROM.getTemperature();
+    t[3] = millis();
 
-  printEvent(&orientationData);
-  printEvent(&angVelocityData);
-  printEvent(&linearAccelData);
+    // PRINTING
+    Serial.println("Timings: ");
+    Serial.println(t[1]-t[0]);
+    Serial.println(t[2]-t[1]);
+    Serial.println(t[3]-t[2]);
 
-  int8_t boardTemp = bno.getTemp();
-  Serial.print(F("temperature: "));
-  Serial.println(boardTemp);
-}
+    Serial.print("Barometer data: ");
+    Serial.print("Altitude: ");
+    Serial.print(barom_data.altitude);
+    Serial.print(" | Pressure: ");
+    Serial.print(barom_data.pressure);
+    Serial.print(" | Temperature: ");
+    Serial.print(barom_data.temperature);
+    Serial.println("");
 
-// This function calls MPL3115A2 specific functions
-// for Altimeter, Temperature, and Pressure.
-void MPL3115A2()
-{
-  float pascals = baro.getPressure();
-  Serial.print(pascals/3377); Serial.println(" Inches (Hg)");
-
-  float altm = baro.getAltitude();
-  Serial.print(altm); Serial.println(" meters");
-
-  float tempC = baro.getTemperature();
-  Serial.print(tempC); Serial.println("*C");
+    // Write data struct to flash chip
+    if (!flash.writeAnything(addr_BAROM+=baromDataSize,barom_data)) {
+        Serial.println("Error writing data to flash.");
+    }
 }
 
 void setup() {
-  // put your setup code here, to run once:
-	pinMode(13, OUTPUT);
-  Serial.begin(115200);
+    // Beep piezo
+    tone(speakerPin,440,200); // hehe concert A
+    delay(1000);
 
-  /* Initialise the sensor BNO055 */
-  if (!bno.begin())
-  {
-    Serial.print("Couldn't find sensor - BNO055");
-    return;
-  }
+    // Start serial
+    Serial.begin(115200);
 
-  /* Initialise the sensor MPL3115A2 */
-  if (!baro.begin()) 
-  {
-    Serial.println("Couldnt find sensor - MPL3115A2");
-    return;
-  }
+    // Initialize BNO055 IMU sensor
+    if (!IMU.begin()) {
+        Serial.println("Couldn't find sensor BNO055");
+        return;
+    }
 
-  // Configure ThreadBNO055
-	ThreadBNO055->onRun(BNO055);
-	ThreadBNO055->setInterval(100);
+    // Initialize MPL3115A2 sensor
+    if (!BAROM.begin()) {
+        Serial.println("Couldn't find sensor MPL3115A2");
+        return;
+    }
 
-  	// Configure ThreadTwo
-	ThreadMPL3115A2->onRun(MPL3115A2);
-	ThreadMPL3115A2->setInterval(15);
+    // Initialize flash chip
+    flash.begin();
+    int flashSize = flash.getCapacity();
+    // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    flash.eraseChip(); // DELETE THIS MOTHERFUCKER
+    // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-	// Adds both threads to the controller
-	thread_control.add(ThreadBNO055);
-  thread_control.add(ThreadMPL3115A2);
+    // Sizing of data structs
+    imuDataSize = sizeof(imu_data);
+    baromDataSize = sizeof(barom_data);
+
+    // Calculate flash chip allocations
+    int share_IMU = (float)flashSize*((float)imuDataSize/(float)interval_IMU)/((float)imuDataSize/(float)interval_IMU + (float)baromDataSize/(float)interval_BAROM);
+
+    Serial.print("flashSize: ");
+    Serial.println(flashSize);
+    Serial.print("IMU size  : ");
+    Serial.println(share_IMU);
+    Serial.print("Barom size: ");
+    Serial.println(flashSize-share_IMU);
+
+    // Define starting addresses
+    addr_IMU = 4;
+    addr_BAROM = share_IMU+5;
+
+    // Store starting address of barom data
+    if (flash.writeAnything(0,addr_BAROM));
+
+    // Configure IMU thread
+    ThreadIMU->onRun(thread_IMU);
+    ThreadIMU->setInterval(interval_IMU);
+
+    // Configure Barometer thread
+    ThreadBAROM->onRun(thread_BAROM);
+    ThreadBAROM->setInterval(interval_BAROM);
+
+    // Add threads to controller
+    thread_control.add(ThreadIMU);
+    thread_control.add(ThreadBAROM);
+
+    // Beep the piezo again
+    for(int i=0;i<10;i++) {
+        tone(speakerPin,1000,25);
+        delay(50);
+    }
+    tone(speakerPin,1000,250);
+    delay(250);
 }
 
 void loop() {
-  // run ThreadController
-	// this will check every thread inside ThreadController,
-	thread_control.run();
+    thread_control.run();
 }
