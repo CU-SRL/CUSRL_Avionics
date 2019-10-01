@@ -1,7 +1,6 @@
 .vscode
+*.code-workspace
 src/include
-src/lib
 src/test
 src/.gitignore
 src/.travis.yml
-src/platformio.ini
