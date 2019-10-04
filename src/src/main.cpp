@@ -11,9 +11,7 @@
 /*                                                             */
 /***************************************************************/
 
-#include "Arduino.h"
-#include <Adafruit_GPS.h>
-#include "dataStructs.hpp"
+#include "yonics.hpp"
 
 
 // ========== DEFINE SOME VARS ==========
@@ -246,6 +244,8 @@ void setup() {
         // Serial.println("Couldn't find sensor MPL3115A2");
         return;
     }
+
+    // Initialize High-G Accelerometer
 
     // Sizing of data structs
     GPSDataSize = sizeof(gps_data);
