@@ -11,6 +11,22 @@
 #include <SPIMemory.h>
 #include <SdFat.h>
 
+struct GPSdata  {
+    float lat = 0;
+    float lon = 0;
+    float altitude = 0;
+    float speed = 0;
+    float angle = 0;
+    float sat_num = 0;
+};
+
+struct Acceldata {
+    float x;
+    float y;
+    float z;
+    uint32_t t;
+};
+
 struct IMUdata {
     double orientation[3] = {0,0,0};
     double gyroscope[3] = {0,0,0};
