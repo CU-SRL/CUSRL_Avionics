@@ -11,7 +11,10 @@
 /*                                                             */
 /***************************************************************/
 
+#include "Arduino.h"
+#include <Adafruit_GPS.h>
 #include "dataStructs.hpp"
+
 
 // ========== DEFINE SOME VARS ==========
 
@@ -20,6 +23,7 @@ int speakerPin = 2;
 int flashPin = 29;
 
 // Intervals
+int interval_GPS = 100;
 int interval_IMU = 40;
 int interval_BAROM = 1500;
 
@@ -29,19 +33,25 @@ int interval_BAROM = 1500;
 ThreadController thread_control = ThreadController();
 
 //Threads (as a pointer)
+Thread* ThreadGPS = new Thread();
 Thread* ThreadIMU = new Thread();
 Thread* ThreadBAROM = new Thread();
 
 // ========== SENSORS AND DATA ==========
 
-// Check I2C device address and correct line below (by default address is 0x29 or 0x28)
-//                                   id, address
+// Define the GPS hardware serial port
+#define GPSSerial Serial3
+// Initialize the GPS on the hardware port
+Adafruit_GPS GPS(&GPSSerial);
+#define GPSECHO false // False to turn off echoing of GPS Data to Serial
+
 // Initializes IMU and barometer
 Adafruit_BNO055 IMU = Adafruit_BNO055(55, 0x28);
 Adafruit_MPL3115A2 BAROM = Adafruit_MPL3115A2();
 
 // Variables to store sensor data
 sensors_event_t event; 
+GPSdata gps_data;
 IMUdata imu_data;
 BAROMdata barom_data;
 
@@ -50,16 +60,100 @@ BAROMdata barom_data;
 // Initialize flash chip
 SPIFlash flash(flashPin);
 
+uint32_t addr_GPS;
 uint32_t addr_IMU;
 uint32_t addr_BAROM;
 
+uint16_t counter_GPS = 0;
 uint16_t counter_IMU = 0;
 uint16_t counter_BAROM = 0;
 
+uint32_t GPSDataSize;
 uint32_t imuDataSize;
 uint32_t baromDataSize;
 
 SaveSD saver;
+
+void GPSData_dump_setup()
+{
+    // TURN OFF OUTPUT
+    GPS.sendCommand(PMTK_SET_NMEA_OUTPUT_OFF);  
+
+    while(GPSSerial.available())
+    {
+      GPSSerial.read();
+    }
+
+    delay(1000);
+    GPS.sendCommand("$PMTK622,1*29");   
+}
+
+//WIP
+void pullGPSData()
+{
+
+}
+
+void refresh_GPSData()
+{
+    // read data from the GPS
+    char c = GPS.read();
+
+    // GPSECHO if set to true will print the raw NMEA strings
+    if (GPSECHO)
+    {
+        if (c) 
+        {
+            Serial.print(c);
+        }
+    }
+    // Check to See if sentenced recieved...
+    if (GPS.newNMEAreceived()) 
+    {
+      Serial.println(GPS.lastNMEA()); // this also sets the newNMEAreceived() flag to false
+      if (!GPS.parse(GPS.lastNMEA())) // this also sets the newNMEAreceived() flag to false
+        return; // we can fail to parse a sentence in which case we should just wait for another
+    }
+}
+
+void thread_GPS()
+{
+    // Refresh the GPS Data
+    refresh_GPSData();
+
+    gps_data.altitude = GPS.altitude;
+    gps_data.angle = GPS.angle;
+    gps_data.lat = GPS.latitudeDegrees;
+    gps_data.lon = GPS.longitudeDegrees;
+    gps_data.sat_num = GPS.satellites;
+    gps_data.speed = GPS.speed;
+
+    /*Serial.println(GPS.milliseconds);
+    Serial.print("Date: ");
+    Serial.print(GPS.day, DEC); Serial.print('/');
+    Serial.print(GPS.month, DEC); Serial.print("/20");
+    Serial.println(GPS.year, DEC);
+    Serial.print("Fix: "); Serial.print((int)GPS.fix);
+    Serial.print(" quality: "); Serial.println((int)GPS.fixquality);
+    if (GPS.fix) {
+      Serial.print("Location: ");
+      Serial.print(GPS.latitude, 4); Serial.print(GPS.lat);
+      Serial.print(", ");
+      Serial.print(GPS.longitude, 4); Serial.println(GPS.lon);
+      Serial.print("Speed (knots): "); Serial.println(GPS.speed);
+      Serial.print("Angle: "); Serial.println(GPS.angle);
+      Serial.print("Altitude: "); Serial.println(GPS.altitude);
+      Serial.print("Satellites: "); Serial.println((int)GPS.satellites);
+    }*/
+
+    // Write data struct to flash chip
+    if (!flash.writeAnything(addr_GPS+=GPSDataSize,gps_data)) {
+        // Serial.println("Error writing data to flash.");
+    }
+    else {
+        counter_GPS++;
+    }
+}
 
 void thread_IMU() {
     // Get data and store it to the imu_data struct
@@ -85,20 +179,6 @@ void thread_IMU() {
 
     imu_data.t = millis();
 
-    // Print data to console (REMOVE)
-    // Serial.print("IMU Data: ");
-    // Serial.print(" x: ");
-    // Serial.print(imu_data.accelerometer[0]);
-    // Serial.print(" | ");
-    // Serial.print("IMU Data: ");
-    // Serial.print(" y: ");
-    // Serial.print(imu_data.accelerometer[1]);
-    // Serial.print(" | ");
-    // Serial.print("IMU Data: ");
-    // Serial.print(" z: ");
-    // Serial.print(imu_data.accelerometer[2]);
-    // Serial.println("");
-
     // Write data struct to flash chip
     if (!flash.writeAnything(addr_IMU+=imuDataSize,imu_data)) {
         // Serial.println("Error writing data to flash.");
@@ -106,8 +186,6 @@ void thread_IMU() {
     else {
         counter_IMU++;
     }
-
-    // tone(speakerPin,6969,10);
 }
 
 void thread_BAROM() {
@@ -154,6 +232,9 @@ void setup() {
     // Start serial
     Serial.begin(115200);
 
+    // Initialize MTK3339 GPS Unit
+    GPS.begin(9600);
+
     // Initialize BNO055 IMU sensor
     if (!IMU.begin()) {
         // Serial.println("Couldn't find sensor BNO055");
@@ -167,8 +248,12 @@ void setup() {
     }
 
     // Sizing of data structs
+    GPSDataSize = sizeof(gps_data);
     imuDataSize = sizeof(imu_data);
     baromDataSize = sizeof(barom_data);
+
+    // Initialize the GPS Data Dump
+    GPSData_dump_setup();
 
     // Initialize flash chip
     flash.begin();
@@ -198,10 +283,23 @@ void setup() {
     // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    flash.eraseChip(); // DELETE THIS MOTHERFUCKER
+    flash.eraseChip();
+
+    GPS.sendCommand(PMTK_SET_NMEA_OUTPUT_OFF);
+    GPS.sendCommand(PMTK_LOCUS_ERASE_FLASH); // Erase LOCUS Flash Chip
     // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+    // RMC (recommended minimum) and GGA (fix data) including altitude
+    GPS.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA);
+    GPS.sendCommand(PMTK_SET_NMEA_UPDATE_10HZ); // 10 Hz update rate
+
+    if (!GPS.LOCUS_StartLogger())
+    {
+        // Serial.println("Failed to start GPS LOCUS Logger");
+        return;
+    }
 
     // Serial.print("flashSize: ");
     // Serial.println(flashSize);
@@ -217,6 +315,10 @@ void setup() {
     // Store starting address of barom data
     flash.writeAnything(0,addr_BAROM);
 
+    // Configure GPS thread
+    ThreadGPS->onRun(thread_GPS);
+    ThreadGPS->setInterval(interval_GPS);
+
     // Configure IMU thread
     ThreadIMU->onRun(thread_IMU);
     ThreadIMU->setInterval(interval_IMU);
@@ -227,6 +329,7 @@ void setup() {
 
     // Add threads to controller
     thread_control.add(ThreadIMU);
+    thread_control.add(ThreadGPS);
     thread_control.add(ThreadBAROM);
 
     // Beep the piezo again
