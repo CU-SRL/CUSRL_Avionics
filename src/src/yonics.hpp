@@ -86,6 +86,21 @@ class DigitalBAROM {
         Adafruit_MPL3115A2 BAROM = Adafruit_MPL3115A2();
 };
 
+class DigitalGPS{
+    private:
+        Adafruit_GPS* GPS;
+        HardwareSerial* GPSSerial;
+    public:
+        DigitalGPS(HardwareSerial *ser);
+        void initGPS();
+        void eraseLOCUS();
+        void GPSData_dump_setup();
+        void refresh_GPSData(bool GPSECHO);
+        void pullGPSFlashData();
+
+
+};
+
 // class FlashOp {
 //     // Class to manage saving data to and reading data from the flash chip
 // };

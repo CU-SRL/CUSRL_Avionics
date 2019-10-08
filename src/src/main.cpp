@@ -27,7 +27,7 @@ int interval_BAROM = 1500;
 
 // ========== PROTOTHREADING ===========
 
-// ThreadController that will controll all threads
+// ThreadController that will control all threads
 ThreadController thread_control = ThreadController();
 
 //Threads (as a pointer)
@@ -40,7 +40,7 @@ Thread* ThreadBAROM = new Thread();
 // Define the GPS hardware serial port
 #define GPSSerial Serial3
 // Initialize the GPS on the hardware port
-Adafruit_GPS GPS(&GPSSerial);
+//Adafruit_GPS GPS(&GPSSerial);
 #define GPSECHO false // False to turn off echoing of GPS Data to Serial
 
 // Initializes IMU and barometer
@@ -71,53 +71,12 @@ uint32_t imuDataSize;
 uint32_t baromDataSize;
 
 SaveSD saver;
-
-void GPSData_dump_setup()
-{
-    // TURN OFF OUTPUT
-    GPS.sendCommand(PMTK_SET_NMEA_OUTPUT_OFF);  
-
-    while(GPSSerial.available())
-    {
-      GPSSerial.read();
-    }
-
-    delay(1000);
-    GPS.sendCommand("$PMTK622,1*29");   
-}
-
-//WIP
-void pullGPSData()
-{
-
-}
-
-void refresh_GPSData()
-{
-    // read data from the GPS
-    char c = GPS.read();
-
-    // GPSECHO if set to true will print the raw NMEA strings
-    if (GPSECHO)
-    {
-        if (c) 
-        {
-            Serial.print(c);
-        }
-    }
-    // Check to See if sentenced recieved...
-    if (GPS.newNMEAreceived()) 
-    {
-      Serial.println(GPS.lastNMEA()); // this also sets the newNMEAreceived() flag to false
-      if (!GPS.parse(GPS.lastNMEA())) // this also sets the newNMEAreceived() flag to false
-        return; // we can fail to parse a sentence in which case we should just wait for another
-    }
-}
+DigitalGPS* gps_ptr;
 
 void thread_GPS()
 {
     // Refresh the GPS Data
-    refresh_GPSData();
+    gps_ptr->refresh_GPSData(GPSECHO);
 
     /*gps_data.altitude = GPS.altitude;
     gps_data.angle = GPS.angle;
@@ -126,7 +85,7 @@ void thread_GPS()
     gps_data.sat_num = GPS.satellites;
     gps_data.speed = GPS.speed;*/
 
-    Serial.println(GPS.milliseconds);
+    /*Serial.println(GPS.milliseconds);
     Serial.print("Date: ");
     Serial.print(GPS.day, DEC); Serial.print('/');
     Serial.print(GPS.month, DEC); Serial.print("/20");
@@ -142,7 +101,7 @@ void thread_GPS()
       Serial.print("Angle: "); Serial.println(GPS.angle);
       Serial.print("Altitude: "); Serial.println(GPS.altitude);
       Serial.print("Satellites: "); Serial.println((int)GPS.satellites);
-    }
+    }*/
 
     // Write data struct to flash chip
     /*if (!flash.writeAnything(addr_GPS+=GPSDataSize,gps_data)) {
@@ -230,8 +189,7 @@ void setup() {
     // Start serial
     Serial.begin(115200);
 
-    // Initialize MTK3339 GPS Unit
-    GPS.begin(9600);
+    DigitalGPS gps(&GPSSerial);
 
     // Initialize BNO055 IMU sensor
     if (!IMU.begin()) {
@@ -253,7 +211,7 @@ void setup() {
     baromDataSize = sizeof(barom_data);
 
     // Initialize the GPS Data Dump
-    GPSData_dump_setup();
+    gps.GPSData_dump_setup();
 
     // Initialize flash chip
     flash.begin();
@@ -284,22 +242,15 @@ void setup() {
     // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     flash.eraseChip();
-
-    GPS.sendCommand(PMTK_SET_NMEA_OUTPUT_OFF);
-    GPS.sendCommand(PMTK_LOCUS_ERASE_FLASH); // Erase LOCUS Flash Chip
+    gps.eraseLOCUS();
     // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-    // RMC (recommended minimum) and GGA (fix data) including altitude
-    GPS.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA);
-    GPS.sendCommand(PMTK_SET_NMEA_UPDATE_10HZ); // 10 Hz update rate
+    gps.initGPS();
 
-    if (!GPS.LOCUS_StartLogger())
-    {
-        // Serial.println("Failed to start GPS LOCUS Logger");
-        return;
-    }
+    //  Give the ptr the address of the GPS Object that was created
+    gps_ptr=&gps;
 
     // Serial.print("flashSize: ");
     // Serial.println(flashSize);
