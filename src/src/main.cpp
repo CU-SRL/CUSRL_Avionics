@@ -119,14 +119,14 @@ void thread_GPS()
     // Refresh the GPS Data
     refresh_GPSData();
 
-    gps_data.altitude = GPS.altitude;
+    /*gps_data.altitude = GPS.altitude;
     gps_data.angle = GPS.angle;
     gps_data.lat = GPS.latitudeDegrees;
     gps_data.lon = GPS.longitudeDegrees;
     gps_data.sat_num = GPS.satellites;
-    gps_data.speed = GPS.speed;
+    gps_data.speed = GPS.speed;*/
 
-    /*Serial.println(GPS.milliseconds);
+    Serial.println(GPS.milliseconds);
     Serial.print("Date: ");
     Serial.print(GPS.day, DEC); Serial.print('/');
     Serial.print(GPS.month, DEC); Serial.print("/20");
@@ -142,15 +142,15 @@ void thread_GPS()
       Serial.print("Angle: "); Serial.println(GPS.angle);
       Serial.print("Altitude: "); Serial.println(GPS.altitude);
       Serial.print("Satellites: "); Serial.println((int)GPS.satellites);
-    }*/
+    }
 
     // Write data struct to flash chip
-    if (!flash.writeAnything(addr_GPS+=GPSDataSize,gps_data)) {
+    /*if (!flash.writeAnything(addr_GPS+=GPSDataSize,gps_data)) {
         // Serial.println("Error writing data to flash.");
     }
     else {
         counter_GPS++;
-    }
+    }*/
 }
 
 void thread_IMU() {
@@ -260,7 +260,7 @@ void setup() {
     int flashSize = flash.getCapacity();
 
     // Calculate flash chip allocations
-    int share_IMU = (float)flashSize*((float)imuDataSize/(float)interval_IMU)/((float)imuDataSize/(float)interval_IMU + (float)baromDataSize/(float)interval_BAROM);
+    int share_IMU = (float)flashSize*((float)imuDataSize/(float)interval_IMU)/((float)imuDataSize/(float)interval_IMU + (float)baromDataSize/(float)interval_BAROM /*+ (float)GPSDataSize/(float)interval_GPS*/);
 
     // Copy data to flash chip
     tone(speakerPin,5000,1000);
