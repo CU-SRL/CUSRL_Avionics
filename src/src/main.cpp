@@ -109,7 +109,8 @@ void thread_GPS()
     else {
         counter_GPS++;
     }*/
-  
+}
+
 void thread_IMU() {
     // Get data and store it to the imu_data struct
     IMU.getEvent(&event,Adafruit_BNO055::VECTOR_LINEARACCEL);
