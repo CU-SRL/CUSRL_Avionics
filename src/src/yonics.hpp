@@ -101,6 +101,13 @@ class DigitalGPS{
 
 };
 
+class ColdGasRCS{
+    private:
+    public:
+    ColdGasRCS();
+    void init();
+}
+
 // class FlashOp {
 //     // Class to manage saving data to and reading data from the flash chip
 // };
