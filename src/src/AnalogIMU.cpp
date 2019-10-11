@@ -24,9 +24,7 @@ AnalogIMU::AnalogIMU(int xPin, int yPin, int zPin, bool highBitDepth) {
     this->zPin = zPin;
     bitDepth = 10;
 
-    if (highBitDepth) {
-    analogReadRes(16);
-    }
+    if (highBitDepth) {analogReadRes(16);}
 
     init();
 }

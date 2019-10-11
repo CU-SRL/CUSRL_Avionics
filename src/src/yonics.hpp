@@ -29,10 +29,13 @@ struct Acceldata {
 };
 
 struct IMUdata {
-    double orientation[3] = {0,0,0};
-    double gyroscope[3] = {0,0,0};
-    double accelerometer[3] = {0,0,0};
+    double orient_euler[3] = {0,0,0};
+    double gyro_fused[3] = {0,0,0};
+    double accel_fused[3] = {0,0,0};
+    double accel_raw[3] = {0,0,0};
+    double gyro_raw[3] = {0,0,0};
     double magnetometer[3] = {0,0,0};
+    double orient_quat[4] = {0,0,0,0}; // {w,x,y,z}
     uint32_t t = 0;
 };
 
@@ -46,9 +49,15 @@ struct BAROMdata {
 class SaveSD {
     private:
         SdFatSdio sd;
+        File of;
+        SPIFlash* flash = NULL;
+        void printIMU(uint32_t imuDataSize);
+        void printBAROM(uint32_t baromDataSize, uint32_t read_addr_BAROM);
+        bool openFile();
     public:
         SaveSD();
-        bool savenow(SPIFlash* flash, uint32_t imuDataSize, uint32_t baromDataSize);
+        bool savenow(uint32_t imuDataSize, uint32_t baromDataSize);
+        bool addFlash(SPIFlash* flash);
 };
 
 class AnalogIMU {
@@ -66,7 +75,6 @@ class AnalogIMU {
         AnalogIMU();
         AnalogIMU(int xPin, int yPin, int zPin);
         AnalogIMU(int xPin, int yPin, int zPin, bool highBitDepth);
-        bool begin();
         void sample(Acceldata* data);
 };
 
@@ -74,19 +82,26 @@ class DigitalIMU {
     private:
         Adafruit_BNO055 board;
         sensors_event_t event;
+        imu::Quaternion quat;
+        imu::Vector<3> accel;
     public:
         DigitalIMU();
         DigitalIMU(int32_t sensorID, uint8_t address);
         bool begin();
         void sample(IMUdata* data);
+        
 };
 
 class DigitalBAROM {
     private:
         Adafruit_MPL3115A2 BAROM = Adafruit_MPL3115A2();
+    public:
+        DigitalBAROM();
+        bool begin();
+        void sample(BAROMdata* data);
 };
 
-class DigitalGPS{
+class DigitalGPS {
     private:
         Adafruit_GPS* GPS;
         HardwareSerial* GPSSerial;
@@ -99,6 +114,25 @@ class DigitalGPS{
         void pullGPSFlashData();
 
 
+};
+
+class BeepyBOI {
+    private:
+        int pin;
+        int errTone = 300;
+        int lowTone = 220;
+        int midTone = 440;
+        int  hiTone = 880;
+    public:
+        BeepyBOI();
+        BeepyBOI(int pin);
+        void hello();
+        void error();
+        void countdown(int s);
+        void lowBeep();
+        void midBeep();
+        void  hiBeep();
+        void bombBeep();
 };
 
 // class FlashOp {

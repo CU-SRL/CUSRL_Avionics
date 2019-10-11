@@ -18,6 +18,9 @@
 // Pin assignments
 int speakerPin = 2;
 int flashPin = 29;
+int highG_xPin = 0;
+int highG_yPin = 0;
+int highG_zPin = 0;
 
 // Intervals
 int interval_GPS = 100;
@@ -33,6 +36,7 @@ ThreadController thread_control = ThreadController();
 Thread* ThreadGPS = new Thread();
 Thread* ThreadIMU = new Thread();
 Thread* ThreadBAROM = new Thread();
+Thread* ThreadACCEL = new Thread();
 
 // ========== SENSORS AND DATA ==========
 
@@ -42,15 +46,23 @@ Thread* ThreadBAROM = new Thread();
 //Adafruit_GPS GPS(&GPSSerial);
 #define GPSECHO false // False to turn off echoing of GPS Data to Serial
 
-// Initializes IMU and barometer
-Adafruit_BNO055 IMU = Adafruit_BNO055(55, 0x28);
-Adafruit_MPL3115A2 BAROM = Adafruit_MPL3115A2();
+// Initializes Sensors
+// Adafruit_BNO055 IMU = Adafruit_BNO055(55, 0x28);
+DigitalIMU IMU = DigitalIMU(55,0x28);
+// Adafruit_MPL3115A2 BAROM = Adafruit_MPL3115A2();
+DigitalBAROM BAROM;
+AnalogIMU HIGHG = AnalogIMU(highG_xPin,highG_yPin,highG_zPin,true);
+
 
 // Variables to store sensor data
 sensors_event_t event; 
 GPSdata gps_data;
 IMUdata imu_data;
 BAROMdata barom_data;
+Acceldata accel_data;
+
+// Piezo beeper!
+BeepyBOI berp = BeepyBOI(speakerPin);
 
 // ========== FLASH CHIP AND DATA SAVING ==========
 
@@ -68,6 +80,7 @@ uint16_t counter_BAROM = 0;
 uint32_t GPSDataSize;
 uint32_t imuDataSize;
 uint32_t baromDataSize;
+uint32_t accelDataSize;
 
 SaveSD saver;
 DigitalGPS* gps_ptr;
@@ -112,65 +125,35 @@ void thread_GPS()
 }
 
 void thread_IMU() {
-    // Get data and store it to the imu_data struct
-    IMU.getEvent(&event,Adafruit_BNO055::VECTOR_LINEARACCEL);
-    imu_data.accelerometer[0] = event.acceleration.x;
-    imu_data.accelerometer[1] = event.acceleration.y;
-    imu_data.accelerometer[2] = event.acceleration.z;
 
-    IMU.getEvent(&event,Adafruit_BNO055::VECTOR_GYROSCOPE);
-    imu_data.gyroscope[0] = event.gyro.x;
-    imu_data.gyroscope[1] = event.gyro.y;
-    imu_data.gyroscope[2] = event.gyro.z;
-
-    IMU.getEvent(&event,Adafruit_BNO055::VECTOR_EULER);
-    imu_data.orientation[0] = event.orientation.x;
-    imu_data.orientation[1] = event.orientation.y;
-    imu_data.orientation[2] = event.orientation.z;
+    IMU.sample(&imu_data);
     
-    IMU.getEvent(&event,Adafruit_BNO055::VECTOR_MAGNETOMETER);
-    imu_data.magnetometer[0] = event.magnetic.x;
-    imu_data.magnetometer[1] = event.magnetic.y;
-    imu_data.magnetometer[2] = event.magnetic.z;
-
-    imu_data.t = millis();
-
     // Write data struct to flash chip
     if (!flash.writeAnything(addr_IMU+=imuDataSize,imu_data)) {
         // Serial.println("Error writing data to flash.");
     }
-    else {
-        counter_IMU++;
-    }
 }
 
 void thread_BAROM() {
-    // Write data to struct
-    unsigned long t[4];
-    // t[0] = millis();
-    barom_data.altitude = BAROM.getAltitude();
-    // t[1] = millis();
-    barom_data.pressure = BAROM.getPressure();
-    // t[2] = millis();
-    barom_data.temperature = BAROM.getTemperature();
-    // t[3] = millis();
-    barom_data.t = millis();
+    BAROM.sample(&barom_data);
 
-    // PRINTING
-    // Serial.println("Timings: ");
-    // Serial.println(t[1]-t[0]);
-    // Serial.println(t[2]-t[1]);
-    // Serial.println(t[3]-t[2]);
+    {
+        // PRINTING
+        // Serial.println("Timings: ");
+        // Serial.println(t[1]-t[0]);
+        // Serial.println(t[2]-t[1]);
+        // Serial.println(t[3]-t[2]);
 
-    // Serial.print("Barometer data: ");
-    // Serial.print("Altitude: ");
-    // Serial.print(barom_data.altitude);
-    // Serial.print(" | Pressure: ");
-    // Serial.print(barom_data.pressure);
-    // Serial.print(" | Temperature: ");
-    // Serial.print(barom_data.temperature);
-    // Serial.println("");
-
+        // Serial.print("Barometer data: ");
+        // Serial.print("Altitude: ");
+        // Serial.print(barom_data.altitude);
+        // Serial.print(" | Pressure: ");
+        // Serial.print(barom_data.pressure);
+        // Serial.print(" | Temperature: ");
+        // Serial.print(barom_data.temperature);
+        // Serial.println("");
+    }
+    
     // Write data struct to flash chip
     if (!flash.writeAnything(addr_BAROM+=baromDataSize,barom_data)) {
         // Serial.println("Error writing data to flash.");
@@ -180,10 +163,22 @@ void thread_BAROM() {
     }
 }
 
+void thread_HIGHG() {
+    HIGHG.sample(&accel_data);
+
+    // TODO
+    // add writing to flash
+}
+
+void KILLSYSTEM() {
+    while(true) {
+        delay(500); // Just to make it do something
+        berp.error();
+    }
+}
+
 void setup() {
-    // Beep piezo
-    tone(speakerPin,440,200); // hehe concert A
-    delay(1000);
+    berp.hello();
 
     // Start serial
     Serial.begin(115200);
@@ -193,21 +188,22 @@ void setup() {
     // Initialize BNO055 IMU sensor
     if (!IMU.begin()) {
         // Serial.println("Couldn't find sensor BNO055");
+        KILLSYSTEM();
         return;
     }
 
     // Initialize MPL3115A2 sensor
     if (!BAROM.begin()) {
         // Serial.println("Couldn't find sensor MPL3115A2");
+        KILLSYSTEM();
         return;
     }
-
-    // Initialize High-G Accelerometer
 
     // Sizing of data structs
     GPSDataSize = sizeof(gps_data);
     imuDataSize = sizeof(imu_data);
     baromDataSize = sizeof(barom_data);
+    accelDataSize = sizeof(accel_data);
 
     // Initialize the GPS Data Dump
     gps.GPSData_dump_setup();
@@ -215,27 +211,24 @@ void setup() {
     // Initialize flash chip
     flash.begin();
     int flashSize = flash.getCapacity();
+    saver.addFlash(&flash);
 
     // Calculate flash chip allocations
     int share_IMU = (float)flashSize*((float)imuDataSize/(float)interval_IMU)/((float)imuDataSize/(float)interval_IMU + (float)baromDataSize/(float)interval_BAROM /*+ (float)GPSDataSize/(float)interval_GPS*/);
 
     // Copy data to flash chip
-    tone(speakerPin,5000,1000);
-    delay(1000);
+    berp.lowBeep();
+    berp.hiBeep();
     // Serial.println("Saving to SD card...");
-    if (!saver.savenow(&flash,imuDataSize,baromDataSize)) {
-        tone(speakerPin,300,4000);
-        delay(4500);
+    if (!saver.savenow(imuDataSize,baromDataSize)) {
+        KILLSYSTEM();
     }
-    delay(250);
-    tone(speakerPin,5000,1000);
-    delay(1000);
+    berp.lowBeep();
+    berp.hiBeep();
+    berp.midBeep();
     // Serial.println("Saving complete.");
 
-    for(int i=0;i<20;i++) {
-        tone(speakerPin,500,20);
-        delay(1000);
-    }
+    berp.countdown(20);
 
     // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -277,19 +270,16 @@ void setup() {
     ThreadBAROM->onRun(thread_BAROM);
     ThreadBAROM->setInterval(interval_BAROM);
 
+    // Configure Accelerometer thread
+    
+
     // Add threads to controller
     thread_control.add(ThreadIMU);
     thread_control.add(ThreadGPS);
     thread_control.add(ThreadBAROM);
 
     // Beep the piezo again
-    for(int i=0;i<10;i++) {
-        tone(speakerPin,1000,25);
-        delay(50);
-    }
-    delay(250);
-    tone(speakerPin,3000,250);
-    delay(250);
+    berp.bombBeep();
 }
 
 void loop() {
