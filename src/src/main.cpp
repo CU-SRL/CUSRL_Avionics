@@ -33,6 +33,7 @@ ThreadController thread_control = ThreadController();
 Thread* ThreadGPS = new Thread();
 Thread* ThreadIMU = new Thread();
 Thread* ThreadBAROM = new Thread();
+Thread* ThreadColdGasRCS = new Thread();
 
 // ========== SENSORS AND DATA ==========
 
@@ -71,6 +72,23 @@ uint32_t baromDataSize;
 
 SaveSD saver;
 DigitalGPS* gps_ptr;
+
+// ========== CONTROL ==========
+
+ColdGasRCS* rcs_ptr;
+
+
+// ========== THREADS ==========
+
+void thread_ColdGasRCS(){
+    //do stuff here. 
+    double current = imu_data.orientation[0];
+    double omega = imu_data.gyroscope[0];
+
+    rcs_ptr->adjust(current, omega);
+
+
+}
 
 void thread_GPS()
 {
@@ -190,6 +208,8 @@ void setup() {
 
     DigitalGPS gps(&GPSSerial);
 
+    ColdGasRCS rcs();
+
     // Initialize BNO055 IMU sensor
     if (!IMU.begin()) {
         // Serial.println("Couldn't find sensor BNO055");
@@ -250,6 +270,7 @@ void setup() {
 
     //  Give the ptr the address of the GPS Object that was created
     gps_ptr=&gps;
+    rcs_ptr = &rcs;
 
     // Serial.print("flashSize: ");
     // Serial.println(flashSize);
@@ -281,6 +302,10 @@ void setup() {
     thread_control.add(ThreadIMU);
     thread_control.add(ThreadGPS);
     thread_control.add(ThreadBAROM);
+
+    ThreadColdGasRCS->onRun(thread_ColdGasRCS);
+    ThreadColdGasRCS->setInterval(rcs_ptr->getInterval());
+    thread_control.add(ThreadColdGasRCS);
 
     // Beep the piezo again
     for(int i=0;i<10;i++) {
