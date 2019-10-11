@@ -106,6 +106,10 @@ class ColdGasRCS{
     public:
     ColdGasRCS();
     void init();
+    void openSolenoid();
+    void closeSolenoid();
+    void adjust();
+    void getInterval();
 }
 
 // class FlashOp {
