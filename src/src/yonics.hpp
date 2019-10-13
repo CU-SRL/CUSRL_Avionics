@@ -110,7 +110,7 @@ class ColdGasRCS{
     void closeSolenoid();
     void adjust();
     void getInterval();
-}
+};
 
 // class FlashOp {
 //     // Class to manage saving data to and reading data from the flash chip
