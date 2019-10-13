@@ -29,10 +29,13 @@ struct Acceldata {
 };
 
 struct IMUdata {
-    double orientation[3] = {0,0,0};
-    double gyroscope[3] = {0,0,0};
-    double accelerometer[3] = {0,0,0};
+    double orient_euler[3] = {0,0,0};
+    double gyro_fused[3] = {0,0,0};
+    double accel_fused[3] = {0,0,0};
+    double accel_raw[3] = {0,0,0};
+    double gyro_raw[3] = {0,0,0};
     double magnetometer[3] = {0,0,0};
+    double orient_quat[4] = {0,0,0,0}; // {w,x,y,z}
     uint32_t t = 0;
 };
 
@@ -46,9 +49,15 @@ struct BAROMdata {
 class SaveSD {
     private:
         SdFatSdio sd;
+        File of;
+        SPIFlash* flash = NULL;
+        void printIMU(uint32_t imuDataSize);
+        void printBAROM(uint32_t baromDataSize, uint32_t read_addr_BAROM);
+        bool openFile();
     public:
         SaveSD();
-        bool savenow(SPIFlash* flash, uint32_t imuDataSize, uint32_t baromDataSize);
+        bool savenow(uint32_t imuDataSize, uint32_t baromDataSize);
+        bool addFlash(SPIFlash* flash);
 };
 
 class AnalogIMU {
@@ -66,7 +75,6 @@ class AnalogIMU {
         AnalogIMU();
         AnalogIMU(int xPin, int yPin, int zPin);
         AnalogIMU(int xPin, int yPin, int zPin, bool highBitDepth);
-        bool begin();
         void sample(Acceldata* data);
 };
 
@@ -74,19 +82,26 @@ class DigitalIMU {
     private:
         Adafruit_BNO055 board;
         sensors_event_t event;
+        imu::Quaternion quat;
+        imu::Vector<3> accel;
     public:
         DigitalIMU();
         DigitalIMU(int32_t sensorID, uint8_t address);
         bool begin();
         void sample(IMUdata* data);
+        
 };
 
 class DigitalBAROM {
     private:
         Adafruit_MPL3115A2 BAROM = Adafruit_MPL3115A2();
+    public:
+        DigitalBAROM();
+        bool begin();
+        void sample(BAROMdata* data);
 };
 
-class DigitalGPS{
+class DigitalGPS {
     private:
         Adafruit_GPS* GPS;
         HardwareSerial* GPSSerial;
@@ -98,10 +113,66 @@ class DigitalGPS{
         void refresh_GPSData(bool GPSECHO);
         void pullGPSFlashData();
         void pullRawGPS(GPSdata* data);
-
-
 };
 
-// class FlashOp {
-//     // Class to manage saving data to and reading data from the flash chip
-// };
+class BeepyBOI {
+    private:
+        int pin;
+        int errTone = 300;
+        int lowTone = 220;
+        int midTone = 440;
+        int  hiTone = 880;
+    public:
+        BeepyBOI();
+        BeepyBOI(int pin);
+        void hello();
+        void error();
+        void countdown(int s);
+        void lowBeep();
+        void midBeep();
+        void  hiBeep();
+        void bombBeep();
+};
+
+class FlashOp {
+    // Class to manage saving data to and reading data from the flash chip
+    struct ourTypes {
+        int size = 0; // Size of one sample, in bytes
+        int nSamples = 0; // Number of samples stored on chip
+        uint32_t start_addr = 0; // Start address of this type's allocated memory
+        void* data;
+        float f;
+    };
+    
+    struct event {
+        uint32_t t;
+        char ident;
+    };
+
+    private:
+        SPIFlash* flash;
+
+        int nTypes = -1;
+        int maxTypes = 5;
+        ourTypes dataTypes[5];
+
+        int nEvents = -1;
+        int maxEvents = 5;
+        event events[5];
+
+        bool running = false;
+
+    public:
+        // init
+        FlashOp(SPIFlash* flash);
+        bool begin();
+        int addType(int size, float f, void* data);
+
+        // Writing
+        bool addSample(int ident);
+        bool addEvent(uint32_t t, char ident);
+
+        // Reading
+        bool getType(int ident, int* size);
+        bool getSample(int ident, int sample, void* data);
+};
