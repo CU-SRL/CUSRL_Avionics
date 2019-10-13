@@ -264,11 +264,11 @@ void setup() {
     // Serial.println(flashSize-share_IMU);
 
     // Define starting addresses
-    addr_IMU = 4;
-    addr_BAROM = share_IMU+5;
+    // addr_IMU = 4;
+    // addr_BAROM = share_IMU+5;
 
     // Store starting address of barom data
-    flash.writeAnything(0,addr_BAROM);
+    // flash.writeAnything(0,addr_BAROM);
 
     // Configure GPS thread
     ThreadGPS->onRun(thread_GPS);
