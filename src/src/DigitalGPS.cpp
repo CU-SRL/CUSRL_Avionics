@@ -44,10 +44,14 @@ void DigitalGPS::GPSData_dump_setup()
     GPS->sendCommand("$PMTK622,1*29");   
 }
 
-//WIP
+//RUDIMENTARY PULLS TO SERIAL AND THEN YOU HAVE TO COPY TO A TXT FILE TO PARSE FROM PYTHON UNTIL PARSER IS COMPLETE
 void DigitalGPS::pullGPSFlashData()
 {
-
+  if (GPSSerial->available())
+  {
+    char c = GPSSerial->read();
+    Serial.write(c);
+  }
 }
 
 void DigitalGPS::refresh_GPSData(bool GPSECHO)
