@@ -232,6 +232,10 @@ void setup() {
     // Copy data to flash chip
     berp.lowBeep();
     berp.hiBeep();
+
+    // pulls to serial term for now
+    gps.pullGPSFlashData();
+
     // Serial.println("Saving to SD card...");
     if (!saver.savenow(imuDataSize,baromDataSize)) {
         KILLSYSTEM();
