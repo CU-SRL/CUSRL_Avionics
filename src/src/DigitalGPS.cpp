@@ -71,3 +71,12 @@ void DigitalGPS::refresh_GPSData(bool GPSECHO)
         return; // we can fail to parse a sentence in which case we should just wait for another
     }
 }
+void DigitalGPS::pullRawGPS(GPSdata* data)
+{
+    data->altitude = GPS->altitude;
+    data->angle = GPS->angle;
+    data->lat = GPS->latitudeDegrees;
+    data->lon = GPS->longitudeDegrees;
+    data->sat_num = GPS->satellites;
+    data->speed = GPS->speed;
+}
