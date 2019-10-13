@@ -112,8 +112,6 @@ class DigitalGPS {
         void GPSData_dump_setup();
         void refresh_GPSData(bool GPSECHO);
         void pullGPSFlashData();
-
-
 };
 
 class BeepyBOI {
@@ -135,6 +133,45 @@ class BeepyBOI {
         void bombBeep();
 };
 
-// class FlashOp {
-//     // Class to manage saving data to and reading data from the flash chip
-// };
+class FlashOp {
+    // Class to manage saving data to and reading data from the flash chip
+    struct ourTypes {
+        int size = 0; // Size of one sample, in bytes
+        int nSamples = 0; // Number of samples stored on chip
+        uint32_t start_addr = 0; // Start address of this type's allocated memory
+        void* data;
+        float f;
+    };
+    
+    struct event {
+        uint32_t t;
+        char ident;
+    };
+
+    private:
+        SPIFlash* flash;
+
+        int nTypes = -1;
+        int maxTypes = 5;
+        ourTypes dataTypes[5];
+
+        int nEvents = -1;
+        int maxEvents = 5;
+        event events[5];
+
+        bool running = false;
+
+    public:
+        // init
+        FlashOp(SPIFlash* flash);
+        bool begin();
+        int addType(int size, float f, void* data);
+
+        // Writing
+        bool addSample(int ident);
+        bool addEvent(uint32_t t, char ident);
+
+        // Reading
+        bool getType(int ident, int* size);
+        bool getSample(int ident, int sample, void* data);
+};

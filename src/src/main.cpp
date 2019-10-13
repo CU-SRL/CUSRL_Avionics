@@ -16,16 +16,17 @@
 // ========== DEFINE SOME VARS ==========
 
 // Pin assignments
-int speakerPin = 2;
 int flashPin = 29;
-int highG_xPin = 0;
-int highG_yPin = 0;
-int highG_zPin = 0;
+int speakerPin = 36;
+int highG_xPin = 33;
+int highG_yPin = 34;
+int highG_zPin = 35;
 
 // Intervals
 int interval_GPS = 100;
 int interval_IMU = 40;
 int interval_BAROM = 1500;
+int interval_ACCEL = 40;
 
 // ========== PROTOTHREADING ===========
 
@@ -69,13 +70,13 @@ BeepyBOI berp = BeepyBOI(speakerPin);
 // Initialize flash chip
 SPIFlash flash(flashPin);
 
-uint32_t addr_GPS;
-uint32_t addr_IMU;
-uint32_t addr_BAROM;
+// uint32_t addr_GPS;
+// uint32_t addr_IMU;
+// uint32_t addr_BAROM;
 
-uint16_t counter_GPS = 0;
-uint16_t counter_IMU = 0;
-uint16_t counter_BAROM = 0;
+// uint16_t counter_GPS = 0;
+// uint16_t counter_IMU = 0;
+// uint16_t counter_BAROM = 0;
 
 uint32_t GPSDataSize;
 uint32_t imuDataSize;
@@ -84,6 +85,7 @@ uint32_t accelDataSize;
 
 SaveSD saver;
 DigitalGPS* gps_ptr;
+FlashOp flashop = FlashOp(&flash);
 
 void thread_GPS()
 {
@@ -127,11 +129,13 @@ void thread_GPS()
 void thread_IMU() {
 
     IMU.sample(&imu_data);
-    
+
     // Write data struct to flash chip
-    if (!flash.writeAnything(addr_IMU+=imuDataSize,imu_data)) {
-        // Serial.println("Error writing data to flash.");
-    }
+    flashop.addSample(0);
+
+    // if (!flash.writeAnything(addr_IMU+=imuDataSize,imu_data)) {
+    //     // Serial.println("Error writing data to flash.");
+    // }
 }
 
 void thread_BAROM() {
@@ -155,19 +159,21 @@ void thread_BAROM() {
     }
     
     // Write data struct to flash chip
-    if (!flash.writeAnything(addr_BAROM+=baromDataSize,barom_data)) {
-        // Serial.println("Error writing data to flash.");
-    }
-    else {
-        counter_BAROM++;
-    }
+    flashop.addSample(1);
+
+    // if (!flash.writeAnything(addr_BAROM+=baromDataSize,barom_data)) {
+    //     // Serial.println("Error writing data to flash.");
+    // }
+    // else {
+    //     counter_BAROM++;
+    // }
 }
 
 void thread_HIGHG() {
     HIGHG.sample(&accel_data);
 
-    // TODO
-    // add writing to flash
+    // Write to flash
+    flashop.addSample(2);
 }
 
 void KILLSYSTEM() {
@@ -189,14 +195,12 @@ void setup() {
     if (!IMU.begin()) {
         // Serial.println("Couldn't find sensor BNO055");
         KILLSYSTEM();
-        return;
     }
 
     // Initialize MPL3115A2 sensor
     if (!BAROM.begin()) {
         // Serial.println("Couldn't find sensor MPL3115A2");
         KILLSYSTEM();
-        return;
     }
 
     // Sizing of data structs
@@ -204,6 +208,14 @@ void setup() {
     imuDataSize = sizeof(imu_data);
     baromDataSize = sizeof(barom_data);
     accelDataSize = sizeof(accel_data);
+
+    // Add data types to flashop
+    if (!flashop.addType(imuDataSize,interval_IMU,&imu_data)) {KILLSYSTEM();}
+    if (!flashop.addType(baromDataSize,interval_BAROM,&barom_data)) {KILLSYSTEM();}
+    if (!flashop.addType(accelDataSize,interval_ACCEL,&accel_data)) {KILLSYSTEM();}
+
+    // Initialize flash chip
+    if (!flashop.begin()) {KILLSYSTEM();}
 
     // Initialize the GPS Data Dump
     gps.GPSData_dump_setup();
