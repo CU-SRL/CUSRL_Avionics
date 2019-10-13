@@ -91,6 +91,7 @@ void thread_GPS()
 {
     // Refresh the GPS Data
     gps_ptr->refresh_GPSData(GPSECHO);
+    gps_ptr->pullRawGPS(&gps_data);
 
     /*gps_data.altitude = GPS.altitude;
     gps_data.angle = GPS.angle;

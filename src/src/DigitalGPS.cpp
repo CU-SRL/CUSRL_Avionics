@@ -44,10 +44,14 @@ void DigitalGPS::GPSData_dump_setup()
     GPS->sendCommand("$PMTK622,1*29");   
 }
 
-//WIP
+//RUDIMENTARY PULLS TO SERIAL AND THEN YOU HAVE TO COPY TO A TXT FILE TO PARSE FROM PYTHON UNTIL PARSER IS COMPLETE
 void DigitalGPS::pullGPSFlashData()
 {
-
+  if (GPSSerial->available())
+  {
+    char c = GPSSerial->read();
+    Serial.write(c);
+  }
 }
 
 void DigitalGPS::refresh_GPSData(bool GPSECHO)
@@ -70,4 +74,13 @@ void DigitalGPS::refresh_GPSData(bool GPSECHO)
       if (!GPS->parse(GPS->lastNMEA())) // this also sets the newNMEAreceived() flag to false
         return; // we can fail to parse a sentence in which case we should just wait for another
     }
+}
+void DigitalGPS::pullRawGPS(GPSdata* data)
+{
+    data->altitude = GPS->altitude;
+    data->angle = GPS->angle;
+    data->lat = GPS->latitudeDegrees;
+    data->lon = GPS->longitudeDegrees;
+    data->sat_num = GPS->satellites;
+    data->speed = GPS->speed;
 }

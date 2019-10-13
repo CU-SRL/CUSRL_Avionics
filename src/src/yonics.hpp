@@ -112,6 +112,7 @@ class DigitalGPS {
         void GPSData_dump_setup();
         void refresh_GPSData(bool GPSECHO);
         void pullGPSFlashData();
+        void pullRawGPS(GPSdata* data);
 };
 
 class BeepyBOI {
