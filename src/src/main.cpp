@@ -208,8 +208,6 @@ void setup() {
 
     DigitalGPS gps(&GPSSerial);
 
-    ColdGasRCS rcs();
-
     // Initialize BNO055 IMU sensor
     if (!IMU.begin()) {
         // Serial.println("Couldn't find sensor BNO055");
@@ -270,7 +268,7 @@ void setup() {
 
     //  Give the ptr the address of the GPS Object that was created
     gps_ptr=&gps;
-    rcs_ptr = &rcs;
+    rcs_ptr = new ColdGasRCS();
 
     // Serial.print("flashSize: ");
     // Serial.println(flashSize);

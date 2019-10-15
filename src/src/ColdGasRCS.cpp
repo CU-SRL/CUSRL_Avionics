@@ -56,6 +56,6 @@ void ColdGasRCS::adjust(double current, double omega){
     }
 }
 
-void ColdGasRCS::getInterval(){
-    return INTERVAlL;
+int ColdGasRCS::getInterval(){
+    return INTERVAL;
 }
