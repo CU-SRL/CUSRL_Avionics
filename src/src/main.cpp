@@ -44,14 +44,10 @@ Thread* ThreadACCEL = new Thread();
 
 // Define the GPS hardware serial port
 #define GPSSerial Serial3
-// Initialize the GPS on the hardware port
-//Adafruit_GPS GPS(&GPSSerial);
 #define GPSECHO false // False to turn off echoing of GPS Data to Serial
 
 // Initializes Sensors
-// Adafruit_BNO055 IMU = Adafruit_BNO055(55, 0x28);
 DigitalIMU IMU = DigitalIMU(55,0x28);
-// Adafruit_MPL3115A2 BAROM = Adafruit_MPL3115A2();
 DigitalBAROM BAROM;
 AnalogIMU HIGHG = AnalogIMU(highG_xPin,highG_yPin,highG_zPin,true);
 
@@ -71,14 +67,6 @@ BeepyBOI berp = BeepyBOI(speakerPin);
 SPIFlash flashChip(flashPin);
 FlashOp flashop = FlashOp(&flashChip);
 
-// uint32_t addr_GPS;
-// uint32_t addr_IMU;
-// uint32_t addr_BAROM;
-
-// uint16_t counter_GPS = 0;
-// uint16_t counter_IMU = 0;
-// uint16_t counter_BAROM = 0;
-
 uint32_t GPSDataSize;
 uint32_t imuDataSize;
 uint32_t baromDataSize;
@@ -92,42 +80,6 @@ void thread_GPS()
     // Refresh the GPS Data
     gps_ptr->refresh_GPSData(GPSECHO);
     gps_ptr->pullRawGPS(&gps_data);
-
-    // Write GPS data to flash
-    flashop.addSample(3);
-
-    /*gps_data.altitude = GPS.altitude;
-    gps_data.angle = GPS.angle;
-    gps_data.lat = GPS.latitudeDegrees;
-    gps_data.lon = GPS.longitudeDegrees;
-    gps_data.sat_num = GPS.satellites;
-    gps_data.speed = GPS.speed;*/
-
-    /*Serial.println(GPS.milliseconds);
-    Serial.print("Date: ");
-    Serial.print(GPS.day, DEC); Serial.print('/');
-    Serial.print(GPS.month, DEC); Serial.print("/20");
-    Serial.println(GPS.year, DEC);
-    Serial.print("Fix: "); Serial.print((int)GPS.fix);
-    Serial.print(" quality: "); Serial.println((int)GPS.fixquality);
-    if (GPS.fix) {
-      Serial.print("Location: ");
-      Serial.print(GPS.latitude, 4); Serial.print(GPS.lat);
-      Serial.print(", ");
-      Serial.print(GPS.longitude, 4); Serial.println(GPS.lon);
-      Serial.print("Speed (knots): "); Serial.println(GPS.speed);
-      Serial.print("Angle: "); Serial.println(GPS.angle);
-      Serial.print("Altitude: "); Serial.println(GPS.altitude);
-      Serial.print("Satellites: "); Serial.println((int)GPS.satellites);
-    }*/
-
-    // Write data struct to flash chip
-    /*if (!flash.writeAnything(addr_GPS+=GPSDataSize,gps_data)) {
-        // Serial.println("Error writing data to flash.");
-    }
-    else {
-        counter_GPS++;
-    }*/
 }
 
 void thread_IMU() {
@@ -138,41 +90,14 @@ void thread_IMU() {
 
     // Write data struct to flash chip
     flashop.addSample(0);
-
-    // if (!flash.writeAnything(addr_IMU+=imuDataSize,imu_data)) {
-    //     // Serial.println("Error writing data to flash.");
-    // }
 }
 
 void thread_BAROM() {
-
     // Sample barometer
     BAROM.sample(&barom_data);
     
     // Write data struct to flash chip
     flashop.addSample(1);
-
-    // PRINTING
-    // Serial.println("Timings: ");
-    // Serial.println(t[1]-t[0]);
-    // Serial.println(t[2]-t[1]);
-    // Serial.println(t[3]-t[2]);
-
-    // Serial.print("Barometer data: ");
-    // Serial.print("Altitude: ");
-    // Serial.print(barom_data.altitude);
-    // Serial.print(" | Pressure: ");
-    // Serial.print(barom_data.pressure);
-    // Serial.print(" | Temperature: ");
-    // Serial.print(barom_data.temperature);
-    // Serial.println("");
-
-    // if (!flash.writeAnything(addr_BAROM+=baromDataSize,barom_data)) {
-    //     // Serial.println("Error writing data to flash.");
-    // }
-    // else {
-    //     counter_BAROM++;
-    // }
 }
 
 void thread_HIGHG() {
@@ -222,16 +147,16 @@ void setup() {
     DigitalGPS gps(&GPSSerial);
 
     // Initialize BNO055 IMU sensor
-    if (!IMU.begin()) {
+    /*if (!IMU.begin()) {
         // Serial.println("Couldn't find sensor BNO055");
         KILLSYSTEM();
-    }
+    }*/
 
     // Initialize MPL3115A2 sensor
-    if (!BAROM.begin()) {
+    /*if (!BAROM.begin()) {
         // Serial.println("Couldn't find sensor MPL3115A2");
         KILLSYSTEM();
-    }
+    }*/
 
     // Sizing of data structs
     GPSDataSize = sizeof(gps_data);
@@ -264,8 +189,8 @@ void setup() {
     // ThreadGPS->setInterval(interval_GPS);
 
     // Configure IMU thread
-    ThreadIMU->onRun(thread_IMU);
-    ThreadIMU->setInterval(interval_IMU);
+    //ThreadIMU->onRun(thread_IMU);
+    //ThreadIMU->setInterval(interval_IMU);
 
     // Configure Barometer thread
     ThreadBAROM->onRun(thread_BAROM);
