@@ -51,6 +51,8 @@ void DigitalIMU::sample(IMUdata* data) {
     data->accel_raw[1] = accel.y();
     data->accel_raw[2] = accel.z();
 
+    Serial.printf("z acceleration: %.5f\n",accel.z());
+
     board.getEvent(&event,Adafruit_BNO055::VECTOR_MAGNETOMETER);
     data->magnetometer[0] = event.magnetic.x;
     data->magnetometer[1] = event.magnetic.y;

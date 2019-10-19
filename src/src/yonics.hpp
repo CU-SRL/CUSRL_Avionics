@@ -46,18 +46,87 @@ struct BAROMdata {
     uint32_t t = 0;
 };
 
+struct ourTypes {
+    int size = 0; // Size of one sample, in bytes
+    int nSamples = 0; // Number of samples stored on chip
+    uint32_t start_addr = 0; // Start address of this type's allocated memory
+    void* data = NULL;
+    float f = 0;
+};
+
+struct event {
+    uint32_t t;
+    char ident;
+};
+
+class FlashOp {
+    // Class to manage saving data to and reading data from the flash chip
+
+    private:
+        SPIFlash* flash = NULL;
+
+        int nTypes = -1;
+        int maxTypes = 5;
+        ourTypes dataTypes[5];
+        int type_size = 0;
+        ourTypes temp_type;
+
+        int nEvents = -1;
+        int maxEvents = 5;
+        uint32_t event_addr_start = 0;
+        int event_size = 0;
+        event temp_event;
+
+        bool reading = false;
+        bool writing = false;
+
+    public:
+        // init
+        FlashOp();
+        FlashOp(SPIFlash* flash);
+        bool beginRead();
+        bool beginWrite();
+        int addType(int size, int interval, void* data);
+        void addWP(int pin);
+
+        // Writing
+        bool addSample(int ident);
+        bool addEvent(uint32_t t, char ident);
+
+        // Reading
+        bool getType(int ident, int* size);
+        bool getSample(int ident, int sample, void* data);
+        bool getEvent(int index, uint32_t* t, char* ident);
+        bool stopReading();
+};
+
 class SaveSD {
     private:
+        bool running = false;
         SdFatSdio sd;
         File of;
-        SPIFlash* flash = NULL;
-        void printIMU(uint32_t imuDataSize);
-        void printBAROM(uint32_t baromDataSize, uint32_t read_addr_BAROM);
+        FlashOp* flash = NULL;
+
+        IMUdata tempIMU;
+        BAROMdata tempBAROM;
+        Acceldata tempACCEL;
+        GPSdata tempGPS;
+
+        int imuID = 0;
+        int baromID = 1;
+        int accelID = 2;
+        int gpsID = 3;
+
+        void printEVENTS();
+        void printIMU();
+        void printBAROM();
+        void printACCEL();
+        void printGPS();
         bool openFile();
     public:
         SaveSD();
-        bool savenow(uint32_t imuDataSize, uint32_t baromDataSize);
-        bool addFlash(SPIFlash* flash);
+        bool savenow();
+        bool addFlashOp(FlashOp* flash);
 };
 
 class AnalogIMU {
@@ -132,47 +201,4 @@ class BeepyBOI {
         void midBeep();
         void  hiBeep();
         void bombBeep();
-};
-
-class FlashOp {
-    // Class to manage saving data to and reading data from the flash chip
-    struct ourTypes {
-        int size = 0; // Size of one sample, in bytes
-        int nSamples = 0; // Number of samples stored on chip
-        uint32_t start_addr = 0; // Start address of this type's allocated memory
-        void* data;
-        float f;
-    };
-    
-    struct event {
-        uint32_t t;
-        char ident;
-    };
-
-    private:
-        SPIFlash* flash;
-
-        int nTypes = -1;
-        int maxTypes = 5;
-        ourTypes dataTypes[5];
-
-        int nEvents = -1;
-        int maxEvents = 5;
-        event events[5];
-
-        bool running = false;
-
-    public:
-        // init
-        FlashOp(SPIFlash* flash);
-        bool begin();
-        int addType(int size, float f, void* data);
-
-        // Writing
-        bool addSample(int ident);
-        bool addEvent(uint32_t t, char ident);
-
-        // Reading
-        bool getType(int ident, int* size);
-        bool getSample(int ident, int sample, void* data);
 };
