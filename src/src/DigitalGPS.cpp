@@ -78,9 +78,26 @@ void DigitalGPS::refresh_GPSData(bool GPSECHO)
 void DigitalGPS::pullRawGPS(GPSdata* data)
 {
     data->altitude = GPS->altitude;
+    Serial.print("Altitude: ");
+    Serial.print(GPS->altitude);
+
     data->angle = GPS->angle;
+    Serial.print("Angle: ");
+    Serial.print(GPS->angle);
+
     data->lat = GPS->latitudeDegrees;
+    Serial.print("Lat (Deg): ");
+    Serial.print(GPS->latitudeDegrees);
+
     data->lon = GPS->longitudeDegrees;
+    Serial.print("Long (Deg): ");
+    Serial.print(GPS->longitudeDegrees);
+
     data->sat_num = GPS->satellites;
+    Serial.print("Sats: ");
+    Serial.print(GPS->satellites);
+
     data->speed = GPS->speed;
+    Serial.print("Speed: ");
+    Serial.println(GPS->speed);
 }

@@ -120,16 +120,16 @@ void setup() {
     DigitalGPS gps(&GPSSerial);
 
     // Initialize BNO055 IMU sensor
-    if (!IMU.begin()) {
+    /*if (!IMU.begin()) {
         // Serial.println("Couldn't find sensor BNO055");
         KILLSYSTEM();
-    }
+    }*/
 
     // Initialize MPL3115A2 sensor
-    if (!BAROM.begin()) {
+    /*if (!BAROM.begin()) {
         // Serial.println("Couldn't find sensor MPL3115A2");
         KILLSYSTEM();
-    }
+    }*/
 
     // Sizing of data structs
     GPSDataSize = sizeof(gps_data);
@@ -193,17 +193,17 @@ void setup() {
     ThreadGPS->setInterval(interval_GPS);
 
     // Configure IMU thread
-    ThreadIMU->onRun(thread_IMU);
-    ThreadIMU->setInterval(interval_IMU);
+    //ThreadIMU->onRun(thread_IMU);
+    //ThreadIMU->setInterval(interval_IMU);
 
     // Configure Barometer thread
-    ThreadBAROM->onRun(thread_BAROM);
-    ThreadBAROM->setInterval(interval_BAROM);
+    //ThreadBAROM->onRun(thread_BAROM);
+    //ThreadBAROM->setInterval(interval_BAROM);
 
     // Add threads to controller
-    thread_control.add(ThreadIMU);
+    //thread_control.add(ThreadIMU);
     thread_control.add(ThreadGPS);
-    thread_control.add(ThreadBAROM);
+    //thread_control.add(ThreadBAROM);
 
     // Beep the piezo again
     berp.bombBeep();
