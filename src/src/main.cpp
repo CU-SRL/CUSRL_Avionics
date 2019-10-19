@@ -16,13 +16,14 @@
 // ========== DEFINE SOME VARS ==========
 
 // Pin assignments
+int flashWP = 10;
 int flashPin = 29;
 int speakerPin = 36;
 int highG_xPin = 33;
 int highG_yPin = 34;
 int highG_zPin = 35;
 
-// Intervals
+// Intervals (ms)
 int interval_GPS = 100;
 int interval_IMU = 40;
 int interval_BAROM = 1500;
@@ -33,7 +34,7 @@ int interval_ACCEL = 40;
 // ThreadController that will control all threads
 ThreadController thread_control = ThreadController();
 
-//Threads (as a pointer)
+// Throw some threads on the heap
 Thread* ThreadGPS = new Thread();
 Thread* ThreadIMU = new Thread();
 Thread* ThreadBAROM = new Thread();
@@ -52,7 +53,6 @@ AnalogIMU HIGHG = AnalogIMU(highG_xPin,highG_yPin,highG_zPin,true);
 
 
 // Variables to store sensor data
-sensors_event_t event; 
 GPSdata gps_data;
 IMUdata imu_data;
 BAROMdata barom_data;
@@ -64,7 +64,8 @@ BeepyBOI berp = BeepyBOI(speakerPin);
 // ========== FLASH CHIP AND DATA SAVING ==========
 
 // Initialize flash chip
-SPIFlash flash(flashPin);
+SPIFlash flashChip(flashPin);
+FlashOp flashop = FlashOp(&flashChip);
 
 uint32_t GPSDataSize;
 uint32_t imuDataSize;
@@ -73,7 +74,6 @@ uint32_t accelDataSize;
 
 SaveSD saver;
 DigitalGPS* gps_ptr;
-FlashOp flashop = FlashOp(&flash);
 
 void thread_GPS()
 {
@@ -84,6 +84,8 @@ void thread_GPS()
 
 void thread_IMU() {
 
+    // Serial.println("IMU Sampling.");
+
     IMU.sample(&imu_data);
 
     // Write data struct to flash chip
@@ -91,6 +93,7 @@ void thread_IMU() {
 }
 
 void thread_BAROM() {
+    // Sample barometer
     BAROM.sample(&barom_data);
     
     // Write data struct to flash chip
@@ -98,6 +101,8 @@ void thread_BAROM() {
 }
 
 void thread_HIGHG() {
+
+    // Sample high-g accelerometer
     HIGHG.sample(&accel_data);
 
     // Write to flash
@@ -112,10 +117,32 @@ void KILLSYSTEM() {
 }
 
 void setup() {
-    berp.hello();
-
     // Start serial
     Serial.begin(115200);
+
+    berp.hello();
+
+    // ========== Save Data ======================================
+
+    saver.addFlashOp(&flashop);
+
+    // Copy data to flash chip
+    berp.lowBeep();
+    berp.hiBeep();
+    
+    flashop.addWP(flashWP);
+    flashop.beginRead();
+    
+    if (!saver.savenow()) {KILLSYSTEM();}
+    berp.lowBeep();
+    berp.hiBeep();
+    berp.midBeep();
+
+    berp.countdown(5);
+
+    flashop.stopReading(); // THIS FUNCTION ERASES THE FLASH CHIP
+
+    // ===========================================================
 
     DigitalGPS gps(&GPSSerial);
 
@@ -138,72 +165,46 @@ void setup() {
     accelDataSize = sizeof(accel_data);
 
     // Add data types to flashop
-    if (!flashop.addType(imuDataSize,interval_IMU,&imu_data)) {KILLSYSTEM();}
-    if (!flashop.addType(baromDataSize,interval_BAROM,&barom_data)) {KILLSYSTEM();}
-    if (!flashop.addType(accelDataSize,interval_ACCEL,&accel_data)) {KILLSYSTEM();}
+    if (-1==flashop.addType(imuDataSize,interval_IMU,&imu_data)) {KILLSYSTEM();}
+    if (-1==flashop.addType(baromDataSize,interval_BAROM,&barom_data)) {KILLSYSTEM();}
+    if (-1==flashop.addType(accelDataSize,interval_ACCEL,&accel_data)) {KILLSYSTEM();}
+    if (-1==flashop.addType(accelDataSize,interval_GPS,&gps_data)) {KILLSYSTEM();}
 
     // Initialize flash chip
-    if (!flashop.begin()) {KILLSYSTEM();}
+    if (!flashop.beginWrite()) {KILLSYSTEM();}
 
     // Initialize the GPS Data Dump
-    gps.GPSData_dump_setup();
-
-    // Initialize flash chip
-    flash.begin();
-    int flashSize = flash.getCapacity();
-    saver.addFlash(&flash);
-
-    // Calculate flash chip allocations
-    int share_IMU = (float)flashSize*((float)imuDataSize/(float)interval_IMU)/((float)imuDataSize/(float)interval_IMU + (float)baromDataSize/(float)interval_BAROM);
-
-    // Copy data to flash chip
-    berp.lowBeep();
-    berp.hiBeep();
-
-    // pulls to serial term for now
-    gps.pullGPSFlashData();
-
-    // Serial.println("Saving to SD card...");
-    if (!saver.savenow(imuDataSize,baromDataSize)) {
-        KILLSYSTEM();
-    }
-    berp.lowBeep();
-    berp.hiBeep();
-    berp.midBeep();
-    // Serial.println("Saving complete.");
-
-    berp.countdown(20);
+    // gps.GPSData_dump_setup();
 
     // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    // gps.eraseLOCUS();
+    // gps.initGPS();
     // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    flash.eraseChip();
-    gps.eraseLOCUS();
-    // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-
-    gps.initGPS();
 
     //  Give the ptr the address of the GPS Object that was created
     gps_ptr=&gps;
 
     // Configure GPS thread
-    ThreadGPS->onRun(thread_GPS);
-    ThreadGPS->setInterval(interval_GPS);
+    // ThreadGPS->onRun(thread_GPS);
+    // ThreadGPS->setInterval(interval_GPS);
 
     // Configure IMU thread
     //ThreadIMU->onRun(thread_IMU);
     //ThreadIMU->setInterval(interval_IMU);
 
     // Configure Barometer thread
-    //ThreadBAROM->onRun(thread_BAROM);
-    //ThreadBAROM->setInterval(interval_BAROM);
+    ThreadBAROM->onRun(thread_BAROM);
+    ThreadBAROM->setInterval(interval_BAROM);
+
+    // Configure Accelerometer thread
+    ThreadACCEL->onRun(thread_HIGHG);
+    ThreadACCEL->setInterval(interval_ACCEL);
 
     // Add threads to controller
-    //thread_control.add(ThreadIMU);
-    thread_control.add(ThreadGPS);
-    //thread_control.add(ThreadBAROM);
+    thread_control.add(ThreadIMU);
+    // thread_control.add(ThreadGPS);
+    thread_control.add(ThreadBAROM);
+    thread_control.add(ThreadACCEL);
 
     // Beep the piezo again
     berp.bombBeep();
