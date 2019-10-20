@@ -2,58 +2,67 @@
 
 DigitalGPS::DigitalGPS(HardwareSerial *ser)
 {
-    Adafruit_GPS initGPS(ser);
+    Adafruit_GPS *initGPS = new Adafruit_GPS(ser);
     // Initialize MTK3339 GPS Unit
-    initGPS.begin(9600);
+    initGPS->begin(9600);
 
     // Pass the object pointers
-    GPS = &initGPS;
-    GPSSerial=ser;
+    DigitalGPS::GPS = initGPS;
+    DigitalGPS::GPSSerial=ser;
 }
 
 void DigitalGPS::initGPS()
 {
     // RMC (recommended minimum) and GGA (fix data) including altitude
-    GPS->sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA);
-    GPS->sendCommand(PMTK_SET_NMEA_UPDATE_10HZ); // 10 Hz update rate
+    DigitalGPS::GPS->sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA);
+    DigitalGPS::GPS->sendCommand(PMTK_SET_NMEA_UPDATE_10HZ); // 10 Hz update rate
 
-    if (!GPS->LOCUS_StartLogger())
+    if (!DigitalGPS::GPS->LOCUS_StartLogger())
     {
-        // Serial.println("Failed to start GPS LOCUS Logger");
+        Serial.println("Failed to start GPS LOCUS Logger");
         return;
     }
 }
 
 void DigitalGPS::eraseLOCUS()
 {
-    GPS->sendCommand(PMTK_SET_NMEA_OUTPUT_OFF);
-    GPS->sendCommand(PMTK_LOCUS_ERASE_FLASH); // Erase LOCUS Flash Chip
+    DigitalGPS::GPS->sendCommand(PMTK_SET_NMEA_OUTPUT_OFF);
+    DigitalGPS::GPS->sendCommand(PMTK_LOCUS_ERASE_FLASH); // Erase LOCUS Flash Chip
 }
 
 void DigitalGPS::GPSData_dump_setup()
 {
     // TURN OFF OUTPUT
-    GPS->sendCommand(PMTK_SET_NMEA_OUTPUT_OFF);  
+    DigitalGPS::GPS->sendCommand(PMTK_SET_NMEA_OUTPUT_OFF);  
 
-    while(GPSSerial->available())
+    while(DigitalGPS::GPSSerial->available())
     {
-      GPSSerial->read();
+      DigitalGPS::GPSSerial->read();
     }
 
     delay(1000);
-    GPS->sendCommand("$PMTK622,1*29");   
+    DigitalGPS::GPS->sendCommand("$PMTK622,1*29");   
 }
 
-//WIP
+void DigitalGPS::dummyPrint()
+{
+    Serial.println("Hello World!!");
+}
+
+//RUDIMENTARY PULLS TO SERIAL AND THEN YOU HAVE TO COPY TO A TXT FILE TO PARSE FROM PYTHON UNTIL PARSER IS COMPLETE
 void DigitalGPS::pullGPSFlashData()
 {
-
+  if (DigitalGPS::GPSSerial->available())
+  {
+    char c = DigitalGPS::GPSSerial->read();
+    Serial.write(c);
+  }
 }
 
 void DigitalGPS::refresh_GPSData(bool GPSECHO)
 {
     // read data from the GPS
-    char c = GPS->read();
+    char c = DigitalGPS::GPS->read();
 
     // GPSECHO if set to true will print the raw NMEA strings
     if (GPSECHO)
@@ -64,10 +73,39 @@ void DigitalGPS::refresh_GPSData(bool GPSECHO)
         }
     }
     // Check to See if sentenced recieved...
-    if (GPS->newNMEAreceived()) 
+    if (DigitalGPS::GPS->newNMEAreceived()) 
     {
-      Serial.println(GPS->lastNMEA()); // this also sets the newNMEAreceived() flag to false
-      if (!GPS->parse(GPS->lastNMEA())) // this also sets the newNMEAreceived() flag to false
+      Serial.println(DigitalGPS::GPS->lastNMEA()); // this also sets the newNMEAreceived() flag to false
+      if (!DigitalGPS::GPS->parse(DigitalGPS::GPS->lastNMEA())) // this also sets the newNMEAreceived() flag to false
         return; // we can fail to parse a sentence in which case we should just wait for another
+    }
+}
+void DigitalGPS::pullRawGPS(/*GPSdata* data*/)
+{
+    if(DigitalGPS::GPS->fix)
+    {
+        //data->altitude = DigitalGPS::GPS->altitude;
+        Serial.print("Altitude: ");
+        Serial.print(DigitalGPS::GPS->altitude);
+
+        //data->angle = DigitalGPS::GPS->angle;
+        Serial.print(" Angle: ");
+        Serial.print(DigitalGPS::GPS->angle);
+
+        //data->lat = DigitalGPS::GPS->latitudeDegrees;
+        Serial.print(" Lat (Deg): ");
+        Serial.print(DigitalGPS::GPS->latitudeDegrees);
+
+        //data->lon = DigitalGPS::GPS->longitudeDegrees;
+        Serial.print(" Long (Deg): ");
+        Serial.print(DigitalGPS::GPS->longitudeDegrees);
+
+        //data->sat_num = DigitalGPS::GPS->satellites;
+        Serial.print(" Sats: ");
+        Serial.print(DigitalGPS::GPS->satellites);
+
+        //data->speed = DigitalGPS::GPS->speed;
+        Serial.print(" Speed: ");
+        Serial.println(DigitalGPS::GPS->speed);
     }
 }
