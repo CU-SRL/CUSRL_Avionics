@@ -122,10 +122,12 @@ class SaveSD {
         void printBAROM();
         void printACCEL();
         void printGPS();
+        void printRCS(double, double, double, bool);
         bool openFile();
     public:
         SaveSD();
         bool savenow();
+        bool saveNowRCS(double, double, double, bool);
         bool addFlashOp(FlashOp* flash);
 };
 
@@ -214,6 +216,7 @@ class ColdGasRCS{
     void openSolenoid(int);
     void closeSolenoid(int);
     void adjust(double, double);
+    void adjust(double, double, SaveSD*);
     int getInterval();
 };
 

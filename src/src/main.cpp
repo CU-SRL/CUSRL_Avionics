@@ -73,7 +73,7 @@ uint32_t imuDataSize;
 uint32_t baromDataSize;
 uint32_t accelDataSize;
 
-SaveSD saver;
+SaveSD* saver;
 DigitalGPS* gps_ptr;
 
 // ========== CONTROL ==========
@@ -85,10 +85,14 @@ ColdGasRCS* rcs_ptr;
 
 void thread_ColdGasRCS(){
     //do stuff here. 
-    double current = imu_data.orient_euler[0];
-    double omega = imu_data.gyro_fused[0]; // not sure which we want LOL raw or fused
+    double current = (90 - imu_data.orient_euler[1])/180 * 3.14159;
+    Serial.print("RCS Euler: ");
+    Serial.println(current);
+    double omega = -imu_data.gyro_fused[1]/180*3.14159; // not sure which we want LOL raw or fused
+    Serial.print("angular rate: ");
+    Serial.println(omega);
 
-    rcs_ptr->adjust(current, omega);
+    rcs_ptr->adjust(current, omega, saver);
 
 
 }
@@ -143,6 +147,7 @@ void setup() {
     // ========== Save Data ======================================
 
     //saver.addFlashOp(&flashop);
+    saver = new SaveSD();
 
     // Copy data to flash chip
     berp.lowBeep();

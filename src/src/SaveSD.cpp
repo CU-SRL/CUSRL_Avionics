@@ -1,11 +1,12 @@
 #include "yonics.hpp"
 
+#define charLen 14
+
 SaveSD::SaveSD() {
     if (sd.begin()) {
         running = true;
     }
 }
-
 bool SaveSD::addFlashOp(FlashOp* flash) {
     if (this->flash==NULL) {
         this->flash = flash;
@@ -14,13 +15,39 @@ bool SaveSD::addFlashOp(FlashOp* flash) {
     else {return false;}
 }
 
+void SaveSD::printRCS(double current, double omega, double ctrl_torque, bool isOpen){
+    Serial.println("Saving: timestamp,current,omega,ctrl_torque,isOpen");
+    of.printf("%u,%.4f,%.4f,%.4f,%u\n", millis(), current, omega, ctrl_torque, isOpen);
+
+    
+}
+
+
+bool SaveSD::saveNowRCS (double current, double omega, double ctrl_torque, bool isOpen) {
+    if (!running) {return false;}
+
+//    uint16_t counter = 1;
+//    int charLen = 14;
+    char filename [charLen];
+    sprintf(filename,"datalog_rcs.csv");
+    of = sd.open(filename,FILE_WRITE);
+
+    Serial.println("File opened!");
+
+    // printEVENTS();
+    printRCS(current, omega, ctrl_torque, isOpen);
+    of.close();
+
+    return true;
+}
+
 bool SaveSD::savenow () {
     if (!running) {return false;}
 
     if (!flash->beginRead()) {return false;}
 
     uint16_t counter = 1;
-    int charLen = 14;
+//    int charLen = 14;
     char filename [charLen];
 
     while(true) {
@@ -51,6 +78,8 @@ bool SaveSD::savenow () {
 
     return true;
 }
+
+
 
 void SaveSD::printEVENTS() {
     of.println("# Events:");
@@ -142,7 +171,7 @@ void SaveSD::printGPS() {
 
 bool SaveSD::openFile() {
     uint16_t counter = 1;
-    int charLen = 14;
+    //int charLen = 14;
     char filename [charLen];
 
     while(true) {
