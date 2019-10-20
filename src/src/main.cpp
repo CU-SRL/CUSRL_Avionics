@@ -162,9 +162,9 @@ void setup() {
 
     // ===========================================================
 
-    DigitalGPS *GPS = new DigitalGPS(&Serial3);
+    // DigitalGPS *GPS = new DigitalGPS(&Serial3);
     //  Give the ptr the address of the GPS Object that was created
-    gps_ptr = GPS;
+    // gps_ptr = GPS;
 
     rcs_ptr = new ColdGasRCS();
     
@@ -176,10 +176,10 @@ void setup() {
     }
 
     // Initialize MPL3115A2 sensor
-    if (!BAROM.begin()) {
-        Serial.println("Couldn't find sensor MPL3115A2");
-        KILLSYSTEM();
-    }
+    // if (!BAROM.begin()) {
+    //     Serial.println("Couldn't find sensor MPL3115A2");
+    //    KILLSYSTEM();
+    // }
 
     // Sizing of data structs
     GPSDataSize = sizeof(gps_data);
@@ -197,34 +197,34 @@ void setup() {
     //if (!flashop.beginWrite()) {KILLSYSTEM();}
 
     // Initialize the GPS Data Dump
-    gps_ptr->GPSData_dump_setup();
+    // gps_ptr->GPSData_dump_setup();
 
     // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    gps_ptr->eraseLOCUS();
-    gps_ptr->initGPS();
+    // gps_ptr->eraseLOCUS();
+    // gps_ptr->initGPS();
     // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
     // Configure GPS thread
-    ThreadGPS->onRun(thread_GPS);
-    ThreadGPS->setInterval(interval_GPS);
+    // ThreadGPS->onRun(thread_GPS);
+    // ThreadGPS->setInterval(interval_GPS);
 
     // Configure IMU thread
     ThreadIMU->onRun(thread_IMU);
     ThreadIMU->setInterval(interval_IMU);
 
     // Configure Barometer thread
-    ThreadBAROM->onRun(thread_BAROM);
-    ThreadBAROM->setInterval(interval_BAROM);
+    // ThreadBAROM->onRun(thread_BAROM);
+    // ThreadBAROM->setInterval(interval_BAROM);
 
     // Configure Accelerometer thread
-    ThreadACCEL->onRun(thread_HIGHG);
-    ThreadACCEL->setInterval(interval_ACCEL);
+    // ThreadACCEL->onRun(thread_HIGHG);
+    // ThreadACCEL->setInterval(interval_ACCEL);
 
     // Add threads to controller
     thread_control.add(ThreadIMU);
-    thread_control.add(ThreadGPS);
-    thread_control.add(ThreadBAROM);
-    thread_control.add(ThreadACCEL);
+    // thread_control.add(ThreadGPS);
+    // thread_control.add(ThreadBAROM);
+    // thread_control.add(ThreadACCEL);
 
     ThreadColdGasRCS->onRun(thread_ColdGasRCS);
     ThreadColdGasRCS->setInterval(rcs_ptr->getInterval());
