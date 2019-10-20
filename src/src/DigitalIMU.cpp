@@ -27,17 +27,38 @@ void DigitalIMU::sample(IMUdata* data) {
     data->accel_fused[1] = event.acceleration.y;
     data->accel_fused[2] = event.acceleration.z;
 
+    Serial.print ("Accel X: ");
+    Serial.print(event.acceleration.x);
+    Serial.print (" Accel Y: ");
+    Serial.print (event.acceleration.y);
+    Serial.print (" Accel Z: ");
+    Serial.print (event.acceleration.z);
+
     // Processed gyro data
     board.getEvent(&event,Adafruit_BNO055::VECTOR_GYROSCOPE);
     data->gyro_fused[0] = event.gyro.x;
     data->gyro_fused[1] = event.gyro.y;
     data->gyro_fused[2] = event.gyro.z;
 
+    Serial.print (" Gyro X: ");
+    Serial.print(event.gyro.x);
+    Serial.print (" Gyro Y: ");
+    Serial.print (event.gyro.y);
+    Serial.print (" Gyro Z: ");
+    Serial.print (event.gyro.z);
+
     // Processed euler orientation vectors
     board.getEvent(&event,Adafruit_BNO055::VECTOR_EULER);
     data->orient_euler[0] = event.orientation.x;
     data->orient_euler[1] = event.orientation.y;
     data->orient_euler[2] = event.orientation.z;
+
+    Serial.print (" Orient X: ");
+    Serial.print(event.orientation.x);
+    Serial.print (" Orient Y: ");
+    Serial.print (event.orientation.y);
+    Serial.print (" Orient Z: ");
+    Serial.println (event.orientation.z);
 
     // 
     quat = board.getQuat();
