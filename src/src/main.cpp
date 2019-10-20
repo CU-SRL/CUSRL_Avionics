@@ -85,8 +85,8 @@ ColdGasRCS* rcs_ptr;
 
 void thread_ColdGasRCS(){
     //do stuff here. 
-    double current = imu_data.orientation[0];
-    double omega = imu_data.gyroscope[0];
+    double current = imu_data.orient_euler[0];
+    double omega = imu_data.gyro_fused[0]; // not sure which we want LOL raw or fused
 
     rcs_ptr->adjust(current, omega);
 
@@ -165,6 +165,9 @@ void setup() {
     DigitalGPS *GPS = new DigitalGPS(&Serial3);
     //  Give the ptr the address of the GPS Object that was created
     gps_ptr = GPS;
+
+    rcs_ptr = new ColdGasRCS();
+    
 
     // Initialize BNO055 IMU sensor
     if (!IMU.begin()) {
