@@ -15,15 +15,13 @@ bool SaveSD::addFlashOp(FlashOp* flash) {
     else {return false;}
 }
 
-void SaveSD::printRCS(double current, double omega, double ctrl_torque, bool isOpen){
+void SaveSD::printRCS(double current, double omega, double error, double ctrl_torque, bool isOpen){
     Serial.println("Saving: timestamp,current,omega,ctrl_torque,isOpen");
-    of.printf("%u,%.4f,%.4f,%.4f,%u\n", millis(), current, omega, ctrl_torque, isOpen);
-
-    
+    of.printf("%u,%.4f,%.4f,%.4f,%.4f,%u\n", millis(), current, omega, error, ctrl_torque, isOpen);
 }
 
 
-bool SaveSD::saveNowRCS (double current, double omega, double ctrl_torque, bool isOpen) {
+bool SaveSD::saveNowRCS (double current, double omega, double error, double ctrl_torque, bool isOpen) {
     if (!running) {return false;}
 
 //    uint16_t counter = 1;
@@ -35,7 +33,7 @@ bool SaveSD::saveNowRCS (double current, double omega, double ctrl_torque, bool 
     Serial.println("File opened!");
 
     // printEVENTS();
-    printRCS(current, omega, ctrl_torque, isOpen);
+    printRCS(current, omega, error, ctrl_torque, isOpen);
     of.close();
 
     return true;
