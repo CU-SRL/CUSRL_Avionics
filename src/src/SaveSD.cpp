@@ -16,25 +16,40 @@ bool SaveSD::addFlashOp(FlashOp* flash) {
 }
 
 void SaveSD::printRCS(double current, double omega, double error, double ctrl_torque, bool isOpen){
-    Serial.println("Saving: timestamp,current,omega,ctrl_torque,isOpen");
-    of.printf("%u,%.4f,%.4f,%.4f,%.4f,%u\n", millis(), current, omega, error, ctrl_torque, isOpen);
+     //of.printf("%u,%.4f,%.4f,%.4f,%.4f,%u\n", millis(), current, omega, error, ctrl_torque, isOpen);
+     Serial.println("hi");
+     Serial.printf("%u,%.4f,%.4f,%.4f,%.4f,%u\n", millis(), current, omega, error, ctrl_torque, isOpen);
+}
+
+void SaveSD::printRCSImu(IMUdata tempIMU){
+    /*of.printf("%.4f,%.4f,%.4f",tempIMU.orient_euler[0],tempIMU.orient_euler[1],tempIMU.orient_euler[2]);
+    of.print(",");
+    of.printf("%.4f,%.4f,%.4f,%.4f",tempIMU.orient_quat[0],tempIMU.orient_quat[1],tempIMU.orient_quat[2],tempIMU.orient_quat[3]);
+    of.print(",");
+    of.println("");*/
+    Serial.printf("%.4f,%.4f,%.4f,",tempIMU.orient_euler[0],tempIMU.orient_euler[1],tempIMU.orient_euler[2]);
+    Serial.printf("%.4f,%.4f,%.4f,%.4f,",tempIMU.orient_quat[0],tempIMU.orient_quat[1],tempIMU.orient_quat[2],tempIMU.orient_quat[3]);
 }
 
 
-bool SaveSD::saveNowRCS (double current, double omega, double error, double ctrl_torque, bool isOpen) {
+
+bool SaveSD::saveNowRCS (double current, double omega, double error, double ctrl_torque, bool isOpen, IMUdata imu) {
     if (!running) {return false;}
 
 //    uint16_t counter = 1;
 //    int charLen = 14;
     char filename [charLen];
     sprintf(filename,"datalog_rcs.csv");
-    of = sd.open(filename,FILE_WRITE);
-
-    Serial.println("File opened!");
-
+    //of = sd.open(filename,FILE_WRITE);
+    // Serial.println("File opened!");
     // printEVENTS();
     printRCS(current, omega, error, ctrl_torque, isOpen);
-    of.close();
+    //of.close();
+
+    sprintf(filename,"datalog_rcs_IMU.csv");
+    //of = sd.open(filename, FILE_WRITE);
+    printRCSImu(imu);
+    //of.close();
 
     return true;
 }

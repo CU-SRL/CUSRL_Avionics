@@ -86,13 +86,13 @@ ColdGasRCS* rcs_ptr;
 void thread_ColdGasRCS(){
     //do stuff here. 
     double current = (90 - imu_data.orient_euler[1])/180 * 3.14159;
-    Serial.print("RCS Euler: ");
-    Serial.println(current);
+    // Serial.print("RCS Euler: ");
+    // Serial.println(current);
     double omega = -imu_data.gyro_fused[1]/180*3.14159; // not sure which we want LOL raw or fused
-    Serial.print("angular rate: ");
-    Serial.println(omega);
+    // Serial.print("angular rate: ");
+    // Serial.println(omega);
 
-    rcs_ptr->adjust(current, omega, saver);
+    rcs_ptr->adjust(current, omega, saver, imu_data);
 
 
 }

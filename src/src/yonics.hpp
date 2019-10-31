@@ -123,11 +123,12 @@ class SaveSD {
         void printACCEL();
         void printGPS();
         void printRCS(double, double, double, double, bool);
+        void printRCSImu(IMUdata tempIMU);
         bool openFile();
     public:
         SaveSD();
         bool savenow();
-        bool saveNowRCS(double, double, double, double, bool);
+        bool saveNowRCS(double, double, double, double, bool, IMUdata);
         bool addFlashOp(FlashOp* flash);
 };
 
@@ -215,7 +216,7 @@ class ColdGasRCS{
     void init();
     void openSolenoid(int);
     void closeSolenoid(int);
-    void adjust(double, double, SaveSD*);
+    void adjust(double, double, SaveSD*, IMUdata);
     int getInterval();
 };
 

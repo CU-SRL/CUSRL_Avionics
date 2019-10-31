@@ -5,7 +5,7 @@
 #define SOLENOID_PIN_2 37
 #define SOLENOID_PIN_3 38*/
 
-#define GOAL .4363 //rad
+#define GOAL 0.523599//.4363 //rad
 #define K0 .3
 #define K1 4.9
 #define K2 9.8
@@ -18,6 +18,12 @@
 
 double error = 0; 
 double last_millis;
+
+void printStuff(double current, double omega, double error, double ctrl_torque, bool isOpen, IMUdata tempIMU){
+    Serial.printf("%u,%.4f,%.4f,%.4f,%.4f,%u,     ", millis(), current, omega, error, ctrl_torque, isOpen);
+    Serial.printf("%.4f,%.4f,%.4f,",tempIMU.orient_euler[0],tempIMU.orient_euler[1],tempIMU.orient_euler[2]);
+    Serial.printf("%.4f,%.4f,%.4f,%.4f\n",tempIMU.orient_quat[0],tempIMU.orient_quat[1],tempIMU.orient_quat[2],tempIMU.orient_quat[3]);
+}
 
 ColdGasRCS::ColdGasRCS() {
     init();
@@ -51,7 +57,7 @@ void ColdGasRCS::closeSolenoid(int solenoid){
     }
 }
 
-void ColdGasRCS::adjust(double current, double omega, SaveSD* saver){
+void ColdGasRCS::adjust(double current, double omega, SaveSD* saver, IMUdata imu){
     double this_error = GOAL - current;
     error += this_error * ((millis() - last_millis)/1000);
     if(error > MAX_ERROR){
@@ -62,16 +68,18 @@ void ColdGasRCS::adjust(double current, double omega, SaveSD* saver){
     last_millis = millis();
 
     double ctrl_torque = K2*(GOAL-current) - K1*omega + K0*error;
-    Serial.print("Control Torque: ");
-    Serial.println(ctrl_torque);
+    // Serial.print("Control Torque: ");
+    // Serial.println(ctrl_torque);
     if(ctrl_torque / ACTUAL_TORQUE > THRESHOLD){
-        Serial.println("OPEN");
+        // Serial.println("OPEN");
         // set solenoid open
         openSolenoid(0);
-        saver->saveNowRCS(current, omega, error, ctrl_torque, 1);
+        // saver->saveNowRCS(current, omega, error, ctrl_torque, 1, imu);
+        printStuff(current, omega, error, ctrl_torque, 1, imu);
     } else {
-        Serial.println("CLOSE");
-        saver->saveNowRCS(current, omega, error, ctrl_torque, 0);    
+        // Serial.println("CLOSE");
+        // saver->saveNowRCS(current, omega, error, ctrl_torque, 0, imu);    
+        printStuff(current, omega, error, ctrl_torque, 0, imu);
         //close
         closeSolenoid(0);
     }
@@ -80,3 +88,4 @@ void ColdGasRCS::adjust(double current, double omega, SaveSD* saver){
 int ColdGasRCS::getInterval(){
     return INTERVAL;
 }
+
