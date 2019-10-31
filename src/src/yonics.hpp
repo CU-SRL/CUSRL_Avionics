@@ -65,39 +65,45 @@ class FlashOp {
     private:
         SPIFlash* flash = NULL;
 
-        int nTypes = -1;
-        int maxTypes = 5;
-        SampleTypes sampleTypes[5];
-        int type_size = 0;
-        SampleTypes temp_type;
+        // IMU Vars
+        uint32_t addr_start_IMU = 0;
+        uint8_t size_IMU = 0;
+        uint32_t nSamples_IMU = 0;
+        float freq_IMU = 0;
 
-        int nEvents = -1;
-        int maxEvents = 5;
-        uint32_t event_addr_start = 0;
-        int event_size = 0;
-        Event temp_event;
+        // GPS Vars
+        uint32_t addr_start_GPS = 0;
+        uint8_t size_GPS = 0;
+        uint32_t nSamples_GPS = 0;
+        float freq_GPS = 0;
 
-        bool reading = false;
-        bool writing = false;
+        // BAROM Vars
+        uint32_t addr_start_BAROM = 0;
+        uint8_t size_BAROM = 0;
+        uint32_t nSamples_BAROM = 0;
+        float freq_BAROM = 0;
+
+        // ACCEL Vars
+        uint32_t addr_start_ACCEL = 0;
+        uint8_t size_ACCEL = 0;
+        uint32_t nSamples_ACCEL = 0;
+        float freq_ACCEL = 0;
 
     public:
         // init
         FlashOp();
         FlashOp(SPIFlash* flash);
-        bool beginRead();
-        bool beginWrite();
-        int addType(int size, int interval, void* data);
         void addWP(int pin);
 
+        // Data size initiation
+        bool setIMU(uint8_t size, float frequency);
+
         // Writing
-        bool addSample(int ident);
-        bool addEvent(uint32_t t, char ident);
+        bool writeIMU(IMUdata* data);
 
         // Reading
-        bool getType(int ident, int* size);
-        bool getSample(int ident, int sample, void* data);
-        bool getEvent(int index, uint32_t* t, char* ident);
-        bool stopReading();
+        bool readIMU(IMUdata* data, int idx);
+
 };
 
 class SaveSD {

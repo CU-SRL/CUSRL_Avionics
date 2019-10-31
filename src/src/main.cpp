@@ -24,10 +24,10 @@ int highG_yPin = 34;
 int highG_zPin = 35;
 
 // Intervals (ms)
-int interval_GPS = 100;
 int interval_IMU = 40;
 int interval_BAROM = 1500;
 int interval_ACCEL = 40;
+int interval_GPS = 100;
 
 // ========== PROTOTHREADING ===========
 
@@ -35,10 +35,10 @@ int interval_ACCEL = 40;
 ThreadController thread_control = ThreadController();
 
 // Throw some threads on the heap
-Thread* ThreadGPS = new Thread();
 Thread* ThreadIMU = new Thread();
 Thread* ThreadBAROM = new Thread();
 Thread* ThreadACCEL = new Thread();
+Thread* ThreadGPS = new Thread();
 
 // ========== SENSORS AND DATA ==========
 
