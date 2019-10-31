@@ -46,7 +46,7 @@ Thread* ThreadACCEL = new Thread();
 #define GPSSerial Serial3
 #define GPSECHO false // False to turn off echoing of GPS Data to Serial
 
-// Initializes Sensors
+// Initializes Sensor classes
 DigitalIMU IMU = DigitalIMU(55,0x28);
 DigitalBAROM BAROM;
 AnalogIMU HIGHG = AnalogIMU(highG_xPin,highG_yPin,highG_zPin,true);
@@ -83,12 +83,7 @@ void thread_GPS()
 }
 
 void thread_IMU() {
-
-    // Serial.println("IMU Sampling.");
-
     IMU.sample(&imu_data);
-
-    // Write data struct to flash chip
     flashop.addSample(0);
 }
 

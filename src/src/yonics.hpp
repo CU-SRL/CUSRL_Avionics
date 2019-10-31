@@ -46,7 +46,7 @@ struct BAROMdata {
     uint32_t t = 0;
 };
 
-struct ourTypes {
+struct SampleTypes {
     int size = 0; // Size of one sample, in bytes
     int nSamples = 0; // Number of samples stored on chip
     uint32_t start_addr = 0; // Start address of this type's allocated memory
@@ -54,7 +54,7 @@ struct ourTypes {
     float f = 0;
 };
 
-struct event {
+struct Event {
     uint32_t t;
     char ident;
 };
@@ -67,15 +67,15 @@ class FlashOp {
 
         int nTypes = -1;
         int maxTypes = 5;
-        ourTypes dataTypes[5];
+        SampleTypes sampleTypes[5];
         int type_size = 0;
-        ourTypes temp_type;
+        SampleTypes temp_type;
 
         int nEvents = -1;
         int maxEvents = 5;
         uint32_t event_addr_start = 0;
         int event_size = 0;
-        event temp_event;
+        Event temp_event;
 
         bool reading = false;
         bool writing = false;

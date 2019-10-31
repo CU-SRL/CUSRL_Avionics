@@ -1,15 +1,34 @@
 #include "yonics.hpp"
 
 FlashOp::FlashOp() {
+    /* 
+    FlashOp::FlashOp()
+    Unparameterized constructor
+    Initializes flash pointer to NULL
+    */
     flash = NULL;
 }
 
 FlashOp::FlashOp(SPIFlash* flash) {
-    this->flash = flash;
-    flash->begin();
+    /*
+    FlashOp::FlashOp(SPIFlash* flash)
+    Parameterized Constructor
 
-    type_size = sizeof(ourTypes);
-    event_size = sizeof(event);
+    Input:
+        SPIFlash* flash --- pointer to SPIFlash object
+    
+    Initializes class member pointer flash to the input value.
+    Calls begin() function from SPIFlash class.
+    */
+    this->flash = flash;
+
+    if (!flash->begin()) {
+        // IDEALLY DO SOMETHING HERE
+    }
+
+    // Get size of structs (in bytes)
+    type_size = sizeof(SampleTypes);
+    event_size = sizeof(Event);
 }
 
 bool FlashOp::beginRead() {
@@ -24,7 +43,7 @@ bool FlashOp::beginRead() {
 
     for (int i=0;i<0;i++) {
         flash->readAnything(curr_addr+=type_size,temp_type);
-        dataTypes[i] = temp_type;
+        sampleTypes[i] = temp_type;
     }
 
     event_addr_start = curr_addr;
@@ -42,7 +61,7 @@ bool FlashOp::beginWrite() {
     flash->writeByte(curr_addr++,(uint8_t)nEvents);
 
     for (int i=0;i<nTypes;i++) {
-        flash->writeAnything(curr_addr+=type_size,&dataTypes[i]);
+        flash->writeAnything(curr_addr+=type_size,&sampleTypes[i]);
     }
 
     event_addr_start = curr_addr;
@@ -54,7 +73,7 @@ bool FlashOp::beginWrite() {
     float totalBytesPerSec = 0;
 
     for (int i=0;i<nTypes;i++) {
-        bytesPerSec[i] = dataTypes[i].size+dataTypes[i].f;
+        bytesPerSec[i] = sampleTypes[i].size+sampleTypes[i].f;
         totalBytesPerSec+=bytesPerSec[i];
     }
 
@@ -62,7 +81,7 @@ bool FlashOp::beginWrite() {
 
     for (int i=0;i<nTypes;i++) {
         ratio = bytesPerSec[i]/totalBytesPerSec;
-        dataTypes[i].start_addr = curr_addr+=(uint32_t)(ratio*capacity);
+        sampleTypes[i].start_addr = curr_addr+=(uint32_t)(ratio*capacity);
     }
 
     writing = true;
@@ -109,9 +128,9 @@ int FlashOp::addType(int size, int interval, void* data) {
     
     nTypes++;
 
-    dataTypes[nTypes].size = size;
-    dataTypes[nTypes].f = f;
-    dataTypes[nTypes].data = data;
+    sampleTypes[nTypes].size = size;
+    sampleTypes[nTypes].f = f;
+    sampleTypes[nTypes].data = data;
 
     Serial.printf("Data type added.    Size: %d    f: %.5f     data: %d\n",size,f,data);
 
@@ -121,21 +140,21 @@ int FlashOp::addType(int size, int interval, void* data) {
 bool FlashOp::addSample(int ident) {
     if (ident>nTypes || ident<0) {return false;}
 
-    uint32_t curr_addr = dataTypes[ident].start_addr + dataTypes[ident].size*dataTypes[ident].nSamples;
+    uint32_t curr_addr = sampleTypes[ident].start_addr + sampleTypes[ident].size*sampleTypes[ident].nSamples;
 
-    byte* curr_data = static_cast<byte*>(dataTypes[ident].data);
+    byte* curr_data = static_cast<byte*>(sampleTypes[ident].data);
 
-    for (int i=0;i<dataTypes[ident].size;i++) {
+    for (int i=0;i<sampleTypes[ident].size;i++) {
         if (!flash->writeByte(curr_addr++,*curr_data)) {return false;}
         // Serial.printf("Writing byte: %3d\n",*curr_data);
         curr_data++;
     }
 
-    // uint8_t* loc = static_cast<uint8_t*>(dataTypes[ident].data);
+    // uint8_t* loc = static_cast<uint8_t*>(sampleTypes[ident].data);
 
-    // if (!flash->writeByteArray(tmp_addr,loc,dataTypes[ident].size,false)) {return false;}
+    // if (!flash->writeByteArray(tmp_addr,loc,sampleTypes[ident].size,false)) {return false;}
 
-    dataTypes[ident].nSamples++;
+    sampleTypes[ident].nSamples++;
 
     return true;
 }
@@ -161,19 +180,19 @@ bool FlashOp::addEvent(uint32_t t, char ident) {
 
 bool FlashOp::getType(int ident, int* size) {
     if (ident>nTypes || ident<0) {return false;}
-    *size = dataTypes[ident].size;
+    *size = sampleTypes[ident].size;
 
     return true;
 }
 
 bool FlashOp::getSample(int ident, int sample, void* data) {
     if (ident>nTypes || ident<0) {return false;}
-    if (dataTypes[ident].nSamples<sample) {return false;}
+    if (sampleTypes[ident].nSamples<sample) {return false;}
 
-    uint32_t flash_addr = dataTypes[ident].start_addr + dataTypes[ident].size*dataTypes[ident].nSamples;
+    uint32_t flash_addr = sampleTypes[ident].start_addr + sampleTypes[ident].size*sampleTypes[ident].nSamples;
     uint8_t* data_addr = static_cast<uint8_t*>(data);
 
-    for (int i=0;i<dataTypes[ident].size;i++) {
+    for (int i=0;i<sampleTypes[ident].size;i++) {
         *(data_addr+i) = flash->readByte(flash_addr++);
     }
 
@@ -194,5 +213,11 @@ bool FlashOp::getEvent(int index, uint32_t* t, char* ident) {
 }
 
 void FlashOp::addWP(int pin) {
+    /*
+    void FlashOp::addWP(int pin)
+
+    Add Write Protect pin for the flash chip.
+    Drives WP pin high.
+    */
     digitalWrite(pin,HIGH);
 }
