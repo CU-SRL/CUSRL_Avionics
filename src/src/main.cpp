@@ -56,7 +56,7 @@ AnalogIMU HIGHG = AnalogIMU(highG_xPin,highG_yPin,highG_zPin,true);
 GPSdata gps_data;
 IMUdata imu_data;
 BAROMdata barom_data;
-Acceldata accel_data;
+ACCELdata accel_data;
 
 // Piezo beeper!
 BeepyBOI berp = BeepyBOI(speakerPin);
@@ -83,8 +83,11 @@ void thread_GPS()
 }
 
 void thread_IMU() {
+    // Sample IMU
     IMU.sample(&imu_data);
-    flashop.addSample(0);
+
+    // Write sample to flash chip
+    flashop.writeIMU(&imu_data);
 }
 
 void thread_BAROM() {
@@ -92,7 +95,7 @@ void thread_BAROM() {
     BAROM.sample(&barom_data);
     
     // Write data struct to flash chip
-    flashop.addSample(1);
+    flashop.writeBAROM(&barom_data);
 }
 
 void thread_HIGHG() {
@@ -101,7 +104,7 @@ void thread_HIGHG() {
     HIGHG.sample(&accel_data);
 
     // Write to flash
-    flashop.addSample(2);
+    flashop.writeACCEL(&accel_data);
 }
 
 void KILLSYSTEM() {
@@ -115,18 +118,29 @@ void setup() {
     // Start serial
     Serial.begin(115200);
 
+    // Hello beep
     berp.hello();
 
     // ========== Save Data ======================================
 
     saver.addFlashOp(&flashop);
+    flashop.addWP(flashWP);
+
+    // Sizing of data structs
+    imuDataSize = sizeof(imu_data);
+    baromDataSize = sizeof(barom_data);
+    accelDataSize = sizeof(accel_data);
+    GPSDataSize = sizeof(gps_data);
+
+    // Initialize flash chip components
+    flashop.setIMU(imuDataSize,1/((float)interval_IMU));
+    flashop.setBAROM(baromDataSize,1/((float)interval_BAROM));
+    flashop.setACCEL(accelDataSize,1/((float)interval_ACCEL));
 
     // Copy data to flash chip
     berp.lowBeep();
     berp.hiBeep();
-    
-    flashop.addWP(flashWP);
-    flashop.beginRead();
+    delay(500);
     
     if (!saver.savenow()) {KILLSYSTEM();}
     berp.lowBeep();
@@ -135,38 +149,21 @@ void setup() {
 
     berp.countdown(5);
 
-    flashop.stopReading(); // THIS FUNCTION ERASES THE FLASH CHIP
+    flashop.startWriting(); // ERASES FLASH CHIP
 
     // ===========================================================
 
     DigitalGPS gps(&GPSSerial);
 
     // Initialize BNO055 IMU sensor
-    /*if (!IMU.begin()) {
-        // Serial.println("Couldn't find sensor BNO055");
+    if (!IMU.begin()) {
         KILLSYSTEM();
-    }*/
+    }
 
     // Initialize MPL3115A2 sensor
-    /*if (!BAROM.begin()) {
-        // Serial.println("Couldn't find sensor MPL3115A2");
+    if (!BAROM.begin()) {
         KILLSYSTEM();
-    }*/
-
-    // Sizing of data structs
-    GPSDataSize = sizeof(gps_data);
-    imuDataSize = sizeof(imu_data);
-    baromDataSize = sizeof(barom_data);
-    accelDataSize = sizeof(accel_data);
-
-    // Add data types to flashop
-    if (-1==flashop.addType(imuDataSize,interval_IMU,&imu_data)) {KILLSYSTEM();}
-    if (-1==flashop.addType(baromDataSize,interval_BAROM,&barom_data)) {KILLSYSTEM();}
-    if (-1==flashop.addType(accelDataSize,interval_ACCEL,&accel_data)) {KILLSYSTEM();}
-    if (-1==flashop.addType(accelDataSize,interval_GPS,&gps_data)) {KILLSYSTEM();}
-
-    // Initialize flash chip
-    if (!flashop.beginWrite()) {KILLSYSTEM();}
+    }
 
     // Initialize the GPS Data Dump
     // gps.GPSData_dump_setup();
@@ -180,12 +177,12 @@ void setup() {
     gps_ptr=&gps;
 
     // Configure GPS thread
-    // ThreadGPS->onRun(thread_GPS);
-    // ThreadGPS->setInterval(interval_GPS);
+    ThreadGPS->onRun(thread_GPS);
+    ThreadGPS->setInterval(interval_GPS);
 
     // Configure IMU thread
-    //ThreadIMU->onRun(thread_IMU);
-    //ThreadIMU->setInterval(interval_IMU);
+    ThreadIMU->onRun(thread_IMU);
+    ThreadIMU->setInterval(interval_IMU);
 
     // Configure Barometer thread
     ThreadBAROM->onRun(thread_BAROM);

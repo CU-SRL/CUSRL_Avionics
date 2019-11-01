@@ -36,7 +36,7 @@ For each data structure stored on the chip, we save the following values:
 
 When the system is powered on, all data stored on the flash chip are read and stored to the SD card (via corresponding hardcoded functions in the SD class). The `nSamples` and `addr_start` parameters for each data type are populated based on information stored in the first bytes of the flash chip. (A description of the memory addressing is below).
 
-The `size` and `freq` values are defined by the function `setXXX(uint8_t size, float frequency)`. This function is called when initializing the data types. This can be done before or after reading and storing data on power up.
+The `size` and `freq` values are defined by the function `setXXX(uint8_t size, float frequency)`. This function is called when initializing the data types.
 
 #### Step 2: Reading out data
 

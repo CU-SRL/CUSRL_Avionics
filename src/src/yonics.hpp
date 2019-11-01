@@ -21,7 +21,7 @@ struct GPSdata  {
     float sat_num = 0;
 };
 
-struct Acceldata {
+struct ACCELdata {
     float x;
     float y;
     float z;
@@ -54,11 +54,6 @@ struct SampleTypes {
     float f = 0;
 };
 
-struct Event {
-    uint32_t t;
-    char ident;
-};
-
 class FlashOp {
     // Class to manage saving data to and reading data from the flash chip
 
@@ -70,12 +65,6 @@ class FlashOp {
         uint8_t size_IMU = 0;
         uint32_t nSamples_IMU = 0;
         float freq_IMU = 0;
-
-        // GPS Vars
-        uint32_t addr_start_GPS = 0;
-        uint8_t size_GPS = 0;
-        uint32_t nSamples_GPS = 0;
-        float freq_GPS = 0;
 
         // BAROM Vars
         uint32_t addr_start_BAROM = 0;
@@ -89,6 +78,12 @@ class FlashOp {
         uint32_t nSamples_ACCEL = 0;
         float freq_ACCEL = 0;
 
+        // GPS Vars
+        uint32_t addr_start_GPS = 0;
+        uint8_t size_GPS = 0;
+        uint32_t nSamples_GPS = 0;
+        float freq_GPS = 0;
+
     public:
         // init
         FlashOp();
@@ -97,12 +92,19 @@ class FlashOp {
 
         // Data size initiation
         bool setIMU(uint8_t size, float frequency);
-
-        // Writing
-        bool writeIMU(IMUdata* data);
+        bool setBAROM(uint8_t size, float frequency);
+        bool setACCEL(uint8_t size, float frequency);
 
         // Reading
         bool readIMU(IMUdata* data, int idx);
+        bool readBAROM(BAROMdata* data, int idx);
+        bool readACCEL(ACCELdata* data, int idx);
+
+        // Writing
+        bool startWriting();
+        bool writeIMU(IMUdata* data);
+        bool writeBAROM(BAROMdata* data);
+        bool writeACCEL(ACCELdata* data);
 
 };
 
@@ -115,20 +117,14 @@ class SaveSD {
 
         IMUdata tempIMU;
         BAROMdata tempBAROM;
-        Acceldata tempACCEL;
-        GPSdata tempGPS;
+        ACCELdata tempACCEL;
+        // GPSdata tempGPS;
 
-        int imuID = 0;
-        int baromID = 1;
-        int accelID = 2;
-        int gpsID = 3;
-
-        void printEVENTS();
         void printIMU();
         void printBAROM();
         void printACCEL();
-        void printGPS();
-        bool openFile();
+        // void printGPS();
+        // bool openFile();
     public:
         SaveSD();
         bool savenow();
@@ -150,7 +146,7 @@ class AnalogIMU {
         AnalogIMU();
         AnalogIMU(int xPin, int yPin, int zPin);
         AnalogIMU(int xPin, int yPin, int zPin, bool highBitDepth);
-        void sample(Acceldata* data);
+        void sample(ACCELdata* data);
 };
 
 class DigitalIMU {
