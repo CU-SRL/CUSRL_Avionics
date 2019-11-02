@@ -107,7 +107,7 @@ void SaveSD::printACCEL() {
 
     while(flash->readACCEL(&tempACCEL,counter)) {
         of.printf("%.4f,%.4f,%.4f\n",tempACCEL.x,tempACCEL.y,tempACCEL.z);
-        counter++
+        counter++;
     }
 }
 

@@ -166,11 +166,11 @@ void setup() {
     }
 
     // Initialize the GPS Data Dump
-    // gps.GPSData_dump_setup();
+    gps.GPSData_dump_setup();
 
     // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    // gps.eraseLOCUS();
-    // gps.initGPS();
+    gps.eraseLOCUS();
+    gps.initGPS();
     // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
     //  Give the ptr the address of the GPS Object that was created

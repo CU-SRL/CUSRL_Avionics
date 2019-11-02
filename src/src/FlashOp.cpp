@@ -132,10 +132,10 @@ bool FlashOp::startWriting() {
     startOffset = 32;
 
     // Get size of flash chip
-    chipSize = flash->getCapacity - startOffset;
+    chipSize = flash->getCapacity() - startOffset;
 
     // Bytes per second for each data type
-    uint rate_IMU,rate_BAROM,rate_ACCEL,rate_total;
+    uint32_t rate_IMU,rate_BAROM,rate_ACCEL,rate_total;
     rate_IMU = size_IMU*freq_IMU;
     rate_BAROM = size_BAROM*freq_BAROM;
     rate_ACCEL = size_ACCEL*freq_BAROM;
