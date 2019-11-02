@@ -34,10 +34,10 @@ void DigitalIMU::sample(IMUdata* data, RFM96W_Client *client) {
     data->gyro_fused[2] = event.gyro.z;
 
     Serial.print(event.gyro.x);
-    char buffer[64];
-    int ret = snprintf(buffer, sizeof buffer, "%f", event.gyro.x);
+    uint8_t *array;
+    array = reinterpret_cast<uint8_t*>(&event.gyro.x);
 
-    client->loop((uint8_t)buffer);
+    client->loop(*array);
 
     // Processed euler orientation vectors
     board.getEvent(&event,Adafruit_BNO055::VECTOR_EULER);
