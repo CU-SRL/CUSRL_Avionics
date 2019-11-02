@@ -1,198 +1,170 @@
 #include "yonics.hpp"
 
 FlashOp::FlashOp() {
+    /* 
+    FlashOp::FlashOp()
+    Unparameterized constructor
+    Initializes flash pointer to NULL
+    */
     flash = NULL;
 }
 
 FlashOp::FlashOp(SPIFlash* flash) {
-    this->flash = flash;
-    flash->begin();
-
-    type_size = sizeof(ourTypes);
-    event_size = sizeof(event);
-}
-
-bool FlashOp::beginRead() {
-    if (reading || writing) {return false;}
-
-    uint32_t curr_addr = 0;
-
-    nTypes = (int)flash->readByte(curr_addr++);
-    nEvents = (int)flash->readByte(curr_addr++);
-
-    if(nTypes > maxTypes) {nTypes = maxTypes;}
-
-    for (int i=0;i<0;i++) {
-        flash->readAnything(curr_addr+=type_size,temp_type);
-        dataTypes[i] = temp_type;
-    }
-
-    event_addr_start = curr_addr;
-    
-    return true;
-}
-
-bool FlashOp::beginWrite() {
-
-    if(writing || reading) {return false;}
-
-    uint32_t curr_addr = 0;
-
-    flash->writeByte(curr_addr++,(uint8_t)nTypes);
-    flash->writeByte(curr_addr++,(uint8_t)nEvents);
-
-    for (int i=0;i<nTypes;i++) {
-        flash->writeAnything(curr_addr+=type_size,&dataTypes[i]);
-    }
-
-    event_addr_start = curr_addr;
-    curr_addr+=(maxEvents*event_size);
-
-    float capacity = flash->getCapacity() - curr_addr;
-
-    float bytesPerSec[nTypes];
-    float totalBytesPerSec = 0;
-
-    for (int i=0;i<nTypes;i++) {
-        bytesPerSec[i] = dataTypes[i].size+dataTypes[i].f;
-        totalBytesPerSec+=bytesPerSec[i];
-    }
-
-    float ratio;
-
-    for (int i=0;i<nTypes;i++) {
-        ratio = bytesPerSec[i]/totalBytesPerSec;
-        dataTypes[i].start_addr = curr_addr+=(uint32_t)(ratio*capacity);
-    }
-
-    writing = true;
-
-    return true;
-}
-
-bool FlashOp::stopReading() {
-    // if (!reading) {return false;}
-
-    flash->eraseChip();
-    reading = false;
-
-    nTypes = -1;
-    maxTypes = 5;
-
-    nEvents = -1;
-    maxEvents = 5;
-    event_addr_start = 0;
-
-    reading = false;
-    writing = false;
-
-    return true;
-}
-
-int FlashOp::addType(int size, int interval, void* data) {
     /*
-    Inputs:
-        size     - size of data type, in bytes
-        interval - sampling period, in ms
-        data     - Pointer to struct holding data
-    Output:
-        ident    - integer identifier of data type. Must be passed to store a sample.
-    */
+    FlashOp::FlashOp(SPIFlash* flash)
+    Parameterized Constructor
 
-    if (reading || writing) {return -1;}
-
-    if (nTypes==maxTypes) {return -1;}
-
-    Serial.println("sko");
-
-    float f = 1000/((float)interval);
+    Input:
+        SPIFlash* flash --- pointer to SPIFlash object
     
-    nTypes++;
+    Initializes class member pointer flash to the input value.
+    Calls begin() function from SPIFlash class.
+    */
+    this->flash = flash;
 
-    dataTypes[nTypes].size = size;
-    dataTypes[nTypes].f = f;
-    dataTypes[nTypes].data = data;
-
-    Serial.printf("Data type added.    Size: %d    f: %.5f     data: %d\n",size,f,data);
-
-    return nTypes;
-}
-
-bool FlashOp::addSample(int ident) {
-    if (ident>nTypes || ident<0) {return false;}
-
-    uint32_t curr_addr = dataTypes[ident].start_addr + dataTypes[ident].size*dataTypes[ident].nSamples;
-
-    byte* curr_data = static_cast<byte*>(dataTypes[ident].data);
-
-    for (int i=0;i<dataTypes[ident].size;i++) {
-        if (!flash->writeByte(curr_addr++,*curr_data)) {return false;}
-        // Serial.printf("Writing byte: %3d\n",*curr_data);
-        curr_data++;
+    if (!flash->begin()) {
+        // IDEALLY DO SOMETHING HERE
     }
 
-    // uint8_t* loc = static_cast<uint8_t*>(dataTypes[ident].data);
-
-    // if (!flash->writeByteArray(tmp_addr,loc,dataTypes[ident].size,false)) {return false;}
-
-    dataTypes[ident].nSamples++;
-
-    return true;
 }
 
-bool FlashOp::addEvent(uint32_t t, char ident) {
-    // BROKEN MAYBE
-
-    if (!writing) {return false;}
-    if (nEvents==maxEvents) {return false;}
-
-    temp_event.t = t;
-    temp_event.ident = ident;
-
-    if(!flash->writeAnything(event_addr_start+(nEvents*event_size),&temp_event)) {return false;}
-
-    nEvents++;
-
-    flash->writeByte(1,(uint8_t)nEvents);
-
-    return true;
-
+// ========== IMU ==========
+bool FlashOp::setIMU(uint8_t size, float frequency) {
+    size_IMU = size;
+    freq_IMU = frequency;
+    addr_start_IMU = flash->readULong(0);
+    nSamples_IMU = flash->readULong(4);
 }
 
-bool FlashOp::getType(int ident, int* size) {
-    if (ident>nTypes || ident<0) {return false;}
-    *size = dataTypes[ident].size;
+bool FlashOp::writeIMU(IMUdata* data) {
+    uint32_t currAddr = nSamples_IMU*size_IMU + addr_start_IMU;
+    nSamples_IMU++;
 
-    return true;
+    if(flash->writeAnything(currAddr,data)) {return true;}
+    else {return false;}
 }
 
-bool FlashOp::getSample(int ident, int sample, void* data) {
-    if (ident>nTypes || ident<0) {return false;}
-    if (dataTypes[ident].nSamples<sample) {return false;}
-
-    uint32_t flash_addr = dataTypes[ident].start_addr + dataTypes[ident].size*dataTypes[ident].nSamples;
-    uint8_t* data_addr = static_cast<uint8_t*>(data);
-
-    for (int i=0;i<dataTypes[ident].size;i++) {
-        *(data_addr+i) = flash->readByte(flash_addr++);
+bool FlashOp::readIMU(IMUdata* data, int idx) {
+    if (idx>=0 && idx <= nSamples_IMU) {
+        uint32_t currAddr = idx*size_IMU + addr_start_IMU;
+        flash->readAnything(currAddr,data);
+        return true;
     }
+    else if (idx<0 && (-idx) <= nSamples_IMU) {
+        uint32_t currAddr = -idx*size_IMU + addr_start_IMU + size_IMU*nSamples_IMU;
+        flash->readAnything(currAddr,data);
+        return true;
+    }
+    else {return false;}
+}
+// =========================
 
-    return true;
+// ========== BAROM ==========
+bool FlashOp::setBAROM(uint8_t size, float frequency) {
+    size_BAROM = size;
+    freq_BAROM = frequency;
+    addr_start_BAROM = flash->readULong(8);
+    nSamples_BAROM = flash->readULong(12);
 }
 
-bool FlashOp::getEvent(int index, uint32_t* t, char* ident) {
-    if (index>nEvents || index<0) {return false;}
+bool FlashOp::writeBAROM(BAROMdata* data) {
+    uint32_t currAddr = nSamples_BAROM*size_BAROM + addr_start_BAROM;
+    nSamples_BAROM++;
 
-    uint32_t event_addr = event_addr_start+(event_size*index);
+    if(flash->writeAnything(currAddr,data)) {return true;}
+    else {return false;}
+}
 
-    flash->readAnything(event_addr,temp_event);
+bool FlashOp::readBAROM(BAROMdata* data, int idx) {
+    if (idx <= nSamples_BAROM) {
+        uint32_t currAddr = idx*size_BAROM + addr_start_BAROM;
+        flash->readAnything(currAddr,data);
+        return true;
+    }
+    else if (idx<0 && (-idx) <= nSamples_BAROM) {
+        uint32_t currAddr = -idx*size_BAROM + addr_start_BAROM + size_BAROM*nSamples_BAROM;
+        flash->readAnything(currAddr,data);
+        return true;
+    }
+    else {return false;}
+}
+// =========================
 
-    *t = temp_event.t;
-    *ident = temp_event.ident;
+// ========== ACCEL ==========
+bool FlashOp::setACCEL(uint8_t size, float frequency) {
+    size_ACCEL = size;
+    freq_ACCEL = frequency;
+    addr_start_ACCEL = flash->readULong(16);
+    nSamples_ACCEL = flash->readULong(20);
+}
 
-    return true;
+bool FlashOp::writeACCEL(ACCELdata* data) {
+    uint32_t currAddr = nSamples_ACCEL*size_ACCEL + addr_start_ACCEL;
+    nSamples_ACCEL++;
+
+    if(flash->writeAnything(currAddr,data)) {return true;}
+    else {return false;}
+}
+
+bool FlashOp::readACCEL(ACCELdata* data, int idx) {
+    if (idx <= nSamples_ACCEL) {
+        uint32_t currAddr = idx*size_ACCEL + addr_start_ACCEL;
+        flash->readAnything(currAddr,data);
+        return true;
+    }
+    else if (idx<0 && (-idx) <= nSamples_ACCEL) {
+        uint32_t currAddr = -idx*size_ACCEL + addr_start_ACCEL + size_ACCEL*nSamples_ACCEL;
+        flash->readAnything(currAddr,data);
+        return true;
+    }
+    else {return false;}
+}
+// =========================
+
+bool FlashOp::startWriting() {
+
+    // Erase flash chip
+    flash->eraseChip();
+
+    uint32_t chipSize,startOffset;
+
+    // Start offset: address offset because first few store other info
+    startOffset = 32;
+
+    // Get size of flash chip
+    chipSize = flash->getCapacity() - startOffset;
+
+    // Bytes per second for each data type
+    uint32_t rate_IMU,rate_BAROM,rate_ACCEL,rate_total;
+    rate_IMU = size_IMU*freq_IMU;
+    rate_BAROM = size_BAROM*freq_BAROM;
+    rate_ACCEL = size_ACCEL*freq_BAROM;
+    rate_total = rate_IMU + rate_BAROM + rate_ACCEL;
+
+    // Fractional share of each data type
+    float share_IMU,share_BAROM,share_ACCEL;
+    share_IMU = (float)rate_IMU/(float)rate_total;
+    share_BAROM = (float)rate_BAROM/(float)rate_total;
+    share_ACCEL = (float)rate_ACCEL/(float)rate_total;
+
+    // Starting address of each type
+    addr_start_IMU = startOffset;
+    addr_start_BAROM = startOffset + (uint32_t)(share_IMU*chipSize);
+    addr_start_ACCEL = addr_start_BAROM + (uint32_t)(share_BAROM*chipSize);
+
+    // Re-initialize all sample counters to zero
+    nSamples_IMU = 0;
+    nSamples_BAROM = 0;
+    nSamples_ACCEL = 0;
+
 }
 
 void FlashOp::addWP(int pin) {
+    /*
+    void FlashOp::addWP(int pin)
+
+    Add Write Protect pin for the flash chip.
+    Drives WP pin high.
+    */
     digitalWrite(pin,HIGH);
 }

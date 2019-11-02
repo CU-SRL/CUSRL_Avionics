@@ -21,7 +21,7 @@ struct GPSdata  {
     float sat_num = 0;
 };
 
-struct Acceldata {
+struct ACCELdata {
     float x;
     float y;
     float z;
@@ -46,17 +46,12 @@ struct BAROMdata {
     uint32_t t = 0;
 };
 
-struct ourTypes {
+struct SampleTypes {
     int size = 0; // Size of one sample, in bytes
     int nSamples = 0; // Number of samples stored on chip
     uint32_t start_addr = 0; // Start address of this type's allocated memory
     void* data = NULL;
     float f = 0;
-};
-
-struct event {
-    uint32_t t;
-    char ident;
 };
 
 class FlashOp {
@@ -65,39 +60,52 @@ class FlashOp {
     private:
         SPIFlash* flash = NULL;
 
-        int nTypes = -1;
-        int maxTypes = 5;
-        ourTypes dataTypes[5];
-        int type_size = 0;
-        ourTypes temp_type;
+        // IMU Vars
+        uint32_t addr_start_IMU = 0;
+        uint8_t size_IMU = 0;
+        uint32_t nSamples_IMU = 0;
+        float freq_IMU = 0;
 
-        int nEvents = -1;
-        int maxEvents = 5;
-        uint32_t event_addr_start = 0;
-        int event_size = 0;
-        event temp_event;
+        // BAROM Vars
+        uint32_t addr_start_BAROM = 0;
+        uint8_t size_BAROM = 0;
+        uint32_t nSamples_BAROM = 0;
+        float freq_BAROM = 0;
 
-        bool reading = false;
-        bool writing = false;
+        // ACCEL Vars
+        uint32_t addr_start_ACCEL = 0;
+        uint8_t size_ACCEL = 0;
+        uint32_t nSamples_ACCEL = 0;
+        float freq_ACCEL = 0;
+
+        // GPS Vars
+        uint32_t addr_start_GPS = 0;
+        uint8_t size_GPS = 0;
+        uint32_t nSamples_GPS = 0;
+        float freq_GPS = 0;
 
     public:
         // init
         FlashOp();
         FlashOp(SPIFlash* flash);
-        bool beginRead();
-        bool beginWrite();
-        int addType(int size, int interval, void* data);
         void addWP(int pin);
 
-        // Writing
-        bool addSample(int ident);
-        bool addEvent(uint32_t t, char ident);
+        // Data size initiation
+        bool setIMU(uint8_t size, float frequency);
+        bool setBAROM(uint8_t size, float frequency);
+        bool setACCEL(uint8_t size, float frequency);
 
         // Reading
-        bool getType(int ident, int* size);
-        bool getSample(int ident, int sample, void* data);
-        bool getEvent(int index, uint32_t* t, char* ident);
-        bool stopReading();
+        bool readIMU(IMUdata* data, int idx);
+        bool readBAROM(BAROMdata* data, int idx);
+        bool readACCEL(ACCELdata* data, int idx);
+
+        // Writing
+        bool startWriting();
+        bool writeIMU(IMUdata* data);
+        bool writeBAROM(BAROMdata* data);
+        bool writeACCEL(ACCELdata* data);
+
 };
 
 class SaveSD {
@@ -109,20 +117,14 @@ class SaveSD {
 
         IMUdata tempIMU;
         BAROMdata tempBAROM;
-        Acceldata tempACCEL;
-        GPSdata tempGPS;
+        ACCELdata tempACCEL;
+        // GPSdata tempGPS;
 
-        int imuID = 0;
-        int baromID = 1;
-        int accelID = 2;
-        int gpsID = 3;
-
-        void printEVENTS();
         void printIMU();
         void printBAROM();
         void printACCEL();
-        void printGPS();
-        bool openFile();
+        // void printGPS();
+        // bool openFile();
     public:
         SaveSD();
         bool savenow();
@@ -144,7 +146,7 @@ class AnalogIMU {
         AnalogIMU();
         AnalogIMU(int xPin, int yPin, int zPin);
         AnalogIMU(int xPin, int yPin, int zPin, bool highBitDepth);
-        void sample(Acceldata* data);
+        void sample(ACCELdata* data);
 };
 
 class DigitalIMU {

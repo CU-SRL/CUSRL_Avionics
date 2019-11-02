@@ -34,7 +34,7 @@ void AnalogIMU::init() {
     ratio = (float)offset/(float)(2*maxG);
 }
 
-void AnalogIMU::sample(Acceldata* data) {
+void AnalogIMU::sample(ACCELdata* data) {
     data->t = millis();
     data->x = formatVal(analogRead(xPin));
     data->y = formatVal(analogRead(yPin));
