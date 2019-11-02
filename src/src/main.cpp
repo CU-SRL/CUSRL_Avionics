@@ -25,9 +25,9 @@ int highG_zPin = 35;
 
 // Intervals (ms)
 int interval_IMU = 40;
-int interval_BAROM = 1500;
-int interval_ACCEL = 50;
-int interval_GPS = 1/10;
+int interval_BAROM = 2000;
+int interval_ACCEL = 40;
+int interval_GPS = 10000;
 
 // ========== PROTOTHREADING ===========
 
@@ -67,7 +67,7 @@ BeepyBOI berp = BeepyBOI(speakerPin);
 SPIFlash flashChip(flashPin);
 FlashOp flashop = FlashOp(&flashChip);
 
-uint32_t GPSDataSize;
+uint32_t gpsDataSize;
 uint32_t imuDataSize;
 uint32_t baromDataSize;
 uint32_t accelDataSize;
@@ -75,8 +75,7 @@ uint32_t accelDataSize;
 SaveSD saver;
 DigitalGPS* gps_ptr;
 
-void thread_GPS()
-{
+void thread_GPS() {
     // Refresh the GPS Data
     gps_ptr->refresh_GPSData(GPSECHO);
     gps_ptr->pullRawGPS();
@@ -88,6 +87,10 @@ void thread_IMU() {
 
     // Write sample to flash chip
     flashop.writeIMU(&imu_data);
+
+    // Print what was written
+    // flashop.readIMU(&imu_data,-1);
+    // Serial.printf("Data from the flash chip: %d\n",imu_data.t);
 }
 
 void thread_BAROM() {
@@ -116,7 +119,7 @@ void KILLSYSTEM() {
 
 void setup() {
 
-    delay(5000);
+    delay(2500);
 
     berp.hello();
 
@@ -125,6 +128,7 @@ void setup() {
 
     // Hello beep
     berp.hello();
+
     Serial.println("1");
 
     // ========== Save Data ======================================
@@ -138,21 +142,25 @@ void setup() {
     imuDataSize = sizeof(imu_data);
     baromDataSize = sizeof(barom_data);
     accelDataSize = sizeof(accel_data);
-    GPSDataSize = sizeof(gps_data);
+    gpsDataSize = sizeof(gps_data);
+
+    // // Set first 16 bytes to 69 bc lol
+    // flashChip.eraseChip();
+    // for (int i=0;i<16;i++){flashChip.writeByte(i,69);}
 
     // Initialize flash chip components
     flashop.setIMU(imuDataSize,1/((float)interval_IMU));
     flashop.setBAROM(baromDataSize,1/((float)interval_BAROM));
     flashop.setACCEL(accelDataSize,1/((float)interval_ACCEL));
+    flashop.setGPS(gpsDataSize,1/((float)interval_GPS));
 
     Serial.println("3");
 
     // Copy data to flash chip
     berp.lowBeep();
     berp.hiBeep();
-    delay(500);
-    
-    //if (!saver.savenow()) {KILLSYSTEM();}
+
+    if (!saver.savenow()) {KILLSYSTEM();}
     berp.lowBeep();
     berp.hiBeep();
     berp.midBeep();
@@ -185,10 +193,6 @@ void setup() {
     gps_ptr->initGPS();
     // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-    // Configure GPS thread
-    ThreadGPS->onRun(thread_GPS);
-    ThreadGPS->setInterval(interval_GPS);
-
     // Configure IMU thread
     ThreadIMU->onRun(thread_IMU);
     ThreadIMU->setInterval(interval_IMU);
@@ -201,11 +205,15 @@ void setup() {
     ThreadACCEL->onRun(thread_HIGHG);
     ThreadACCEL->setInterval(interval_ACCEL);
 
+    // Configure GPS thread
+    ThreadGPS->onRun(thread_GPS);
+    ThreadGPS->setInterval(interval_GPS);
+
     // Add threads to controller
     thread_control.add(ThreadIMU);
-    //thread_control.add(ThreadGPS);
     thread_control.add(ThreadBAROM);
     thread_control.add(ThreadACCEL);
+    thread_control.add(ThreadGPS);
 
     // Beep the piezo again
     berp.bombBeep();

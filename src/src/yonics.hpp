@@ -59,32 +59,40 @@ class FlashOp {
 
     private:
         SPIFlash* flash = NULL;
-
+        bool writing = false;
+        
         // IMU Vars
         uint32_t addr_start_IMU = 0;
+        uint32_t addr_curr_IMU = 0;
         uint8_t size_IMU = 0;
-        uint32_t nSamples_IMU = 0;
         float freq_IMU = 0;
 
         // BAROM Vars
         uint32_t addr_start_BAROM = 0;
+        uint32_t addr_curr_BAROM = 0;
         uint8_t size_BAROM = 0;
-        uint32_t nSamples_BAROM = 0;
         float freq_BAROM = 0;
 
         // ACCEL Vars
         uint32_t addr_start_ACCEL = 0;
+        uint32_t addr_curr_ACCEL = 0;
         uint8_t size_ACCEL = 0;
-        uint32_t nSamples_ACCEL = 0;
         float freq_ACCEL = 0;
 
         // GPS Vars
         uint32_t addr_start_GPS = 0;
+        uint32_t addr_curr_GPS = 0;
         uint8_t size_GPS = 0;
-        uint32_t nSamples_GPS = 0;
         float freq_GPS = 0;
 
     public:
+
+        // Temporary structs (used for reading)
+        IMUdata tempIMU;
+        BAROMdata tempBAROM;
+        ACCELdata tempACCEL;
+        GPSdata tempGPS;
+
         // init
         FlashOp();
         FlashOp(SPIFlash* flash);
@@ -94,17 +102,20 @@ class FlashOp {
         bool setIMU(uint8_t size, float frequency);
         bool setBAROM(uint8_t size, float frequency);
         bool setACCEL(uint8_t size, float frequency);
+        bool setGPS(uint8_t size, float frequency);
 
         // Reading
-        bool readIMU(IMUdata* data, int idx);
-        bool readBAROM(BAROMdata* data, int idx);
-        bool readACCEL(ACCELdata* data, int idx);
+        IMUdata* readIMU(uint32_t idx);
+        BAROMdata* readBAROM(uint32_t idx);
+        ACCELdata* readACCEL(uint32_t idx);
+        GPSdata* readGPS(uint32_t idx);
 
         // Writing
         bool startWriting();
         bool writeIMU(IMUdata* data);
         bool writeBAROM(BAROMdata* data);
         bool writeACCEL(ACCELdata* data);
+        bool writeGPS(GPSdata* data);
 
 };
 
@@ -115,18 +126,22 @@ class SaveSD {
         File of;
         FlashOp* flash = NULL;
 
-        IMUdata tempIMU;
-        BAROMdata tempBAROM;
-        ACCELdata tempACCEL;
-        // GPSdata tempGPS;
-
         void printIMU();
         void printBAROM();
         void printACCEL();
-        // void printGPS();
+        void printGPS();
         // bool openFile();
     public:
+        // IMUdata* tempIMU = NULL;
+        // BAROMdata* tempBAROM = NULL;
+        // ACCELdata* tempACCEL = NULL;
+        // GPSdata* tempGPS = NULL;
+
         SaveSD();
+        // bool addIMUdata(IMUdata* data);
+        // bool addBAROMdata(BAROMdata* data);
+        // bool addACCELdata(ACCELdata* data);
+        // bool addGPSdata(GPSdata* data);
         bool savenow();
         bool addFlashOp(FlashOp* flash);
 };

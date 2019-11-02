@@ -39,13 +39,14 @@ bool SaveSD::savenow () {
 
     Serial.println("File opened!");
 
-    // printEVENTS();
     printIMU();
     printBAROM();
     printACCEL();
-    // printGPS();
+    printGPS();
 
     of.close();
+
+    Serial.println("File closed!");
 
     return true;
 }
@@ -56,33 +57,36 @@ void SaveSD::printIMU() {
 
     uint32_t counter = 0;
 
-    while(flash->readIMU(&tempIMU,counter)) {
+    IMUdata* tempIMU = flash->readIMU(counter);
+
+    while(tempIMU!=NULL) {
         
-        of.printf("%.4f,%.4f,%.4f",tempIMU.orient_euler[0],tempIMU.orient_euler[1],tempIMU.orient_euler[2]);
+        of.printf("%.4f,%.4f,%.4f",tempIMU->orient_euler[0],tempIMU->orient_euler[1],tempIMU->orient_euler[2]);
         of.print(",");
 
-        of.printf("%.4f,%.4f,%.4f",tempIMU.gyro_fused[0],tempIMU.gyro_fused[1],tempIMU.gyro_fused[2]);
+        of.printf("%.4f,%.4f,%.4f",tempIMU->gyro_fused[0],tempIMU->gyro_fused[1],tempIMU->gyro_fused[2]);
         of.print(",");
         
-        of.printf("%.4f,%.4f,%.4f",tempIMU.accel_fused[0],tempIMU.accel_fused[1],tempIMU.accel_fused[2]);
+        of.printf("%.4f,%.4f,%.4f",tempIMU->accel_fused[0],tempIMU->accel_fused[1],tempIMU->accel_fused[2]);
         of.print(",");
 
-        of.printf("%.4f,%.4f,%.4f",tempIMU.accel_raw[0],tempIMU.accel_raw[1],tempIMU.accel_raw[2]);
+        of.printf("%.4f,%.4f,%.4f",tempIMU->accel_raw[0],tempIMU->accel_raw[1],tempIMU->accel_raw[2]);
         of.print(",");
 
-        of.printf("%.4f,%.4f,%.4f",tempIMU.gyro_raw[0],tempIMU.gyro_raw[1],tempIMU.gyro_raw[2]);
+        of.printf("%.4f,%.4f,%.4f",tempIMU->gyro_raw[0],tempIMU->gyro_raw[1],tempIMU->gyro_raw[2]);
         of.print(",");
 
-        of.printf("%.4f,%.4f,%.4f",tempIMU.magnetometer[0],tempIMU.magnetometer[1],tempIMU.magnetometer[2]);
+        of.printf("%.4f,%.4f,%.4f",tempIMU->magnetometer[0],tempIMU->magnetometer[1],tempIMU->magnetometer[2]);
         of.print(",");
 
-        of.printf("%.4f,%.4f,%.4f,%.4f",tempIMU.orient_quat[0],tempIMU.orient_quat[1],tempIMU.orient_quat[2],tempIMU.orient_quat[3]);
+        of.printf("%.4f,%.4f,%.4f,%.4f",tempIMU->orient_quat[0],tempIMU->orient_quat[1],tempIMU->orient_quat[2],tempIMU->orient_quat[3]);
         of.print(",");
 
-        of.printf("%u",tempIMU.t);
+        of.printf("%u",tempIMU->t);
         of.println("");
 
         counter++;
+        tempIMU = flash->readIMU(counter);
     }
 }
 
@@ -92,10 +96,13 @@ void SaveSD::printBAROM() {
 
     int counter=0;
 
+    BAROMdata* tempBAROM = flash->readBAROM(counter);
+
     // Save barometer data
-    while(flash->readBAROM(&tempBAROM,counter)) {
-        of.printf("%.4f,%.4f,%.4f\n",tempBAROM.altitude,tempBAROM.pressure,tempBAROM.temperature);
+    while(tempBAROM!=NULL) {
+        of.printf("%.4f,%.4f,%.4f\n",tempBAROM->altitude,tempBAROM->pressure,tempBAROM->temperature);
         counter++;
+        tempBAROM = flash->readBAROM(counter);
     }
 }
 
@@ -105,39 +112,28 @@ void SaveSD::printACCEL() {
 
     uint32_t counter = 0;
 
-    while(flash->readACCEL(&tempACCEL,counter)) {
-        of.printf("%.4f,%.4f,%.4f\n",tempACCEL.x,tempACCEL.y,tempACCEL.z);
+    ACCELdata* tempACCEL = flash->readACCEL(counter);
+
+    while(tempACCEL!=NULL) {
+        of.printf("%.4f,%.4f,%.4f\n",tempACCEL->x,tempACCEL->y,tempACCEL->z);
         counter++;
+        tempACCEL = flash->readACCEL(counter);
     }
 }
 
-// void SaveSD::printGPS() {
-//     of.println("# GPS:");
-//     of.println("lat,lom,altitude,speed,angle,sat_num");
+void SaveSD::printGPS() {
+    of.println("# GPS:");
+    of.println("lat,lom,altitude,speed,angle,sat_num");
 
-//     uint32_t counter = 0;
+    uint32_t counter = 0;
 
-//     while(flash->getSample(3,counter++,&tempGPS)) {
-//         of.printf("%.10f,%.10f,%.4f,%.4f,%.10f,%f\n",tempGPS.lat,tempGPS.lon,tempGPS.altitude,tempGPS.speed,tempGPS.angle,tempGPS.sat_num);
-//     }
+    GPSdata* tempGPS = flash->readGPS(counter);
 
-// }
+    while(tempGPS!=NULL) {
+        of.printf("%.10f,%.10f,%.4f,%.4f,%.10f,%f\n",tempGPS->lat,tempGPS->lon,tempGPS->altitude,tempGPS->speed,tempGPS->angle,tempGPS->sat_num);
 
-// bool SaveSD::openFile() {
-//     uint16_t counter = 1;
-//     int charLen = 14;
-//     char filename [charLen];
+        counter++;
+        tempGPS = flash->readGPS(counter);
+    }
 
-//     while(true) {
-//         sprintf(filename,"datalog%03d.csv",counter);
-
-//         if(sd.exists(filename)) {
-//             counter+=1;
-//             if(counter>999){return false;}
-//         }
-//         else {
-//             if (sd.open(filename, FILE_WRITE)) {return true;}
-//             else {return false;}
-//         }
-//     }
-// }
+}
