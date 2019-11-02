@@ -75,12 +75,12 @@ uint32_t accelDataSize;
 SaveSD saver;
 //DigitalGPS* gps_ptr;
 
-/*void thread_GPS()
+void thread_GPS()
 {
     // Refresh the GPS Data
     gps_ptr->refresh_GPSData(GPSECHO);
-    gps_ptr->pullRawGPS(&gps_data);
-}*/
+    gps_ptr->pullRawGPS();
+}
 
 void thread_IMU() {
     // Sample IMU
