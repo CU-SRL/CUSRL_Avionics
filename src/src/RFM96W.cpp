@@ -137,6 +137,7 @@ void RFM96W_Client::init()
 
 void RFM96W_Client::loop(uint8_t data)
 {
+  Serial.print(data);
   RFM96W_Client::TX((const uint8_t*)data);
 }
 

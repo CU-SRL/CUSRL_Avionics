@@ -33,9 +33,11 @@ void DigitalIMU::sample(IMUdata* data, RFM96W_Client *client) {
     data->gyro_fused[1] = event.gyro.y;
     data->gyro_fused[2] = event.gyro.z;
 
-    Serial.print(event.gyro.x);
-    uint8_t *array;
-    array = reinterpret_cast<uint8_t*>(&event.gyro.x);
+    float float_data = event.gyro.x;
+
+    //Serial.print(event.gyro.x);
+    uint8_t array[250];
+    memcpy(&array, (void*)&float_data, sizeof(float));
 
     client->loop(*array);
 
