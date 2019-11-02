@@ -11,6 +11,7 @@
 #include <utility/imumaths.h>
 #include <SPIMemory.h>
 #include <SdFat.h>
+#include "RFM96W.hpp"
 
 struct GPSdata  {
     float lat = 0;
@@ -159,7 +160,7 @@ class DigitalIMU {
         DigitalIMU();
         DigitalIMU(int32_t sensorID, uint8_t address);
         bool begin();
-        void sample(IMUdata* data);
+        void sample(IMUdata* data, RFM96W_Client *client);
         
 };
 

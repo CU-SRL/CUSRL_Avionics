@@ -51,6 +51,10 @@ DigitalIMU IMU = DigitalIMU(55,0x28);
 DigitalBAROM BAROM;
 AnalogIMU HIGHG = AnalogIMU(highG_xPin,highG_yPin,highG_zPin,true);
 
+#define RF_TYPE 0 // SERVER(1) or CLIENT(0)
+
+RFM96W_Server *GROUND_STATION;
+RFM96W_Client *CLIENT;
 
 // Variables to store sensor data
 GPSdata gps_data;
@@ -84,7 +88,7 @@ void thread_GPS()
 
 void thread_IMU() {
     // Sample IMU
-    IMU.sample(&imu_data);
+    IMU.sample(&imu_data, CLIENT);
 
     // Write sample to flash chip
     flashop.writeIMU(&imu_data);
@@ -184,6 +188,14 @@ void setup() {
     gps_ptr->eraseLOCUS();
     gps_ptr->initGPS();
     // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    if(RF_TYPE==1)
+    {
+        GROUND_STATION = new RFM96W_Server(16, 14, hardware_spi);
+    }
+    else if (RF_TYPE==0)
+    {
+        CLIENT = new RFM96W_Client(16, 14, hardware_spi);
+    }
 
     // Configure GPS thread
     ThreadGPS->onRun(thread_GPS);
