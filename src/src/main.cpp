@@ -16,8 +16,8 @@
 // ========== DEFINE SOME VARS ==========
 
 // Pin assignments
-int flashWP = 10;
-int flashPin = 29;
+int flashWP = 29;
+int flashPin = 10;
 int speakerPin = 2;
 int highG_xPin = 33;
 int highG_yPin = 34;
