@@ -29,6 +29,12 @@ int interval_BAROM = 2000;
 int interval_ACCEL = 40;
 int interval_GPS = 10000;
 
+// Sampling frequency
+float freq_IMU = 1/(float)interval_IMU;
+float freq_BAROM = 1/(float)interval_BAROM;
+float freq_ACCEL = 1/(float)interval_ACCEL;
+float freq_GPS = 1/(float)interval_GPS;
+
 // ========== PROTOTHREADING ===========
 
 // ThreadController that will control all threads
@@ -64,8 +70,7 @@ BeepyBOI berp = BeepyBOI(speakerPin);
 // ========== FLASH CHIP AND DATA SAVING ==========
 
 // Initialize flash chip
-SPIFlash flashChip(flashPin);
-FlashOp flashop = FlashOp(&flashChip);
+SPIFlash flash(flashPin);
 
 uint32_t gpsDataSize;
 uint32_t imuDataSize;
@@ -73,12 +78,36 @@ uint32_t baromDataSize;
 uint32_t accelDataSize;
 
 SaveSD saver;
+
+// Start addresses
+uint32_t addr_start_IMU = 0;
+uint32_t addr_start_BAROM = 0;
+uint32_t addr_start_ACCEL = 0;
+uint32_t addr_start_GPS = 0;
+
+// Current addresses
+uint32_t addr_curr_IMU = 0;
+uint32_t addr_curr_BAROM = 0;
+uint32_t addr_curr_ACCEL = 0;
+uint32_t addr_curr_GPS = 0;
+
+
 DigitalGPS* gps_ptr;
+
+
+void KILLSYSTEM() {
+    while(true) {
+        delay(500); // Just to make it do something
+        berp.error();
+    }
+}
 
 void thread_GPS() {
     // Refresh the GPS Data
     gps_ptr->refresh_GPSData(GPSECHO);
     gps_ptr->pullRawGPS();
+
+    if (!flash.writeAnything(addr_curr_GPS+=gpsDataSize,gps_data)) {KILLSYSTEM();}
 }
 
 void thread_IMU() {
@@ -86,11 +115,7 @@ void thread_IMU() {
     IMU.sample(&imu_data);
 
     // Write sample to flash chip
-    flashop.writeIMU(&imu_data);
-
-    // Print what was written
-    // flashop.readIMU(&imu_data,-1);
-    // Serial.printf("Data from the flash chip: %d\n",imu_data.t);
+    if (!flash.writeAnything(addr_curr_IMU+=imuDataSize,imu_data)) {KILLSYSTEM();}
 }
 
 void thread_BAROM() {
@@ -98,7 +123,7 @@ void thread_BAROM() {
     BAROM.sample(&barom_data);
     
     // Write data struct to flash chip
-    flashop.writeBAROM(&barom_data);
+    if (!flash.writeAnything(addr_curr_BAROM+=baromDataSize,barom_data)) {KILLSYSTEM();}
 }
 
 void thread_HIGHG() {
@@ -107,14 +132,7 @@ void thread_HIGHG() {
     HIGHG.sample(&accel_data);
 
     // Write to flash
-    flashop.writeACCEL(&accel_data);
-}
-
-void KILLSYSTEM() {
-    while(true) {
-        delay(500); // Just to make it do something
-        berp.error();
-    }
+    if (!flash.writeAnything(addr_curr_ACCEL+=accelDataSize,accel_data)) {KILLSYSTEM();}
 }
 
 void setup() {
@@ -133,8 +151,9 @@ void setup() {
 
     // ========== Save Data ======================================
 
-    saver.addFlashOp(&flashop);
-    flashop.addWP(flashWP);
+    flash.begin();
+    saver.addFlash(&flash);
+    digitalWrite(flashWP,HIGH);
 
     Serial.println("2");
 
@@ -145,17 +164,77 @@ void setup() {
     gpsDataSize = sizeof(gps_data);
 
     // // Set first 16 bytes to 69 bc lol
-    // flashChip.eraseChip();
-    // for (int i=0;i<16;i++){flashChip.writeByte(i,69);}
+    // flash.eraseChip();
+    // for (int i=0;i<16;i++){flash.writeByte(i,1);}
 
+    // ===========================================================
     // Initialize flash chip components
-    flashop.setIMU(imuDataSize,1/((float)interval_IMU));
-    flashop.setBAROM(baromDataSize,1/((float)interval_BAROM));
-    flashop.setACCEL(accelDataSize,1/((float)interval_ACCEL));
-    flashop.setGPS(gpsDataSize,1/((float)interval_GPS));
+
+    uint32_t chipSize,startOffset;
+
+    // Start offset: address offset because first few store other info
+    startOffset = 16;
+
+    // Get size of flash chip
+    chipSize = flash.getCapacity() - startOffset;
+
+    // Bytes per second for each data type
+    float rate_IMU = (float)imuDataSize*freq_IMU;
+    float rate_BAROM = (float)baromDataSize*freq_BAROM;
+    float rate_ACCEL = (float)accelDataSize*freq_ACCEL;
+    float rate_GPS = (float)gpsDataSize*freq_GPS;
+    float rate_total = rate_IMU + rate_BAROM + rate_ACCEL + rate_GPS;
+
+    // Print rates to Serial
+    Serial.printf("IMU   rate: %.3f\n",rate_IMU);
+    Serial.printf("BAROM rate: %.3f\n",rate_BAROM);
+    Serial.printf("ACCEL rate: %.3f\n",rate_ACCEL);
+    Serial.printf("GPS   rate: %.3f\n",rate_GPS);
+
+    // Fractional share of each data type
+    float share_IMU = rate_IMU/rate_total;
+    float share_BAROM = rate_BAROM/rate_total;
+    float share_ACCEL = rate_ACCEL/rate_total;
+    float share_GPS = rate_GPS/rate_total;
+
+    // Print shares to Serial
+    Serial.printf("IMU   share: %.3f\n",share_IMU);
+    Serial.printf("BAROM share: %.3f\n",share_BAROM);
+    Serial.printf("ACCEL share: %.3f\n",share_ACCEL);
+    Serial.printf("GPS   share: %.3f\n",share_GPS);
+
+    // Starting address of each type
+    addr_start_IMU = startOffset;
+    addr_start_BAROM = startOffset + (uint32_t)(share_IMU*chipSize);
+    addr_start_ACCEL = addr_start_BAROM + (uint32_t)(share_BAROM*chipSize);
+    addr_start_GPS = addr_start_ACCEL + (uint32_t)(share_ACCEL*chipSize);
+
+    // Write starting addresses to flash chip
+    flash.writeULong(0,addr_start_IMU);
+    flash.writeULong(4,addr_start_BAROM);
+    flash.writeULong(8,addr_start_ACCEL);
+    flash.writeULong(12,addr_start_GPS);
+
+    // Set current addresses to starting addresses
+    addr_curr_IMU = addr_start_IMU;
+    addr_curr_BAROM = addr_start_BAROM;
+    addr_curr_ACCEL = addr_start_ACCEL;
+    addr_curr_GPS = addr_start_GPS;
+
+    // Print starting addresses to Serial
+    Serial.print("IMU   start address: ");
+    Serial.println(addr_start_IMU);
+    Serial.print("BAROM start address: ");
+    Serial.println(addr_start_BAROM);
+    Serial.print("ACCEL start address: ");
+    Serial.println(addr_start_ACCEL);
+    Serial.print("GPS   start address: ");
+    Serial.println(addr_start_GPS);
+
 
     Serial.println("3");
 
+    // ===========================================================
     // Copy data to flash chip
     berp.lowBeep();
     berp.hiBeep();
@@ -168,7 +247,7 @@ void setup() {
     berp.countdown(5);
     Serial.println("4");
 
-    flashop.startWriting(); // ERASES FLASH CHIP
+    flash.eraseChip();
 
     // ===========================================================
 

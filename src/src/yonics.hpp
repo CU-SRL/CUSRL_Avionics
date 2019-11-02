@@ -124,26 +124,27 @@ class SaveSD {
         bool running = false;
         SdFatSdio sd;
         File of;
-        FlashOp* flash = NULL;
+        SPIFlash* flash = NULL;
+
+        IMUdata tempIMU;
+        BAROMdata tempBAROM;
+        ACCELdata tempACCEL;
+        GPSdata tempGPS;
+
+        uint32_t gpsDataSize;
+        uint32_t imuDataSize;
+        uint32_t baromDataSize;
+        uint32_t accelDataSize;
 
         void printIMU();
         void printBAROM();
         void printACCEL();
         void printGPS();
-        // bool openFile();
     public:
-        // IMUdata* tempIMU = NULL;
-        // BAROMdata* tempBAROM = NULL;
-        // ACCELdata* tempACCEL = NULL;
-        // GPSdata* tempGPS = NULL;
 
         SaveSD();
-        // bool addIMUdata(IMUdata* data);
-        // bool addBAROMdata(BAROMdata* data);
-        // bool addACCELdata(ACCELdata* data);
-        // bool addGPSdata(GPSdata* data);
         bool savenow();
-        bool addFlashOp(FlashOp* flash);
+        bool addFlash(SPIFlash* flash);
 };
 
 class AnalogIMU {
