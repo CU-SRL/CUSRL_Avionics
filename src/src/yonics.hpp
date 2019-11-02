@@ -46,104 +46,32 @@ struct BAROMdata {
     uint32_t t = 0;
 };
 
-struct SampleTypes {
-    int size = 0; // Size of one sample, in bytes
-    int nSamples = 0; // Number of samples stored on chip
-    uint32_t start_addr = 0; // Start address of this type's allocated memory
-    void* data = NULL;
-    float f = 0;
-};
-
-class FlashOp {
-    // Class to manage saving data to and reading data from the flash chip
-
-    private:
-        SPIFlash* flash = NULL;
-        bool writing = false;
-        
-        // IMU Vars
-        uint32_t addr_start_IMU = 0;
-        uint32_t addr_curr_IMU = 0;
-        uint8_t size_IMU = 0;
-        float freq_IMU = 0;
-
-        // BAROM Vars
-        uint32_t addr_start_BAROM = 0;
-        uint32_t addr_curr_BAROM = 0;
-        uint8_t size_BAROM = 0;
-        float freq_BAROM = 0;
-
-        // ACCEL Vars
-        uint32_t addr_start_ACCEL = 0;
-        uint32_t addr_curr_ACCEL = 0;
-        uint8_t size_ACCEL = 0;
-        float freq_ACCEL = 0;
-
-        // GPS Vars
-        uint32_t addr_start_GPS = 0;
-        uint32_t addr_curr_GPS = 0;
-        uint8_t size_GPS = 0;
-        float freq_GPS = 0;
-
-    public:
-
-        // Temporary structs (used for reading)
-        IMUdata tempIMU;
-        BAROMdata tempBAROM;
-        ACCELdata tempACCEL;
-        GPSdata tempGPS;
-
-        // init
-        FlashOp();
-        FlashOp(SPIFlash* flash);
-        void addWP(int pin);
-
-        // Data size initiation
-        bool setIMU(uint8_t size, float frequency);
-        bool setBAROM(uint8_t size, float frequency);
-        bool setACCEL(uint8_t size, float frequency);
-        bool setGPS(uint8_t size, float frequency);
-
-        // Reading
-        IMUdata* readIMU(uint32_t idx);
-        BAROMdata* readBAROM(uint32_t idx);
-        ACCELdata* readACCEL(uint32_t idx);
-        GPSdata* readGPS(uint32_t idx);
-
-        // Writing
-        bool startWriting();
-        bool writeIMU(IMUdata* data);
-        bool writeBAROM(BAROMdata* data);
-        bool writeACCEL(ACCELdata* data);
-        bool writeGPS(GPSdata* data);
-
-};
-
 class SaveSD {
     private:
         bool running = false;
         SdFatSdio sd;
         File of;
-        FlashOp* flash = NULL;
+        char foldername[10];
 
-        void printIMU();
-        void printBAROM();
-        void printACCEL();
-        void printGPS();
-        // bool openFile();
+        void printIMU(IMUdata* data);
+        void printBAROM(BAROMdata* data);
+        void printACCEL(ACCELdata* data);
+        void printGPS(GPSdata* data);
+
+        bool openIMU();
+        bool openBAROM();
+        bool openACCEL();
+        bool openGPS();
+
     public:
-        // IMUdata* tempIMU = NULL;
-        // BAROMdata* tempBAROM = NULL;
-        // ACCELdata* tempACCEL = NULL;
-        // GPSdata* tempGPS = NULL;
-
         SaveSD();
-        // bool addIMUdata(IMUdata* data);
-        // bool addBAROMdata(BAROMdata* data);
-        // bool addACCELdata(ACCELdata* data);
-        // bool addGPSdata(GPSdata* data);
-        bool savenow();
-        bool addFlashOp(FlashOp* flash);
+
+        bool initFolder();
+        
+        bool sampleIMU(IMUdata* data);
+        bool sampleBAROM(BAROMdata* data);
+        bool sampleACCEL(ACCELdata* data);
+        bool sampleGPS(GPSdata* data);
 };
 
 class AnalogIMU {
