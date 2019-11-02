@@ -18,7 +18,7 @@
 // Pin assignments
 int flashWP = 10;
 int flashPin = 29;
-int speakerPin = 36;
+int speakerPin = 2;
 int highG_xPin = 33;
 int highG_yPin = 34;
 int highG_zPin = 35;
@@ -73,14 +73,14 @@ uint32_t baromDataSize;
 uint32_t accelDataSize;
 
 SaveSD saver;
-DigitalGPS* gps_ptr;
+//DigitalGPS* gps_ptr;
 
-void thread_GPS()
+/*void thread_GPS()
 {
     // Refresh the GPS Data
     gps_ptr->refresh_GPSData(GPSECHO);
     gps_ptr->pullRawGPS(&gps_data);
-}
+}*/
 
 void thread_IMU() {
     // Sample IMU
@@ -115,16 +115,24 @@ void KILLSYSTEM() {
 }
 
 void setup() {
+
+    delay(5000);
+
+    berp.hello();
+
     // Start serial
     Serial.begin(115200);
 
     // Hello beep
     berp.hello();
+    Serial.println("1");
 
     // ========== Save Data ======================================
 
     saver.addFlashOp(&flashop);
     flashop.addWP(flashWP);
+
+    Serial.println("2");
 
     // Sizing of data structs
     imuDataSize = sizeof(imu_data);
@@ -136,6 +144,8 @@ void setup() {
     flashop.setIMU(imuDataSize,1/((float)interval_IMU));
     flashop.setBAROM(baromDataSize,1/((float)interval_BAROM));
     flashop.setACCEL(accelDataSize,1/((float)interval_ACCEL));
+
+    Serial.println("3");
 
     // Copy data to flash chip
     berp.lowBeep();
@@ -153,7 +163,7 @@ void setup() {
 
     // ===========================================================
 
-    DigitalGPS gps(&GPSSerial);
+    //DigitalGPS gps(&GPSSerial);
 
     // Initialize BNO055 IMU sensor
     if (!IMU.begin()) {
@@ -166,19 +176,19 @@ void setup() {
     }
 
     // Initialize the GPS Data Dump
-    gps.GPSData_dump_setup();
+    //gps.GPSData_dump_setup();
 
     // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    gps.eraseLOCUS();
-    gps.initGPS();
+    //gps.eraseLOCUS();
+    //gps.initGPS();
     // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
     //  Give the ptr the address of the GPS Object that was created
-    gps_ptr=&gps;
+    //gps_ptr=&gps;
 
     // Configure GPS thread
-    ThreadGPS->onRun(thread_GPS);
-    ThreadGPS->setInterval(interval_GPS);
+    //ThreadGPS->onRun(thread_GPS);
+    //ThreadGPS->setInterval(interval_GPS);
 
     // Configure IMU thread
     ThreadIMU->onRun(thread_IMU);
