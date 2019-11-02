@@ -174,16 +174,19 @@ class DigitalBAROM {
 
 class DigitalGPS {
     private:
+    public:
         Adafruit_GPS* GPS;
         HardwareSerial* GPSSerial;
-    public:
+
         DigitalGPS(HardwareSerial *ser);
+
+        void dummyPrint();
         void initGPS();
         void eraseLOCUS();
         void GPSData_dump_setup();
         void refresh_GPSData(bool GPSECHO);
         void pullGPSFlashData();
-        void pullRawGPS(GPSdata* data);
+        void pullRawGPS(/*GPSdata* data*/);
 };
 
 class BeepyBOI {
