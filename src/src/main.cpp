@@ -16,8 +16,6 @@
 // ========== DEFINE SOME VARS ==========
 
 // Pin assignments
-int flashWP = 29;
-int flashPin = 10;
 int speakerPin = 2;
 int highG_xPin = 33;
 int highG_yPin = 34;
@@ -25,9 +23,9 @@ int highG_zPin = 35;
 
 // Intervals (ms)
 int interval_IMU = 40;
-int interval_BAROM = 1500;
-int interval_ACCEL = 50;
-int interval_GPS = 1/10;
+int interval_BAROM = 2000;
+int interval_ACCEL = 40;
+int interval_GPS = 5000;
 
 // ========== PROTOTHREADING ===========
 
@@ -65,50 +63,39 @@ ACCELdata accel_data;
 // Piezo beeper!
 BeepyBOI berp = BeepyBOI(speakerPin);
 
-// ========== FLASH CHIP AND DATA SAVING ==========
+// ========== DATA SAVING ==========
 
-// Initialize flash chip
-SPIFlash flashChip(flashPin);
-FlashOp flashop = FlashOp(&flashChip);
-
-uint32_t GPSDataSize;
-uint32_t imuDataSize;
-uint32_t baromDataSize;
-uint32_t accelDataSize;
 
 SaveSD saver;
 DigitalGPS* gps_ptr;
 
-void thread_GPS()
-{
+void thread_GPS() {
     // Refresh the GPS Data
     gps_ptr->refresh_GPSData(GPSECHO);
     gps_ptr->pullRawGPS();
+
+    saver.sampleGPS(&gps_data);
 }
 
 void thread_IMU() {
     // Sample IMU
     IMU.sample(&imu_data, CLIENT);
 
-    // Write sample to flash chip
-    flashop.writeIMU(&imu_data);
+    saver.sampleIMU(&imu_data);
 }
 
 void thread_BAROM() {
     // Sample barometer
     BAROM.sample(&barom_data);
-    
-    // Write data struct to flash chip
-    flashop.writeBAROM(&barom_data);
+
+    saver.sampleBAROM(&barom_data);
 }
 
 void thread_HIGHG() {
-
     // Sample high-g accelerometer
     HIGHG.sample(&accel_data);
 
-    // Write to flash
-    flashop.writeACCEL(&accel_data);
+    saver.sampleACCEL(&accel_data);
 }
 
 void KILLSYSTEM() {
@@ -120,56 +107,16 @@ void KILLSYSTEM() {
 
 void setup() {
 
-    delay(5000);
-
-    berp.hello();
+    delay(2500);
 
     // Start serial
     Serial.begin(115200);
 
     // Hello beep
     berp.hello();
-    Serial.println("1");
 
-    // ========== Save Data ======================================
-
-    saver.addFlashOp(&flashop);
-    flashop.addWP(flashWP);
-
-    Serial.println("2");
-
-    // Sizing of data structs
-    imuDataSize = sizeof(imu_data);
-    baromDataSize = sizeof(barom_data);
-    accelDataSize = sizeof(accel_data);
-    GPSDataSize = sizeof(gps_data);
-
-    // Initialize flash chip components
-    flashop.setIMU(imuDataSize,1/((float)interval_IMU));
-    flashop.setBAROM(baromDataSize,1/((float)interval_BAROM));
-    flashop.setACCEL(accelDataSize,1/((float)interval_ACCEL));
-
-    Serial.println("3");
-
-    // Copy data to flash chip
-    berp.lowBeep();
-    berp.hiBeep();
-    delay(500);
-    
-    //if (!saver.savenow()) {KILLSYSTEM();}
-    berp.lowBeep();
-    berp.hiBeep();
-    berp.midBeep();
-
-    berp.countdown(5);
-    Serial.println("4");
-
-    flashop.startWriting(); // ERASES FLASH CHIP
-
-    // ===========================================================
-
-    gps_ptr = new DigitalGPS(&Serial3);
-    Serial.println("5");
+    // Initialize file saving
+    saver.initFolder();
 
     // Initialize BNO055 IMU sensor
     if (!IMU.begin()) {
@@ -180,6 +127,8 @@ void setup() {
     if (!BAROM.begin()) {
         KILLSYSTEM();
     }
+
+    gps_ptr = new DigitalGPS(&Serial3);
 
     // Initialize the GPS Data Dump
     gps_ptr->GPSData_dump_setup();
@@ -197,10 +146,6 @@ void setup() {
         CLIENT = new RFM96W_Client(16, 14, hardware_spi);
     }
 
-    // Configure GPS thread
-    ThreadGPS->onRun(thread_GPS);
-    ThreadGPS->setInterval(interval_GPS);
-
     // Configure IMU thread
     ThreadIMU->onRun(thread_IMU);
     ThreadIMU->setInterval(interval_IMU);
@@ -213,11 +158,15 @@ void setup() {
     ThreadACCEL->onRun(thread_HIGHG);
     ThreadACCEL->setInterval(interval_ACCEL);
 
+    // Configure GPS thread
+    ThreadGPS->onRun(thread_GPS);
+    ThreadGPS->setInterval(interval_GPS);
+
     // Add threads to controller
     thread_control.add(ThreadIMU);
-    //thread_control.add(ThreadGPS);
     thread_control.add(ThreadBAROM);
     thread_control.add(ThreadACCEL);
+    thread_control.add(ThreadGPS);
 
     // Beep the piezo again
     berp.bombBeep();
