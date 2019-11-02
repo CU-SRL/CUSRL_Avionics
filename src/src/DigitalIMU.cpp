@@ -45,18 +45,29 @@ void DigitalIMU::sample(IMUdata* data) {
     data->orient_quat[1] = quat.x();
     data->orient_quat[2] = quat.y();
     data->orient_quat[3] = quat.z();
+    
+    /*Serial.printf("w acceleration: %.5f",quat.w());
+    Serial.printf("x acceleration: %.5f",quat.x());
+    Serial.printf("y acceleration: %.5f",quat.y());
+    Serial.printf("z acceleration: %.5f",quat.z());*/
 
     accel = board.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);
     data->accel_raw[0] = accel.x();
     data->accel_raw[1] = accel.y();
     data->accel_raw[2] = accel.z();
 
-    Serial.printf("z acceleration: %.5f\n",accel.z());
+    /*Serial.printf("x acceleration: %.5f",accel.x());
+    Serial.printf("y acceleration: %.5f",accel.y());
+    Serial.printf("z acceleration: %.5f",accel.z());*/
 
     board.getEvent(&event,Adafruit_BNO055::VECTOR_MAGNETOMETER);
     data->magnetometer[0] = event.magnetic.x;
     data->magnetometer[1] = event.magnetic.y;
     data->magnetometer[2] = event.magnetic.z;
+
+    /*Serial.printf("x Magnetometer: %.5f",event.magnetic.x);
+    Serial.printf("y Magnetometer: %.5f",event.magnetic.y);
+    Serial.printf("z Magnetometer: %.5f\n",event.magnetic.z);*/
 
     data->t = millis();
 }

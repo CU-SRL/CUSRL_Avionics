@@ -26,8 +26,8 @@ int highG_zPin = 35;
 // Intervals (ms)
 int interval_IMU = 40;
 int interval_BAROM = 1500;
-int interval_ACCEL = 40;
-int interval_GPS = 100;
+int interval_ACCEL = 50;
+int interval_GPS = 1/10;
 
 // ========== PROTOTHREADING ===========
 
@@ -73,7 +73,7 @@ uint32_t baromDataSize;
 uint32_t accelDataSize;
 
 SaveSD saver;
-//DigitalGPS* gps_ptr;
+DigitalGPS* gps_ptr;
 
 void thread_GPS()
 {
@@ -152,18 +152,20 @@ void setup() {
     berp.hiBeep();
     delay(500);
     
-    if (!saver.savenow()) {KILLSYSTEM();}
+    //if (!saver.savenow()) {KILLSYSTEM();}
     berp.lowBeep();
     berp.hiBeep();
     berp.midBeep();
 
     berp.countdown(5);
+    Serial.println("4");
 
     flashop.startWriting(); // ERASES FLASH CHIP
 
     // ===========================================================
 
-    //DigitalGPS gps(&GPSSerial);
+    gps_ptr = new DigitalGPS(&Serial3);
+    Serial.println("5");
 
     // Initialize BNO055 IMU sensor
     if (!IMU.begin()) {
@@ -176,19 +178,16 @@ void setup() {
     }
 
     // Initialize the GPS Data Dump
-    //gps.GPSData_dump_setup();
+    gps_ptr->GPSData_dump_setup();
 
     // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    //gps.eraseLOCUS();
-    //gps.initGPS();
+    gps_ptr->eraseLOCUS();
+    gps_ptr->initGPS();
     // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-
-    //  Give the ptr the address of the GPS Object that was created
-    //gps_ptr=&gps;
 
     // Configure GPS thread
-    //ThreadGPS->onRun(thread_GPS);
-    //ThreadGPS->setInterval(interval_GPS);
+    ThreadGPS->onRun(thread_GPS);
+    ThreadGPS->setInterval(interval_GPS);
 
     // Configure IMU thread
     ThreadIMU->onRun(thread_IMU);
@@ -204,7 +203,7 @@ void setup() {
 
     // Add threads to controller
     thread_control.add(ThreadIMU);
-    // thread_control.add(ThreadGPS);
+    //thread_control.add(ThreadGPS);
     thread_control.add(ThreadBAROM);
     thread_control.add(ThreadACCEL);
 

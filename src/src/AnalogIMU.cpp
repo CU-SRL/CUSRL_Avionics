@@ -39,6 +39,14 @@ void AnalogIMU::sample(ACCELdata* data) {
     data->x = formatVal(analogRead(xPin));
     data->y = formatVal(analogRead(yPin));
     data->z = formatVal(analogRead(zPin));
+
+
+    /*Serial.print(formatVal(analogRead(xPin)));
+    Serial.print(" ");
+    Serial.print(formatVal(analogRead(yPin)));
+    Serial.print(" ");
+    Serial.print(formatVal(analogRead(zPin)));
+    Serial.println(" ");*/
 }
 
 float AnalogIMU::formatVal(int rawVal) {
