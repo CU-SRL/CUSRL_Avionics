@@ -74,7 +74,11 @@ void RFM96W_Server::RX()
     if (RFM96W_Server::Server_Driver->recv(server_buf, &server_len))
     {
       Serial.print("got request: ");
-      Serial.println((char*)server_buf);
+      // Output value
+      float valOut = 0;
+      // Copy data back to output float
+      memcpy(&valOut,&server_buf,sizeof(float));
+      //Serial.println(server_buf);
       
       RFM96W_Server::Server_Driver->send(ServerReturnMessage, sizeof(ServerReturnMessage));
       RFM96W_Server::Server_Driver->waitPacketSent();
@@ -135,9 +139,9 @@ void RFM96W_Client::init()
   RFM96W_Client::Client_Driver->setTxPower(23, false); // Set Max Power at 23 db because need max range and Use BOOST pin therefore set UFO false*/
 }
 
-void RFM96W_Client::loop(uint8_t data)
+void RFM96W_Client::loop(uint8_t *data)
 {
-  Serial.print(data);
+  Serial.print(*data);
   RFM96W_Client::TX((const uint8_t*)data);
 }
 

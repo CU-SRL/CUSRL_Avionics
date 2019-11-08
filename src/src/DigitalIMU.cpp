@@ -18,7 +18,7 @@ bool DigitalIMU::begin() {
     }
 }
 
-void DigitalIMU::sample(IMUdata* data, RFM96W_Client *client) {
+void DigitalIMU::sample(IMUdata* data) {
     // Get data and store it to the imu_data struct
 
     // Processed acceleration data
@@ -32,14 +32,6 @@ void DigitalIMU::sample(IMUdata* data, RFM96W_Client *client) {
     data->gyro_fused[0] = event.gyro.x;
     data->gyro_fused[1] = event.gyro.y;
     data->gyro_fused[2] = event.gyro.z;
-
-    float float_data = event.gyro.x;
-
-    //Serial.print(event.gyro.x);
-    uint8_t array[250];
-    memcpy(&array, (void*)&float_data, sizeof(float));
-
-    client->loop(*array);
 
     // Processed euler orientation vectors
     board.getEvent(&event,Adafruit_BNO055::VECTOR_EULER);

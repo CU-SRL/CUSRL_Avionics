@@ -20,6 +20,7 @@ struct GPSdata  {
     float speed = 0;
     float angle = 0;
     float sat_num = 0;
+    uint32_t t;
 };
 
 struct ACCELdata {
@@ -103,7 +104,7 @@ class DigitalIMU {
         DigitalIMU();
         DigitalIMU(int32_t sensorID, uint8_t address);
         bool begin();
-        void sample(IMUdata* data, RFM96W_Client *client);
+        void sample(IMUdata* data);
         
 };
 

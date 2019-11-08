@@ -22,10 +22,11 @@ int highG_yPin = 34;
 int highG_zPin = 35;
 
 // Intervals (ms)
-int interval_IMU = 40;
+int interval_IMU = 45;
 int interval_BAROM = 2000;
-int interval_ACCEL = 40;
-int interval_GPS = 5000;
+int interval_ACCEL = 50;
+int interval_GPS = 1/10;
+int interval_RF = 2000;
 
 // ========== PROTOTHREADING ===========
 
@@ -36,7 +37,8 @@ ThreadController thread_control = ThreadController();
 Thread* ThreadIMU = new Thread();
 Thread* ThreadBAROM = new Thread();
 Thread* ThreadACCEL = new Thread();
-Thread* ThreadGPS = new Thread();
+Thread* ThreadRF = new Thread();
+//Thread* ThreadGPS = new Thread();
 
 // ========== SENSORS AND DATA ==========
 
@@ -70,16 +72,15 @@ SaveSD saver;
 DigitalGPS* gps_ptr;
 
 void thread_GPS() {
+    //saver.sampleGPS(&gps_data);
     // Refresh the GPS Data
     gps_ptr->refresh_GPSData(GPSECHO);
-    gps_ptr->pullRawGPS();
-
-    saver.sampleGPS(&gps_data);
+    gps_ptr->pullRawGPS(/*&gps_data*/);
 }
 
 void thread_IMU() {
     // Sample IMU
-    IMU.sample(&imu_data, CLIENT);
+    IMU.sample(&imu_data);
 
     saver.sampleIMU(&imu_data);
 }
@@ -96,6 +97,18 @@ void thread_HIGHG() {
     HIGHG.sample(&accel_data);
 
     saver.sampleACCEL(&accel_data);
+}
+
+void thread_RF() {
+    float float_data = imu_data.gyro_fused[0];
+    // Proxy array of uint8_t values
+    uint8_t proxyArr[sizeof(float)];
+    // Populate array with zeros
+    for (int i=0;i<sizeof(float);i++) {proxyArr[i] = 0;}
+    // Copy float data to array
+    memcpy(&proxyArr,&float_data,sizeof(float));
+
+    CLIENT->loop(proxyArr);
 }
 
 void KILLSYSTEM() {
@@ -124,18 +137,18 @@ void setup() {
     }
 
     // Initialize MPL3115A2 sensor
-    if (!BAROM.begin()) {
+    /*if (!BAROM.begin()) {
         KILLSYSTEM();
-    }
+    }*/
 
-    gps_ptr = new DigitalGPS(&Serial3);
+    //gps_ptr = new DigitalGPS(&Serial3);
 
     // Initialize the GPS Data Dump
-    gps_ptr->GPSData_dump_setup();
+    //gps_ptr->GPSData_dump_setup();
 
     // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    gps_ptr->eraseLOCUS();
-    gps_ptr->initGPS();
+    //gps_ptr->eraseLOCUS();
+    //gps_ptr->initGPS();
     // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     if(RF_TYPE==1)
     {
@@ -151,22 +164,27 @@ void setup() {
     ThreadIMU->setInterval(interval_IMU);
 
     // Configure Barometer thread
-    ThreadBAROM->onRun(thread_BAROM);
-    ThreadBAROM->setInterval(interval_BAROM);
+    /*ThreadBAROM->onRun(thread_BAROM);
+    ThreadBAROM->setInterval(interval_BAROM);*/
 
     // Configure Accelerometer thread
     ThreadACCEL->onRun(thread_HIGHG);
     ThreadACCEL->setInterval(interval_ACCEL);
 
     // Configure GPS thread
-    ThreadGPS->onRun(thread_GPS);
-    ThreadGPS->setInterval(interval_GPS);
+    //ThreadGPS->onRun(thread_GPS);
+    //ThreadGPS->setInterval(interval_GPS);
+
+    // Configure RF thread
+    ThreadRF->onRun(thread_RF);
+    ThreadRF->setInterval(interval_RF);
 
     // Add threads to controller
     thread_control.add(ThreadIMU);
-    thread_control.add(ThreadBAROM);
+    //thread_control.add(ThreadBAROM);
     thread_control.add(ThreadACCEL);
-    thread_control.add(ThreadGPS);
+    thread_control.add(ThreadRF);
+    //thread_control.add(ThreadGPS);
 
     // Beep the piezo again
     berp.bombBeep();

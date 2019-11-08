@@ -39,7 +39,7 @@ class RFM96W_Client
         RHReliableDatagram *Client_Manager;
 
         void init();
-        void loop(uint8_t data);
+        void loop(uint8_t *data);
         void TX(const uint8_t *data);
         void RX();
 
