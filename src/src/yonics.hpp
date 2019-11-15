@@ -218,6 +218,7 @@ class ColdGasRCS{
     void closeSolenoid(int);
     void adjust(double, double, SaveSD*, IMUdata);
     int getInterval();
+    double polyfitfunct(double);
 };
 
 // class FlashOp {

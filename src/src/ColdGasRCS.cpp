@@ -1,13 +1,15 @@
 #include "yonics.hpp"
+#include <Servo.h>
+#include "math.h"
 
-#define SOLENOID_PIN_0 6
+#define SERVO_PIN_0 6
 /*#define SOLENOID_PIN_1 36
 #define SOLENOID_PIN_2 37
 #define SOLENOID_PIN_3 38*/
 
-#define GOAL 0.523599//.4363 //rad
-#define K0 .3
-#define K1 4.9
+#define GOAL 0.262//0.523599//.4363 //rad
+#define K0 0
+#define K1 .5
 #define K2 9.8
 #define THRESHOLD 0.1
 #define ACTUAL_TORQUE 10 
@@ -15,6 +17,8 @@
 
 #define MAX_ERROR 15 // radian seconds
 #define MIN_ERROR -15
+
+Servo jim;
 
 double error = 0; 
 double last_millis;
@@ -30,32 +34,15 @@ ColdGasRCS::ColdGasRCS() {
 }
 
 void ColdGasRCS::init() {
-    pinMode(SOLENOID_PIN_0, OUTPUT);
+    pinMode(SERVO_PIN_0, OUTPUT);
     last_millis = millis();
+    jim.attach(SERVO_PIN_0);
     /*pinMode(SOLENOID_PIN_1, OUTPUT);
     pinMode(SOLENOID_PIN_2, OUTPUT);
     pinMode(SOLENOID_PIN_3, OUTPUT);*/
 }
 
-void ColdGasRCS::openSolenoid(int solenoid){
-    switch(solenoid){
-        case 0:
-            digitalWrite(SOLENOID_PIN_0, HIGH);
-            break;
-        default:
-            break;
-    }
-}
 
-void ColdGasRCS::closeSolenoid(int solenoid){
-    switch(solenoid){
-        case 0:
-            digitalWrite(SOLENOID_PIN_0, LOW);
-            break;
-        default:
-            break;
-    }
-}
 
 void ColdGasRCS::adjust(double current, double omega, SaveSD* saver, IMUdata imu){
     double this_error = GOAL - current;
@@ -67,25 +54,26 @@ void ColdGasRCS::adjust(double current, double omega, SaveSD* saver, IMUdata imu
     }
     last_millis = millis();
 
-    double ctrl_torque = K2*(GOAL-current) - K1*omega + K0*error;
+    double ctrl_torque = K2*(GOAL-current) - K1*abs(omega) + K0*error;
+    if (ctrl_torque >= 9){
+        ctrl_torque = 9;
+    }
+    if (ctrl_torque <=0){
+        ctrl_torque = 0;
+    }
+    ctrl_torque = ctrl_torque/7;
     // Serial.print("Control Torque: ");
     // Serial.println(ctrl_torque);
-    if(ctrl_torque / ACTUAL_TORQUE > THRESHOLD){
-        // Serial.println("OPEN");
-        // set solenoid open
-        openSolenoid(0);
-        // saver->saveNowRCS(current, omega, error, ctrl_torque, 1, imu);
-        printStuff(current, omega, error, ctrl_torque, 1, imu);
-    } else {
-        // Serial.println("CLOSE");
-        // saver->saveNowRCS(current, omega, error, ctrl_torque, 0, imu);    
-        printStuff(current, omega, error, ctrl_torque, 0, imu);
-        //close
-        closeSolenoid(0);
-    }
+    double angle = polyfitfunct(ctrl_torque);
+    jim.write(angle);
+    Serial.printf("%d,%d,%d,%d,%d\n",millis(),current,omega,ctrl_torque,angle);
 }
 
 int ColdGasRCS::getInterval(){
     return INTERVAL;
 }
 
+double ColdGasRCS::polyfitfunct(double x){
+        double angle = pow(15264*x,8) - pow(6.5224E4*x,7) + pow(1.1440E5*x,6) - pow(1.0655E5*x,5) + pow(5.6864E4*x,4) - pow(1.7472E4*x,3) + pow(2.9237E3*x,2) - 261.1007*x + 56.1953;
+        return angle;
+}
