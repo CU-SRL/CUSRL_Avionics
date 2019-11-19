@@ -70,6 +70,7 @@ BeepyBOI berp = BeepyBOI(speakerPin);
 
 SaveSD saver;
 DigitalGPS* gps_ptr;
+DLLflash* flash;
 
 void thread_GPS() {
     //saver.sampleGPS(&gps_data);
@@ -82,21 +83,21 @@ void thread_IMU() {
     // Sample IMU
     IMU.sample(&imu_data);
 
-    saver.sampleIMU(&imu_data);
+    //saver.sampleIMU(&imu_data);
 }
 
 void thread_BAROM() {
     // Sample barometer
     BAROM.sample(&barom_data);
 
-    saver.sampleBAROM(&barom_data);
+    //saver.sampleBAROM(&barom_data);
 }
 
 void thread_HIGHG() {
     // Sample high-g accelerometer
     HIGHG.sample(&accel_data);
 
-    saver.sampleACCEL(&accel_data);
+    //saver.sampleACCEL(&accel_data);
 }
 
 void thread_RF() {
@@ -128,8 +129,10 @@ void setup() {
     // Hello beep
     berp.hello();
 
+    flash = new DLLflash(10);
+
     // Initialize file saving
-    saver.initFolder();
+    //saver.initFolder();
 
     // Initialize BNO055 IMU sensor
     if (!IMU.begin()) {

@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include<vector>
-#include "StructDefs.hpp"
+// #include "StructDefs.hpp"
 #include "SPIMemory.h"
 
 struct Node {
@@ -34,9 +34,10 @@ class DLLflash {
         // Next available address
         uint32_t addr_next_available = 0;
         std::vector <DLLtype> types;
-        SPIFlash* flash = NULL;
+        SPIFlash* flash;
     public:
-        DLLflash();
+        DLLflash(int flashpin);
+        int flashsize;
         void addType(void*,int,char*);
         bool writeSample(char*);
 
