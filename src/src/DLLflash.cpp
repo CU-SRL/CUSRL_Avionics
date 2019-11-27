@@ -1,9 +1,12 @@
 #include "DLLflash.hpp"
 
-DLLtype::DLLtype(void* refData,int dataSize,char* id) {
-    this->refData = refData;
-    this->dataSize = dataSize;
-    strcpy(this->id,id);
+DLLtype::DLLtype() {
+    dataSize = sizeof(T);
+}
+
+DLLtype::DLLtype(T* data) {
+    refData = data;
+    dataSize = sizeof(T);
 }
 
 int DLLtype::getDataSize() {
@@ -16,23 +19,4 @@ char* DLLtype::getID() {
 
 bool DLLtype::writeSample(uint32_t addr_write,SPIFlash* flash) {
     
-}
-
-DLLflash::DLLflash() {}
-
-void DLLflash::addType(void* refData, int dataSize, char* id) {
-    types.push_back(DLLtype(refData,dataSize,id));
-}
-
-bool DLLflash::writeSample(char* id) {
-
-    // Loop through vector until finding the correct thing
-    for (int i=0;i<types.size;i++) {
-        if (strcmp(id,types[i].getID())) {
-            bool returnVal = types[i].writeSample(addr_next_available,flash);
-            if(returnVal) {addr_next_available += types[i].getDataSize();}
-            return returnVal;
-        }
-    }
-    return false;
 }
