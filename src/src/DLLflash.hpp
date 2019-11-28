@@ -3,26 +3,31 @@
 #include "StructDefs.hpp"
 #include "SPIMemory.h"
 
-template <class T>
 class DLLtype {
     private:
-        T prevData;
-        T currData;
-        T* refData = NULL;
-        uint32_t head = -1;
-        uint32_t tail = -1;
-        int dataSize = 0;
+        void* prevBuffer = NULL; // Buffer of previous sample
+        void* currBuffer = NULL; // Buffer of current sample
+        void* writeBuffer = NULL; // Buffer of data to be written
+        void* refData = NULL; // Pointer to struct containing data
+        uint32_t head = -1; // Flash chip addr of head
+        uint32_t tail = -1; // Flash chip addr of tail
+        int dataSize = 0; // Size of one sample (i.e. size of refData)
+        int addrSize; // Size of one flash chip address
+        char id[3];  // Three-character identifier (e.g. IMU)
+
+        bool init();
     public:
         DLLtype();
-        DLLtype(T*);
-        bool writeSample(uint32_t,SPIFlash*);
-        int getDataSize();
+        DLLtype(void*,int);
+        ~DLLtype();
+        bool setType(void*,int);
+        int writeSample(uint32_t,SPIFlash*);
+        bool readSample();
         char* getID();
 
 
 };
 
-template <class T>
 class DLLflash {
     private:
         // Next available address
@@ -31,7 +36,8 @@ class DLLflash {
         SPIFlash* flash = NULL;
     public:
         DLLflash();
-        void addType(void*,int,char*);
+        ~DLLflash();
+        template <class T>
+        void addType(T*,char*);
         bool writeSample(char*);
-
 };
