@@ -1,10 +1,21 @@
+/*
+==================================================
+================    Carter Mak   =================
+================ CU SRL Avionics =================
+================  November, 2019 =================
+==================================================
+*/
+
 #include "DLLflash.hpp"
 
-DLLtype::DLLtype() {
-    addrSize = sizeof(uint32_t);
-}
+DLLtype::DLLtype(void* dataPtr,int dataSize,char* id) {
+    /*
+    Parameterized constructor
+    */
 
-DLLtype::DLLtype(void* dataPtr,int dataSize) {
+    // Set ID
+    strcpy(this->id,id);
+
     // Set values
     refData = dataPtr;
     this->dataSize = dataSize;
@@ -38,6 +49,10 @@ bool DLLtype::init() {
     return true;
 }
 
+void DLLtype::bufferFirstSample() {
+    memcpy(nextBuffer,refData,dataSize);
+}
+
 bool DLLtype::setType(void* dataPtr,int dataSize) {
     // Check whether type is already set
     if (dataSize) {return false;}
@@ -49,29 +64,35 @@ bool DLLtype::setType(void* dataPtr,int dataSize) {
     return true;
 }
 
-int DLLtype::writeSample(uint32_t addrNext,SPIFlash* flash) {
+bool DLLtype::writeSample(uint32_t next,SPIFlash* flash) {
     /*
     TODO: The rest of this function
+    - Error checking
     - Correctly assign the head/tail addresses
     - Copy over the correct data
 
-    Returns: Size to be allocated for next sample
     */
 
-    uint32_t curr = tail;
+    this->next = next;
+    uint32_t writeAddr = curr;
 
     // Write next address
-    flash->writeULong(curr,addrNext);
-    curr+=addrSize;
+    flash->writeULong(writeAddr,next);
+    writeAddr+=addrSize;
 
     // Write prev address
-    flash->writeULong(curr,0); // TODO: not sure what to write here
-    curr+=addrSize;
+    flash->writeULong(writeAddr,prev);
+    writeAddr+=addrSize;
 
     for (int i=0;i<dataSize;i++) {
-        flash->writeByte(curr+=1,*(uint8_t*)(currBuffer+i));
+        flash->writeByte(writeAddr+=1,*(uint8_t*)(currBuffer+i));
     }
     
+    // Copy next to curr
+    memcpy(currBuffer,nextBuffer,dataSize);
+
+    // Copy data from reference pointer to next
+    memcpy(nextBuffer,refData,dataSize);
 
     return true;
 }
@@ -79,3 +100,25 @@ int DLLtype::writeSample(uint32_t addrNext,SPIFlash* flash) {
 char* DLLtype::getID() {
     return id;
 }
+
+DLLflash::DLLflash() {}
+
+DLLflash::~DLLflash() {
+    // Free memory
+    for (std::vector<DLLtype*>::iterator it = types.begin();it!=types.end();it++) {
+        delete *it;
+        *it = NULL;
+    }
+}
+
+template <class T>
+void DLLflash::addType(T* data,char* id) {
+
+    int dataSize = sizeof(*data);
+    void* dataPtr = (void*) data;
+
+    DLLtype* newType = new DLLtype(dataPtr,dataSize,id);
+    types.push_back(newType);
+
+}
+bool DLLflash::writeSample(char*) {}
