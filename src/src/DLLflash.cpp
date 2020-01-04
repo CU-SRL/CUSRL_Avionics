@@ -101,7 +101,20 @@ char* DLLtype::getID() {
     return id;
 }
 
-DLLflash::DLLflash() {}
+DLLflash::DLLflash(int flashpin) 
+{
+    DLLflash::flash = new SPIFlash(flashpin);
+
+    // Initialize flash chip
+    if(!flash->begin())
+    {
+      while(true)
+      {
+        Serial.println("Failed to initialize the Flash Chip");
+      }
+    }
+    DLLflash::flashsize = flash->getCapacity();
+}
 
 DLLflash::~DLLflash() {
     // Free memory
@@ -119,6 +132,5 @@ void DLLflash::addType(T* data,char* id) {
 
     DLLtype* newType = new DLLtype(dataPtr,dataSize,id);
     types.push_back(newType);
-
 }
 bool DLLflash::writeSample(char*) {}

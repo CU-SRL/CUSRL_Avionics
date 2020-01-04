@@ -12,6 +12,7 @@
 #include <SPIMemory.h>
 #include <SdFat.h>
 #include "RFM96W.hpp"
+#include "DLLflash.hpp"
 
 struct GPSdata  {
     float lat = 0;
