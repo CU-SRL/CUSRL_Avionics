@@ -133,4 +133,6 @@ void DLLflash::addType(T* data,char* id) {
     DLLtype* newType = new DLLtype(dataPtr,dataSize,id);
     types.push_back(newType);
 }
-bool DLLflash::writeSample(char*) {}
+bool DLLflash::writeSample(char*) {
+    return true;
+}
