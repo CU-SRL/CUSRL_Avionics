@@ -38,6 +38,7 @@ class DLLtype {
 
         bool init();
         void bufferFirstSample();
+        bool buffer2flash(uint32_t,SPIflash*);
     public:
         DLLtype(void*,int,char*);
         ~DLLtype();

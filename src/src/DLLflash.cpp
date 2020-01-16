@@ -53,6 +53,10 @@ void DLLtype::bufferFirstSample() {
     memcpy(nextBuffer,refData,dataSize);
 }
 
+bool DLLtype::buffer2flash(uint32_t writeAddr,SPIflash* flash) {
+    
+}
+
 bool DLLtype::setType(void* dataPtr,int dataSize) {
     // Check whether type is already set
     if (dataSize) {return false;}
