@@ -8,7 +8,7 @@
 
 #include <Arduino.h>
 #include<vector>
-#include "StructDefs.hpp"
+// #include "StructDefs.hpp"
 #include "SPIMemory.h"
 
 /*
