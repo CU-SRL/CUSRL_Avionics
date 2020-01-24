@@ -129,15 +129,15 @@ void setup() {
     // Hello beep
     berp.hello();
 
-    flash = new DLLflash(10);
+    // flash = new DLLflash(10);
 
     // Initialize file saving
     //saver.initFolder();
 
     // Initialize BNO055 IMU sensor
-    if (!IMU.begin()) {
-        KILLSYSTEM();
-    }
+    // if (!IMU.begin()) {
+    //     KILLSYSTEM();
+    // }
 
     // Initialize MPL3115A2 sensor
     /*if (!BAROM.begin()) {
@@ -153,40 +153,40 @@ void setup() {
     //gps_ptr->eraseLOCUS();
     //gps_ptr->initGPS();
     // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    if(RF_TYPE==1)
-    {
-        GROUND_STATION = new RFM96W_Server(16, 14, hardware_spi);
-    }
-    else if (RF_TYPE==0)
-    {
-        CLIENT = new RFM96W_Client(16, 14, hardware_spi);
-    }
+    // if(RF_TYPE==1)
+    // {
+    //     GROUND_STATION = new RFM96W_Server(16, 14, hardware_spi);
+    // }
+    // else if (RF_TYPE==0)
+    // {
+    //     CLIENT = new RFM96W_Client(16, 14, hardware_spi);
+    // }
 
     // Configure IMU thread
-    ThreadIMU->onRun(thread_IMU);
-    ThreadIMU->setInterval(interval_IMU);
+    // ThreadIMU->onRun(thread_IMU);
+    // ThreadIMU->setInterval(interval_IMU);
 
     // Configure Barometer thread
     /*ThreadBAROM->onRun(thread_BAROM);
     ThreadBAROM->setInterval(interval_BAROM);*/
 
     // Configure Accelerometer thread
-    ThreadACCEL->onRun(thread_HIGHG);
-    ThreadACCEL->setInterval(interval_ACCEL);
+    // ThreadACCEL->onRun(thread_HIGHG);
+    // ThreadACCEL->setInterval(interval_ACCEL);
 
     // Configure GPS thread
     //ThreadGPS->onRun(thread_GPS);
     //ThreadGPS->setInterval(interval_GPS);
 
     // Configure RF thread
-    ThreadRF->onRun(thread_RF);
-    ThreadRF->setInterval(interval_RF);
+    // ThreadRF->onRun(thread_RF);
+    // ThreadRF->setInterval(interval_RF);
 
     // Add threads to controller
-    thread_control.add(ThreadIMU);
+    // thread_control.add(ThreadIMU);
     //thread_control.add(ThreadBAROM);
-    thread_control.add(ThreadACCEL);
-    thread_control.add(ThreadRF);
+    // thread_control.add(ThreadACCEL);
+    // thread_control.add(ThreadRF);
     //thread_control.add(ThreadGPS);
 
     // Beep the piezo again
