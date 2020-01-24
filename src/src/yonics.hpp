@@ -1,3 +1,5 @@
+#ifndef _YONICS_HPP_
+#define _YONICS_HPP_
 
 #include <Arduino.h>
 #include <Wire.h>
@@ -11,6 +13,8 @@
 #include <utility/imumaths.h>
 #include <SPIMemory.h>
 #include <SdFat.h>
+#include "RFM96W.hpp"
+#include "register.hpp"
 
 struct GPSdata  {
     float lat = 0;
@@ -19,9 +23,10 @@ struct GPSdata  {
     float speed = 0;
     float angle = 0;
     float sat_num = 0;
+    uint32_t t;
 };
 
-struct Acceldata {
+struct ACCELdata {
     float x;
     float y;
     float z;
@@ -46,87 +51,32 @@ struct BAROMdata {
     uint32_t t = 0;
 };
 
-struct ourTypes {
-    int size = 0; // Size of one sample, in bytes
-    int nSamples = 0; // Number of samples stored on chip
-    uint32_t start_addr = 0; // Start address of this type's allocated memory
-    void* data = NULL;
-    float f = 0;
-};
-
-struct event {
-    uint32_t t;
-    char ident;
-};
-
-class FlashOp {
-    // Class to manage saving data to and reading data from the flash chip
-
-    private:
-        SPIFlash* flash = NULL;
-
-        int nTypes = -1;
-        int maxTypes = 5;
-        ourTypes dataTypes[5];
-        int type_size = 0;
-        ourTypes temp_type;
-
-        int nEvents = -1;
-        int maxEvents = 5;
-        uint32_t event_addr_start = 0;
-        int event_size = 0;
-        event temp_event;
-
-        bool reading = false;
-        bool writing = false;
-
-    public:
-        // init
-        FlashOp();
-        FlashOp(SPIFlash* flash);
-        bool beginRead();
-        bool beginWrite();
-        int addType(int size, int interval, void* data);
-        void addWP(int pin);
-
-        // Writing
-        bool addSample(int ident);
-        bool addEvent(uint32_t t, char ident);
-
-        // Reading
-        bool getType(int ident, int* size);
-        bool getSample(int ident, int sample, void* data);
-        bool getEvent(int index, uint32_t* t, char* ident);
-        bool stopReading();
-};
-
 class SaveSD {
     private:
         bool running = false;
         SdFatSdio sd;
         File of;
-        FlashOp* flash = NULL;
+        char foldername[10];
 
-        IMUdata tempIMU;
-        BAROMdata tempBAROM;
-        Acceldata tempACCEL;
-        GPSdata tempGPS;
+        void printIMU(IMUdata* data);
+        void printBAROM(BAROMdata* data);
+        void printACCEL(ACCELdata* data);
+        void printGPS(GPSdata* data);
 
-        int imuID = 0;
-        int baromID = 1;
-        int accelID = 2;
-        int gpsID = 3;
+        bool openIMU();
+        bool openBAROM();
+        bool openACCEL();
+        bool openGPS();
 
-        void printEVENTS();
-        void printIMU();
-        void printBAROM();
-        void printACCEL();
-        void printGPS();
-        bool openFile();
     public:
         SaveSD();
-        bool savenow();
-        bool addFlashOp(FlashOp* flash);
+
+        bool initFolder();
+        
+        bool sampleIMU(IMUdata* data);
+        bool sampleBAROM(BAROMdata* data);
+        bool sampleACCEL(ACCELdata* data);
+        bool sampleGPS(GPSdata* data);
 };
 
 class AnalogIMU {
@@ -144,7 +94,7 @@ class AnalogIMU {
         AnalogIMU();
         AnalogIMU(int xPin, int yPin, int zPin);
         AnalogIMU(int xPin, int yPin, int zPin, bool highBitDepth);
-        void sample(Acceldata* data);
+        void sample(ACCELdata* data);
 };
 
 class DigitalIMU {
@@ -163,11 +113,10 @@ class DigitalIMU {
 
 class DigitalBAROM {
     private:
-        Adafruit_MPL3115A2 BAROM = Adafruit_MPL3115A2();
     public:
         DigitalBAROM();
         bool begin();
-        void sample(BAROMdata* data);
+        bool sample(BAROMdata* data);
 };
 
 class DigitalGPS {
@@ -205,3 +154,38 @@ class BeepyBOI {
         void  hiBeep();
         void bombBeep();
 };
+
+static bool write_reg(uint8_t i2c, uint8_t addr, uint8_t val)
+{
+	Wire.beginTransmission(i2c);
+	Wire.write(addr);
+	Wire.write(val);
+	return Wire.endTransmission() == 0;
+}
+
+static bool read_regs(uint8_t i2c, uint8_t addr, uint8_t *data, uint8_t num)
+{
+	Wire.beginTransmission(i2c);
+	Wire.write(addr);
+	if (Wire.endTransmission(false) != 0) return false;
+	Wire.requestFrom(i2c, num);
+	if (Wire.available() != num) return false;
+	while (num > 0) {
+		*data++ = Wire.read();
+		num--;
+	}
+	return true;
+}
+
+static bool read_regs(uint8_t i2c, uint8_t *data, uint8_t num)
+{
+	Wire.requestFrom(i2c, num);
+	if (Wire.available() != num) return false;
+	while (num > 0) {
+		*data++ = Wire.read();
+		num--;
+	}
+	return true;
+}
+
+#endif

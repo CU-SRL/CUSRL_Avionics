@@ -2,12 +2,19 @@
 
 DigitalGPS::DigitalGPS(HardwareSerial *ser)
 {
+<<<<<<< HEAD
     Adafruit_GPS *initGPS = new Adafruit_GPS(ser);
     // Initialize MTK3339 GPS Unit
     initGPS->begin(9600);
 
     // Pass the object pointers
     DigitalGPS::GPS = initGPS;
+=======
+    DigitalGPS::GPS = new Adafruit_GPS(ser);
+    // Initialize MTK3339 GPS Unit
+    DigitalGPS::GPS->begin(9600);
+
+>>>>>>> 51ff3efac751bb77e930d8d1d45736bd63eb3926
     DigitalGPS::GPSSerial=ser;
 }
 
@@ -85,7 +92,11 @@ void DigitalGPS::pullRawGPS(/*GPSdata* data*/)
     if(DigitalGPS::GPS->fix)
     {
         //data->altitude = DigitalGPS::GPS->altitude;
+<<<<<<< HEAD
         Serial.print("Altitude: ");
+=======
+        /*Serial.print("Altitude: ");
+>>>>>>> 51ff3efac751bb77e930d8d1d45736bd63eb3926
         Serial.print(DigitalGPS::GPS->altitude);
 
         //data->angle = DigitalGPS::GPS->angle;
@@ -106,6 +117,12 @@ void DigitalGPS::pullRawGPS(/*GPSdata* data*/)
 
         //data->speed = DigitalGPS::GPS->speed;
         Serial.print(" Speed: ");
+<<<<<<< HEAD
         Serial.println(DigitalGPS::GPS->speed);
     }
 }
+=======
+        Serial.println(DigitalGPS::GPS->speed);*/
+    }
+}
+>>>>>>> 51ff3efac751bb77e930d8d1d45736bd63eb3926
