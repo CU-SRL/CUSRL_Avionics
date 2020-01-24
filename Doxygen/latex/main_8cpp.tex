@@ -1,0 +1,573 @@
+\hypertarget{main_8cpp}{}\doxysection{src/src/main.cpp File Reference}
+\label{main_8cpp}\index{src/src/main.cpp@{src/src/main.cpp}}
+{\ttfamily \#include \char`\"{}yonics.\+hpp\char`\"{}}\newline
+Include dependency graph for main.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{main_8cpp_a2e81a3da2c16c2835fbdc871086767ef}{G\+P\+S\+Serial}}~Serial3
+\item 
+\#define \mbox{\hyperlink{main_8cpp_a17595c9fe0c65060057bb29ef5dfbfa5}{G\+P\+S\+E\+C\+HO}}~false
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{main_8cpp_a05b7896c865e7d063f0b3d8b2da7f42d}{thread\+\_\+\+G\+PS}} ()
+\item 
+void \mbox{\hyperlink{main_8cpp_ae469de29626401639bd4169d260f63bb}{thread\+\_\+\+I\+MU}} ()
+\item 
+void \mbox{\hyperlink{main_8cpp_a4c41375613b83f0fbd2935a25f02df66}{thread\+\_\+\+B\+A\+R\+OM}} ()
+\item 
+void \mbox{\hyperlink{main_8cpp_a44c33c06360504ce7ee1b9f69cfda4c9}{thread\+\_\+\+H\+I\+G\+HG}} ()
+\item 
+void \mbox{\hyperlink{main_8cpp_a24855038c09096fbd0c8a171642fece4}{K\+I\+L\+L\+S\+Y\+S\+T\+EM}} ()
+\item 
+void \mbox{\hyperlink{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d}{setup}} ()
+\item 
+void \mbox{\hyperlink{main_8cpp_afe461d27b9c48d5921c00d521181f12f}{loop}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{main_8cpp_a70244d87e02b9a3bba18457f7d91e1e7}{flash\+WP}} = 10
+\item 
+int \mbox{\hyperlink{main_8cpp_aa5e2a3edb939773ede9f135e073daa1b}{flash\+Pin}} = 29
+\item 
+int \mbox{\hyperlink{main_8cpp_a15b1f92890c22bba86b3250b8eb90bdc}{speaker\+Pin}} = 36
+\item 
+int \mbox{\hyperlink{main_8cpp_aa3599c9688392203270ebe86f35f3bab}{high\+G\+\_\+x\+Pin}} = 33
+\item 
+int \mbox{\hyperlink{main_8cpp_a5f8db989585f8fc6b2407dda0d0418ec}{high\+G\+\_\+y\+Pin}} = 34
+\item 
+int \mbox{\hyperlink{main_8cpp_ad747d8c896bc4dd77afc9ec5e3f6cb20}{high\+G\+\_\+z\+Pin}} = 35
+\item 
+int \mbox{\hyperlink{main_8cpp_a7d3830fc9b5a0f282b3074d121c4ab69}{interval\+\_\+\+G\+PS}} = 1/10
+\item 
+int \mbox{\hyperlink{main_8cpp_af38754297fcc74d6651b0846f6b4aeed}{interval\+\_\+\+I\+MU}} = 40
+\item 
+int \mbox{\hyperlink{main_8cpp_a0c6440aedcb935d9a9d7046fd54dcaa0}{interval\+\_\+\+B\+A\+R\+OM}} = 1500
+\item 
+int \mbox{\hyperlink{main_8cpp_a7522a7bba69c3f5e0774a687a53bef26}{interval\+\_\+\+A\+C\+C\+EL}} = 40
+\item 
+Thread\+Controller \mbox{\hyperlink{main_8cpp_a66c34440a84f464579ae67fe52313192}{thread\+\_\+control}} = Thread\+Controller()
+\item 
+Thread $\ast$ \mbox{\hyperlink{main_8cpp_a708a35d1a61bc86357b9d0d40fcd3e9a}{Thread\+G\+PS}} = new Thread()
+\item 
+Thread $\ast$ \mbox{\hyperlink{main_8cpp_a5aec08d68a8871b625cd6f09f16b18e6}{Thread\+I\+MU}} = new Thread()
+\item 
+Thread $\ast$ \mbox{\hyperlink{main_8cpp_ade5c5491880e763e181bdbb379da1cfc}{Thread\+B\+A\+R\+OM}} = new Thread()
+\item 
+Thread $\ast$ \mbox{\hyperlink{main_8cpp_a69999896c0065d0dc97a394292e092c9}{Thread\+A\+C\+C\+EL}} = new Thread()
+\item 
+\mbox{\hyperlink{class_digital_i_m_u}{Digital\+I\+MU}} \mbox{\hyperlink{main_8cpp_a4cef40f0bc9a38c3127ff3d3a4e2be59}{I\+MU}} = \mbox{\hyperlink{class_digital_i_m_u}{Digital\+I\+MU}}(55,0x28)
+\item 
+\mbox{\hyperlink{class_digital_b_a_r_o_m}{Digital\+B\+A\+R\+OM}} \mbox{\hyperlink{main_8cpp_a2b4b06aab897ee5fc489d31ea0d4b86e}{B\+A\+R\+OM}}
+\item 
+\mbox{\hyperlink{class_analog_i_m_u}{Analog\+I\+MU}} \mbox{\hyperlink{main_8cpp_a35380be71e62a587ddac49dcee851992}{H\+I\+G\+HG}} = \mbox{\hyperlink{class_analog_i_m_u}{Analog\+I\+MU}}(\mbox{\hyperlink{main_8cpp_aa3599c9688392203270ebe86f35f3bab}{high\+G\+\_\+x\+Pin}},\mbox{\hyperlink{main_8cpp_a5f8db989585f8fc6b2407dda0d0418ec}{high\+G\+\_\+y\+Pin}},\mbox{\hyperlink{main_8cpp_ad747d8c896bc4dd77afc9ec5e3f6cb20}{high\+G\+\_\+z\+Pin}},true)
+\item 
+\mbox{\hyperlink{struct_g_p_sdata}{G\+P\+Sdata}} \mbox{\hyperlink{main_8cpp_acacd029abd20329095cf98c044d71da3}{gps\+\_\+data}}
+\item 
+\mbox{\hyperlink{struct_i_m_udata}{I\+M\+Udata}} \mbox{\hyperlink{main_8cpp_abfd794080e647e802d40c51c1b3b935f}{imu\+\_\+data}}
+\item 
+\mbox{\hyperlink{struct_b_a_r_o_mdata}{B\+A\+R\+O\+Mdata}} \mbox{\hyperlink{main_8cpp_af540116e69f198568967c74729a86754}{barom\+\_\+data}}
+\item 
+\mbox{\hyperlink{struct_acceldata}{Acceldata}} \mbox{\hyperlink{main_8cpp_abe2070cbed7ad299725be465cc645807}{accel\+\_\+data}}
+\item 
+\mbox{\hyperlink{class_beepy_b_o_i}{Beepy\+B\+OI}} \mbox{\hyperlink{main_8cpp_a7deeb9119fbbfd769dc13882411cfcfe}{berp}} = \mbox{\hyperlink{class_beepy_b_o_i}{Beepy\+B\+OI}}(\mbox{\hyperlink{main_8cpp_a15b1f92890c22bba86b3250b8eb90bdc}{speaker\+Pin}})
+\item 
+uint32\+\_\+t \mbox{\hyperlink{main_8cpp_aa7625741b44e724ed14d9e56624a4707}{G\+P\+S\+Data\+Size}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{main_8cpp_a069cd0b1fa2f8eee2f05da0fb44b4edf}{imu\+Data\+Size}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{main_8cpp_a0ea6db24d49d7b1896c13c5dac3df98e}{barom\+Data\+Size}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{main_8cpp_a4873e0d064119b8f1c73c9b9c414c8e5}{accel\+Data\+Size}}
+\item 
+\mbox{\hyperlink{class_save_s_d}{Save\+SD}} \mbox{\hyperlink{main_8cpp_a14bc2907009356a38f49943056669f1a}{saver}}
+\item 
+\mbox{\hyperlink{class_digital_g_p_s}{Digital\+G\+PS}} $\ast$ \mbox{\hyperlink{main_8cpp_a675915c0eccd70b0397464d818436d52}{gps\+\_\+ptr}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{main_8cpp_a17595c9fe0c65060057bb29ef5dfbfa5}\label{main_8cpp_a17595c9fe0c65060057bb29ef5dfbfa5}} 
+\index{main.cpp@{main.cpp}!GPSECHO@{GPSECHO}}
+\index{GPSECHO@{GPSECHO}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{GPSECHO}{GPSECHO}}
+{\footnotesize\ttfamily \#define G\+P\+S\+E\+C\+HO~false}
+
+
+
+Definition at line 47 of file main.\+cpp.
+
+\mbox{\Hypertarget{main_8cpp_a2e81a3da2c16c2835fbdc871086767ef}\label{main_8cpp_a2e81a3da2c16c2835fbdc871086767ef}} 
+\index{main.cpp@{main.cpp}!GPSSerial@{GPSSerial}}
+\index{GPSSerial@{GPSSerial}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{GPSSerial}{GPSSerial}}
+{\footnotesize\ttfamily \#define G\+P\+S\+Serial~Serial3}
+
+
+
+Definition at line 46 of file main.\+cpp.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{main_8cpp_a24855038c09096fbd0c8a171642fece4}\label{main_8cpp_a24855038c09096fbd0c8a171642fece4}} 
+\index{main.cpp@{main.cpp}!KILLSYSTEM@{KILLSYSTEM}}
+\index{KILLSYSTEM@{KILLSYSTEM}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{KILLSYSTEM()}{KILLSYSTEM()}}
+{\footnotesize\ttfamily void K\+I\+L\+L\+S\+Y\+S\+T\+EM (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 112 of file main.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=282pt]{main_8cpp_a24855038c09096fbd0c8a171642fece4_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=234pt]{main_8cpp_a24855038c09096fbd0c8a171642fece4_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{main_8cpp_afe461d27b9c48d5921c00d521181f12f}\label{main_8cpp_afe461d27b9c48d5921c00d521181f12f}} 
+\index{main.cpp@{main.cpp}!loop@{loop}}
+\index{loop@{loop}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{loop()}{loop()}}
+{\footnotesize\ttfamily void loop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 212 of file main.\+cpp.
+
+\mbox{\Hypertarget{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d}\label{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d}} 
+\index{main.cpp@{main.cpp}!setup@{setup}}
+\index{setup@{setup}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{setup()}{setup()}}
+{\footnotesize\ttfamily void setup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 119 of file main.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{main_8cpp_a4c41375613b83f0fbd2935a25f02df66}\label{main_8cpp_a4c41375613b83f0fbd2935a25f02df66}} 
+\index{main.cpp@{main.cpp}!thread\_BAROM@{thread\_BAROM}}
+\index{thread\_BAROM@{thread\_BAROM}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{thread\_BAROM()}{thread\_BAROM()}}
+{\footnotesize\ttfamily void thread\+\_\+\+B\+A\+R\+OM (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 95 of file main.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=321pt]{main_8cpp_a4c41375613b83f0fbd2935a25f02df66_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=243pt]{main_8cpp_a4c41375613b83f0fbd2935a25f02df66_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{main_8cpp_a05b7896c865e7d063f0b3d8b2da7f42d}\label{main_8cpp_a05b7896c865e7d063f0b3d8b2da7f42d}} 
+\index{main.cpp@{main.cpp}!thread\_GPS@{thread\_GPS}}
+\index{thread\_GPS@{thread\_GPS}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{thread\_GPS()}{thread\_GPS()}}
+{\footnotesize\ttfamily void thread\+\_\+\+G\+PS (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 78 of file main.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=314pt]{main_8cpp_a05b7896c865e7d063f0b3d8b2da7f42d_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=227pt]{main_8cpp_a05b7896c865e7d063f0b3d8b2da7f42d_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{main_8cpp_a44c33c06360504ce7ee1b9f69cfda4c9}\label{main_8cpp_a44c33c06360504ce7ee1b9f69cfda4c9}} 
+\index{main.cpp@{main.cpp}!thread\_HIGHG@{thread\_HIGHG}}
+\index{thread\_HIGHG@{thread\_HIGHG}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{thread\_HIGHG()}{thread\_HIGHG()}}
+{\footnotesize\ttfamily void thread\+\_\+\+H\+I\+G\+HG (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 103 of file main.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=302pt]{main_8cpp_a44c33c06360504ce7ee1b9f69cfda4c9_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=239pt]{main_8cpp_a44c33c06360504ce7ee1b9f69cfda4c9_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{main_8cpp_ae469de29626401639bd4169d260f63bb}\label{main_8cpp_ae469de29626401639bd4169d260f63bb}} 
+\index{main.cpp@{main.cpp}!thread\_IMU@{thread\_IMU}}
+\index{thread\_IMU@{thread\_IMU}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{thread\_IMU()}{thread\_IMU()}}
+{\footnotesize\ttfamily void thread\+\_\+\+I\+MU (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 85 of file main.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=284pt]{main_8cpp_ae469de29626401639bd4169d260f63bb_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=225pt]{main_8cpp_ae469de29626401639bd4169d260f63bb_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{main_8cpp_abe2070cbed7ad299725be465cc645807}\label{main_8cpp_abe2070cbed7ad299725be465cc645807}} 
+\index{main.cpp@{main.cpp}!accel\_data@{accel\_data}}
+\index{accel\_data@{accel\_data}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{accel\_data}{accel\_data}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_acceldata}{Acceldata}} accel\+\_\+data}
+
+
+
+Definition at line 59 of file main.\+cpp.
+
+\mbox{\Hypertarget{main_8cpp_a4873e0d064119b8f1c73c9b9c414c8e5}\label{main_8cpp_a4873e0d064119b8f1c73c9b9c414c8e5}} 
+\index{main.cpp@{main.cpp}!accelDataSize@{accelDataSize}}
+\index{accelDataSize@{accelDataSize}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{accelDataSize}{accelDataSize}}
+{\footnotesize\ttfamily uint32\+\_\+t accel\+Data\+Size}
+
+
+
+Definition at line 73 of file main.\+cpp.
+
+\mbox{\Hypertarget{main_8cpp_a2b4b06aab897ee5fc489d31ea0d4b86e}\label{main_8cpp_a2b4b06aab897ee5fc489d31ea0d4b86e}} 
+\index{main.cpp@{main.cpp}!BAROM@{BAROM}}
+\index{BAROM@{BAROM}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{BAROM}{BAROM}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_digital_b_a_r_o_m}{Digital\+B\+A\+R\+OM}} B\+A\+R\+OM}
+
+
+
+Definition at line 51 of file main.\+cpp.
+
+\mbox{\Hypertarget{main_8cpp_af540116e69f198568967c74729a86754}\label{main_8cpp_af540116e69f198568967c74729a86754}} 
+\index{main.cpp@{main.cpp}!barom\_data@{barom\_data}}
+\index{barom\_data@{barom\_data}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{barom\_data}{barom\_data}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_b_a_r_o_mdata}{B\+A\+R\+O\+Mdata}} barom\+\_\+data}
+
+
+
+Definition at line 58 of file main.\+cpp.
+
+\mbox{\Hypertarget{main_8cpp_a0ea6db24d49d7b1896c13c5dac3df98e}\label{main_8cpp_a0ea6db24d49d7b1896c13c5dac3df98e}} 
+\index{main.cpp@{main.cpp}!baromDataSize@{baromDataSize}}
+\index{baromDataSize@{baromDataSize}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{baromDataSize}{baromDataSize}}
+{\footnotesize\ttfamily uint32\+\_\+t barom\+Data\+Size}
+
+
+
+Definition at line 72 of file main.\+cpp.
+
+\mbox{\Hypertarget{main_8cpp_a7deeb9119fbbfd769dc13882411cfcfe}\label{main_8cpp_a7deeb9119fbbfd769dc13882411cfcfe}} 
+\index{main.cpp@{main.cpp}!berp@{berp}}
+\index{berp@{berp}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{berp}{berp}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_beepy_b_o_i}{Beepy\+B\+OI}} berp = \mbox{\hyperlink{class_beepy_b_o_i}{Beepy\+B\+OI}}(\mbox{\hyperlink{main_8cpp_a15b1f92890c22bba86b3250b8eb90bdc}{speaker\+Pin}})}
+
+
+
+Definition at line 62 of file main.\+cpp.
+
+\mbox{\Hypertarget{main_8cpp_aa5e2a3edb939773ede9f135e073daa1b}\label{main_8cpp_aa5e2a3edb939773ede9f135e073daa1b}} 
+\index{main.cpp@{main.cpp}!flashPin@{flashPin}}
+\index{flashPin@{flashPin}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{flashPin}{flashPin}}
+{\footnotesize\ttfamily int flash\+Pin = 29}
+
+
+
+Definition at line 20 of file main.\+cpp.
+
+\mbox{\Hypertarget{main_8cpp_a70244d87e02b9a3bba18457f7d91e1e7}\label{main_8cpp_a70244d87e02b9a3bba18457f7d91e1e7}} 
+\index{main.cpp@{main.cpp}!flashWP@{flashWP}}
+\index{flashWP@{flashWP}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{flashWP}{flashWP}}
+{\footnotesize\ttfamily int flash\+WP = 10}
+
+
+
+Definition at line 19 of file main.\+cpp.
+
+\mbox{\Hypertarget{main_8cpp_acacd029abd20329095cf98c044d71da3}\label{main_8cpp_acacd029abd20329095cf98c044d71da3}} 
+\index{main.cpp@{main.cpp}!gps\_data@{gps\_data}}
+\index{gps\_data@{gps\_data}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{gps\_data}{gps\_data}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_g_p_sdata}{G\+P\+Sdata}} gps\+\_\+data}
+
+
+
+Definition at line 56 of file main.\+cpp.
+
+\mbox{\Hypertarget{main_8cpp_a675915c0eccd70b0397464d818436d52}\label{main_8cpp_a675915c0eccd70b0397464d818436d52}} 
+\index{main.cpp@{main.cpp}!gps\_ptr@{gps\_ptr}}
+\index{gps\_ptr@{gps\_ptr}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{gps\_ptr}{gps\_ptr}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_digital_g_p_s}{Digital\+G\+PS}}$\ast$ gps\+\_\+ptr}
+
+
+
+Definition at line 76 of file main.\+cpp.
+
+\mbox{\Hypertarget{main_8cpp_aa7625741b44e724ed14d9e56624a4707}\label{main_8cpp_aa7625741b44e724ed14d9e56624a4707}} 
+\index{main.cpp@{main.cpp}!GPSDataSize@{GPSDataSize}}
+\index{GPSDataSize@{GPSDataSize}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{GPSDataSize}{GPSDataSize}}
+{\footnotesize\ttfamily uint32\+\_\+t G\+P\+S\+Data\+Size}
+
+
+
+Definition at line 70 of file main.\+cpp.
+
+\mbox{\Hypertarget{main_8cpp_a35380be71e62a587ddac49dcee851992}\label{main_8cpp_a35380be71e62a587ddac49dcee851992}} 
+\index{main.cpp@{main.cpp}!HIGHG@{HIGHG}}
+\index{HIGHG@{HIGHG}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{HIGHG}{HIGHG}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_analog_i_m_u}{Analog\+I\+MU}} H\+I\+G\+HG = \mbox{\hyperlink{class_analog_i_m_u}{Analog\+I\+MU}}(\mbox{\hyperlink{main_8cpp_aa3599c9688392203270ebe86f35f3bab}{high\+G\+\_\+x\+Pin}},\mbox{\hyperlink{main_8cpp_a5f8db989585f8fc6b2407dda0d0418ec}{high\+G\+\_\+y\+Pin}},\mbox{\hyperlink{main_8cpp_ad747d8c896bc4dd77afc9ec5e3f6cb20}{high\+G\+\_\+z\+Pin}},true)}
+
+
+
+Definition at line 52 of file main.\+cpp.
+
+\mbox{\Hypertarget{main_8cpp_aa3599c9688392203270ebe86f35f3bab}\label{main_8cpp_aa3599c9688392203270ebe86f35f3bab}} 
+\index{main.cpp@{main.cpp}!highG\_xPin@{highG\_xPin}}
+\index{highG\_xPin@{highG\_xPin}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{highG\_xPin}{highG\_xPin}}
+{\footnotesize\ttfamily int high\+G\+\_\+x\+Pin = 33}
+
+
+
+Definition at line 22 of file main.\+cpp.
+
+\mbox{\Hypertarget{main_8cpp_a5f8db989585f8fc6b2407dda0d0418ec}\label{main_8cpp_a5f8db989585f8fc6b2407dda0d0418ec}} 
+\index{main.cpp@{main.cpp}!highG\_yPin@{highG\_yPin}}
+\index{highG\_yPin@{highG\_yPin}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{highG\_yPin}{highG\_yPin}}
+{\footnotesize\ttfamily int high\+G\+\_\+y\+Pin = 34}
+
+
+
+Definition at line 23 of file main.\+cpp.
+
+\mbox{\Hypertarget{main_8cpp_ad747d8c896bc4dd77afc9ec5e3f6cb20}\label{main_8cpp_ad747d8c896bc4dd77afc9ec5e3f6cb20}} 
+\index{main.cpp@{main.cpp}!highG\_zPin@{highG\_zPin}}
+\index{highG\_zPin@{highG\_zPin}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{highG\_zPin}{highG\_zPin}}
+{\footnotesize\ttfamily int high\+G\+\_\+z\+Pin = 35}
+
+
+
+Definition at line 24 of file main.\+cpp.
+
+\mbox{\Hypertarget{main_8cpp_a4cef40f0bc9a38c3127ff3d3a4e2be59}\label{main_8cpp_a4cef40f0bc9a38c3127ff3d3a4e2be59}} 
+\index{main.cpp@{main.cpp}!IMU@{IMU}}
+\index{IMU@{IMU}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{IMU}{IMU}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_digital_i_m_u}{Digital\+I\+MU}} I\+MU = \mbox{\hyperlink{class_digital_i_m_u}{Digital\+I\+MU}}(55,0x28)}
+
+
+
+Definition at line 50 of file main.\+cpp.
+
+\mbox{\Hypertarget{main_8cpp_abfd794080e647e802d40c51c1b3b935f}\label{main_8cpp_abfd794080e647e802d40c51c1b3b935f}} 
+\index{main.cpp@{main.cpp}!imu\_data@{imu\_data}}
+\index{imu\_data@{imu\_data}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{imu\_data}{imu\_data}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_i_m_udata}{I\+M\+Udata}} imu\+\_\+data}
+
+
+
+Definition at line 57 of file main.\+cpp.
+
+\mbox{\Hypertarget{main_8cpp_a069cd0b1fa2f8eee2f05da0fb44b4edf}\label{main_8cpp_a069cd0b1fa2f8eee2f05da0fb44b4edf}} 
+\index{main.cpp@{main.cpp}!imuDataSize@{imuDataSize}}
+\index{imuDataSize@{imuDataSize}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{imuDataSize}{imuDataSize}}
+{\footnotesize\ttfamily uint32\+\_\+t imu\+Data\+Size}
+
+
+
+Definition at line 71 of file main.\+cpp.
+
+\mbox{\Hypertarget{main_8cpp_a7522a7bba69c3f5e0774a687a53bef26}\label{main_8cpp_a7522a7bba69c3f5e0774a687a53bef26}} 
+\index{main.cpp@{main.cpp}!interval\_ACCEL@{interval\_ACCEL}}
+\index{interval\_ACCEL@{interval\_ACCEL}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{interval\_ACCEL}{interval\_ACCEL}}
+{\footnotesize\ttfamily int interval\+\_\+\+A\+C\+C\+EL = 40}
+
+
+
+Definition at line 30 of file main.\+cpp.
+
+\mbox{\Hypertarget{main_8cpp_a0c6440aedcb935d9a9d7046fd54dcaa0}\label{main_8cpp_a0c6440aedcb935d9a9d7046fd54dcaa0}} 
+\index{main.cpp@{main.cpp}!interval\_BAROM@{interval\_BAROM}}
+\index{interval\_BAROM@{interval\_BAROM}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{interval\_BAROM}{interval\_BAROM}}
+{\footnotesize\ttfamily int interval\+\_\+\+B\+A\+R\+OM = 1500}
+
+
+
+Definition at line 29 of file main.\+cpp.
+
+\mbox{\Hypertarget{main_8cpp_a7d3830fc9b5a0f282b3074d121c4ab69}\label{main_8cpp_a7d3830fc9b5a0f282b3074d121c4ab69}} 
+\index{main.cpp@{main.cpp}!interval\_GPS@{interval\_GPS}}
+\index{interval\_GPS@{interval\_GPS}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{interval\_GPS}{interval\_GPS}}
+{\footnotesize\ttfamily int interval\+\_\+\+G\+PS = 1/10}
+
+
+
+Definition at line 27 of file main.\+cpp.
+
+\mbox{\Hypertarget{main_8cpp_af38754297fcc74d6651b0846f6b4aeed}\label{main_8cpp_af38754297fcc74d6651b0846f6b4aeed}} 
+\index{main.cpp@{main.cpp}!interval\_IMU@{interval\_IMU}}
+\index{interval\_IMU@{interval\_IMU}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{interval\_IMU}{interval\_IMU}}
+{\footnotesize\ttfamily int interval\+\_\+\+I\+MU = 40}
+
+
+
+Definition at line 28 of file main.\+cpp.
+
+\mbox{\Hypertarget{main_8cpp_a14bc2907009356a38f49943056669f1a}\label{main_8cpp_a14bc2907009356a38f49943056669f1a}} 
+\index{main.cpp@{main.cpp}!saver@{saver}}
+\index{saver@{saver}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{saver}{saver}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_save_s_d}{Save\+SD}} saver}
+
+
+
+Definition at line 75 of file main.\+cpp.
+
+\mbox{\Hypertarget{main_8cpp_a15b1f92890c22bba86b3250b8eb90bdc}\label{main_8cpp_a15b1f92890c22bba86b3250b8eb90bdc}} 
+\index{main.cpp@{main.cpp}!speakerPin@{speakerPin}}
+\index{speakerPin@{speakerPin}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{speakerPin}{speakerPin}}
+{\footnotesize\ttfamily int speaker\+Pin = 36}
+
+
+
+Definition at line 21 of file main.\+cpp.
+
+\mbox{\Hypertarget{main_8cpp_a66c34440a84f464579ae67fe52313192}\label{main_8cpp_a66c34440a84f464579ae67fe52313192}} 
+\index{main.cpp@{main.cpp}!thread\_control@{thread\_control}}
+\index{thread\_control@{thread\_control}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{thread\_control}{thread\_control}}
+{\footnotesize\ttfamily Thread\+Controller thread\+\_\+control = Thread\+Controller()}
+
+
+
+Definition at line 35 of file main.\+cpp.
+
+\mbox{\Hypertarget{main_8cpp_a69999896c0065d0dc97a394292e092c9}\label{main_8cpp_a69999896c0065d0dc97a394292e092c9}} 
+\index{main.cpp@{main.cpp}!ThreadACCEL@{ThreadACCEL}}
+\index{ThreadACCEL@{ThreadACCEL}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{ThreadACCEL}{ThreadACCEL}}
+{\footnotesize\ttfamily Thread$\ast$ Thread\+A\+C\+C\+EL = new Thread()}
+
+
+
+Definition at line 41 of file main.\+cpp.
+
+\mbox{\Hypertarget{main_8cpp_ade5c5491880e763e181bdbb379da1cfc}\label{main_8cpp_ade5c5491880e763e181bdbb379da1cfc}} 
+\index{main.cpp@{main.cpp}!ThreadBAROM@{ThreadBAROM}}
+\index{ThreadBAROM@{ThreadBAROM}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{ThreadBAROM}{ThreadBAROM}}
+{\footnotesize\ttfamily Thread$\ast$ Thread\+B\+A\+R\+OM = new Thread()}
+
+
+
+Definition at line 40 of file main.\+cpp.
+
+\mbox{\Hypertarget{main_8cpp_a708a35d1a61bc86357b9d0d40fcd3e9a}\label{main_8cpp_a708a35d1a61bc86357b9d0d40fcd3e9a}} 
+\index{main.cpp@{main.cpp}!ThreadGPS@{ThreadGPS}}
+\index{ThreadGPS@{ThreadGPS}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{ThreadGPS}{ThreadGPS}}
+{\footnotesize\ttfamily Thread$\ast$ Thread\+G\+PS = new Thread()}
+
+
+
+Definition at line 38 of file main.\+cpp.
+
+\mbox{\Hypertarget{main_8cpp_a5aec08d68a8871b625cd6f09f16b18e6}\label{main_8cpp_a5aec08d68a8871b625cd6f09f16b18e6}} 
+\index{main.cpp@{main.cpp}!ThreadIMU@{ThreadIMU}}
+\index{ThreadIMU@{ThreadIMU}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{ThreadIMU}{ThreadIMU}}
+{\footnotesize\ttfamily Thread$\ast$ Thread\+I\+MU = new Thread()}
+
+
+
+Definition at line 39 of file main.\+cpp.
+

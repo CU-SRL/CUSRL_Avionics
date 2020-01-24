@@ -1,0 +1,190 @@
+\hypertarget{class_flash_op}{}\doxysection{Flash\+Op Class Reference}
+\label{class_flash_op}\index{FlashOp@{FlashOp}}
+
+
+{\ttfamily \#include $<$yonics.\+hpp$>$}
+
+
+
+Collaboration diagram for Flash\+Op\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=167pt]{class_flash_op__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_flash_op_a5ae02bf53b2644d7d4102ab5a777f371}{Flash\+Op}} ()
+\item 
+\mbox{\hyperlink{class_flash_op_a8c51dcf0e2373ab043c0692c3aa8515d}{Flash\+Op}} (S\+P\+I\+Flash $\ast$flash)
+\item 
+bool \mbox{\hyperlink{class_flash_op_a2d863f5e695cfb91d4e5e1e3d3fecc96}{begin\+Read}} ()
+\item 
+bool \mbox{\hyperlink{class_flash_op_a7f3a12a3455445f44587f87df2008734}{begin\+Write}} ()
+\item 
+int \mbox{\hyperlink{class_flash_op_a3da332a5673e018b027a0c4b1436323b}{add\+Type}} (int size, int interval, void $\ast$data)
+\item 
+void \mbox{\hyperlink{class_flash_op_a6d8ea7e27df57a14e1b735737657c265}{add\+WP}} (int pin)
+\item 
+bool \mbox{\hyperlink{class_flash_op_a5dfd6782efb35401760b94fe003acc4f}{add\+Sample}} (int ident)
+\item 
+bool \mbox{\hyperlink{class_flash_op_aa815edead54f66f067394c3e1ce4f239}{add\+Event}} (uint32\+\_\+t t, char ident)
+\item 
+bool \mbox{\hyperlink{class_flash_op_aab58df9e5da78dcba7654228a8b4556f}{get\+Type}} (int ident, int $\ast$size)
+\item 
+bool \mbox{\hyperlink{class_flash_op_a218c8f7e9d1811cead47e0e8c477171f}{get\+Sample}} (int ident, int sample, void $\ast$data)
+\item 
+bool \mbox{\hyperlink{class_flash_op_a41e31d6f3cbf630be6a5c0553fef5d32}{get\+Event}} (int index, uint32\+\_\+t $\ast$t, char $\ast$ident)
+\item 
+bool \mbox{\hyperlink{class_flash_op_a52e8f4fee90b2fe9d35789e5ea0df692}{stop\+Reading}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line 62 of file yonics.\+hpp.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_flash_op_a5ae02bf53b2644d7d4102ab5a777f371}\label{class_flash_op_a5ae02bf53b2644d7d4102ab5a777f371}} 
+\index{FlashOp@{FlashOp}!FlashOp@{FlashOp}}
+\index{FlashOp@{FlashOp}!FlashOp@{FlashOp}}
+\doxysubsubsection{\texorpdfstring{FlashOp()}{FlashOp()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Flash\+Op\+::\+Flash\+Op (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 3 of file Flash\+Op.\+cpp.
+
+\mbox{\Hypertarget{class_flash_op_a8c51dcf0e2373ab043c0692c3aa8515d}\label{class_flash_op_a8c51dcf0e2373ab043c0692c3aa8515d}} 
+\index{FlashOp@{FlashOp}!FlashOp@{FlashOp}}
+\index{FlashOp@{FlashOp}!FlashOp@{FlashOp}}
+\doxysubsubsection{\texorpdfstring{FlashOp()}{FlashOp()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Flash\+Op\+::\+Flash\+Op (\begin{DoxyParamCaption}\item[{S\+P\+I\+Flash $\ast$}]{flash }\end{DoxyParamCaption})}
+
+
+
+Definition at line 7 of file Flash\+Op.\+cpp.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_flash_op_aa815edead54f66f067394c3e1ce4f239}\label{class_flash_op_aa815edead54f66f067394c3e1ce4f239}} 
+\index{FlashOp@{FlashOp}!addEvent@{addEvent}}
+\index{addEvent@{addEvent}!FlashOp@{FlashOp}}
+\doxysubsubsection{\texorpdfstring{addEvent()}{addEvent()}}
+{\footnotesize\ttfamily bool Flash\+Op\+::add\+Event (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{t,  }\item[{char}]{ident }\end{DoxyParamCaption})}
+
+
+
+Definition at line 143 of file Flash\+Op.\+cpp.
+
+\mbox{\Hypertarget{class_flash_op_a5dfd6782efb35401760b94fe003acc4f}\label{class_flash_op_a5dfd6782efb35401760b94fe003acc4f}} 
+\index{FlashOp@{FlashOp}!addSample@{addSample}}
+\index{addSample@{addSample}!FlashOp@{FlashOp}}
+\doxysubsubsection{\texorpdfstring{addSample()}{addSample()}}
+{\footnotesize\ttfamily bool Flash\+Op\+::add\+Sample (\begin{DoxyParamCaption}\item[{int}]{ident }\end{DoxyParamCaption})}
+
+
+
+Definition at line 121 of file Flash\+Op.\+cpp.
+
+\mbox{\Hypertarget{class_flash_op_a3da332a5673e018b027a0c4b1436323b}\label{class_flash_op_a3da332a5673e018b027a0c4b1436323b}} 
+\index{FlashOp@{FlashOp}!addType@{addType}}
+\index{addType@{addType}!FlashOp@{FlashOp}}
+\doxysubsubsection{\texorpdfstring{addType()}{addType()}}
+{\footnotesize\ttfamily int Flash\+Op\+::add\+Type (\begin{DoxyParamCaption}\item[{int}]{size,  }\item[{int}]{interval,  }\item[{void $\ast$}]{data }\end{DoxyParamCaption})}
+
+
+
+Definition at line 92 of file Flash\+Op.\+cpp.
+
+\mbox{\Hypertarget{class_flash_op_a6d8ea7e27df57a14e1b735737657c265}\label{class_flash_op_a6d8ea7e27df57a14e1b735737657c265}} 
+\index{FlashOp@{FlashOp}!addWP@{addWP}}
+\index{addWP@{addWP}!FlashOp@{FlashOp}}
+\doxysubsubsection{\texorpdfstring{addWP()}{addWP()}}
+{\footnotesize\ttfamily void Flash\+Op\+::add\+WP (\begin{DoxyParamCaption}\item[{int}]{pin }\end{DoxyParamCaption})}
+
+
+
+Definition at line 196 of file Flash\+Op.\+cpp.
+
+\mbox{\Hypertarget{class_flash_op_a2d863f5e695cfb91d4e5e1e3d3fecc96}\label{class_flash_op_a2d863f5e695cfb91d4e5e1e3d3fecc96}} 
+\index{FlashOp@{FlashOp}!beginRead@{beginRead}}
+\index{beginRead@{beginRead}!FlashOp@{FlashOp}}
+\doxysubsubsection{\texorpdfstring{beginRead()}{beginRead()}}
+{\footnotesize\ttfamily bool Flash\+Op\+::begin\+Read (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 15 of file Flash\+Op.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=321pt]{class_flash_op_a2d863f5e695cfb91d4e5e1e3d3fecc96_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_flash_op_a7f3a12a3455445f44587f87df2008734}\label{class_flash_op_a7f3a12a3455445f44587f87df2008734}} 
+\index{FlashOp@{FlashOp}!beginWrite@{beginWrite}}
+\index{beginWrite@{beginWrite}!FlashOp@{FlashOp}}
+\doxysubsubsection{\texorpdfstring{beginWrite()}{beginWrite()}}
+{\footnotesize\ttfamily bool Flash\+Op\+::begin\+Write (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 35 of file Flash\+Op.\+cpp.
+
+\mbox{\Hypertarget{class_flash_op_a41e31d6f3cbf630be6a5c0553fef5d32}\label{class_flash_op_a41e31d6f3cbf630be6a5c0553fef5d32}} 
+\index{FlashOp@{FlashOp}!getEvent@{getEvent}}
+\index{getEvent@{getEvent}!FlashOp@{FlashOp}}
+\doxysubsubsection{\texorpdfstring{getEvent()}{getEvent()}}
+{\footnotesize\ttfamily bool Flash\+Op\+::get\+Event (\begin{DoxyParamCaption}\item[{int}]{index,  }\item[{uint32\+\_\+t $\ast$}]{t,  }\item[{char $\ast$}]{ident }\end{DoxyParamCaption})}
+
+
+
+Definition at line 183 of file Flash\+Op.\+cpp.
+
+\mbox{\Hypertarget{class_flash_op_a218c8f7e9d1811cead47e0e8c477171f}\label{class_flash_op_a218c8f7e9d1811cead47e0e8c477171f}} 
+\index{FlashOp@{FlashOp}!getSample@{getSample}}
+\index{getSample@{getSample}!FlashOp@{FlashOp}}
+\doxysubsubsection{\texorpdfstring{getSample()}{getSample()}}
+{\footnotesize\ttfamily bool Flash\+Op\+::get\+Sample (\begin{DoxyParamCaption}\item[{int}]{ident,  }\item[{int}]{sample,  }\item[{void $\ast$}]{data }\end{DoxyParamCaption})}
+
+
+
+Definition at line 169 of file Flash\+Op.\+cpp.
+
+\mbox{\Hypertarget{class_flash_op_aab58df9e5da78dcba7654228a8b4556f}\label{class_flash_op_aab58df9e5da78dcba7654228a8b4556f}} 
+\index{FlashOp@{FlashOp}!getType@{getType}}
+\index{getType@{getType}!FlashOp@{FlashOp}}
+\doxysubsubsection{\texorpdfstring{getType()}{getType()}}
+{\footnotesize\ttfamily bool Flash\+Op\+::get\+Type (\begin{DoxyParamCaption}\item[{int}]{ident,  }\item[{int $\ast$}]{size }\end{DoxyParamCaption})}
+
+
+
+Definition at line 162 of file Flash\+Op.\+cpp.
+
+\mbox{\Hypertarget{class_flash_op_a52e8f4fee90b2fe9d35789e5ea0df692}\label{class_flash_op_a52e8f4fee90b2fe9d35789e5ea0df692}} 
+\index{FlashOp@{FlashOp}!stopReading@{stopReading}}
+\index{stopReading@{stopReading}!FlashOp@{FlashOp}}
+\doxysubsubsection{\texorpdfstring{stopReading()}{stopReading()}}
+{\footnotesize\ttfamily bool Flash\+Op\+::stop\+Reading (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 73 of file Flash\+Op.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/src/\mbox{\hyperlink{yonics_8hpp}{yonics.\+hpp}}\item 
+src/src/\mbox{\hyperlink{_flash_op_8cpp}{Flash\+Op.\+cpp}}\end{DoxyCompactItemize}
