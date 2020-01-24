@@ -12,6 +12,7 @@
 #include <SdFat.h>
 #include "RFM96W.hpp"
 #include "DLLflash.hpp"
+#include "register.hpp"
 
 struct GPSdata  {
     float lat = 0;
@@ -114,7 +115,7 @@ class DigitalBAROM {
     public:
         DigitalBAROM();
         bool begin();
-        void sample(BAROMdata* data);
+        bool sample(BAROMdata* data);
 };
 
 class DigitalGPS {
@@ -152,3 +153,36 @@ class BeepyBOI {
         void  hiBeep();
         void bombBeep();
 };
+
+static bool write_reg(uint8_t i2c, uint8_t addr, uint8_t val)
+{
+	Wire.beginTransmission(i2c);
+	Wire.write(addr);
+	Wire.write(val);
+	return Wire.endTransmission() == 0;
+}
+
+static bool read_regs(uint8_t i2c, uint8_t addr, uint8_t *data, uint8_t num)
+{
+	Wire.beginTransmission(i2c);
+	Wire.write(addr);
+	if (Wire.endTransmission(false) != 0) return false;
+	Wire.requestFrom(i2c, num);
+	if (Wire.available() != num) return false;
+	while (num > 0) {
+		*data++ = Wire.read();
+		num--;
+	}
+	return true;
+}
+
+static bool read_regs(uint8_t i2c, uint8_t *data, uint8_t num)
+{
+	Wire.requestFrom(i2c, num);
+	if (Wire.available() != num) return false;
+	while (num > 0) {
+		*data++ = Wire.read();
+		num--;
+	}
+	return true;
+}
