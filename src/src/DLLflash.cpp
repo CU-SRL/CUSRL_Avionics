@@ -53,7 +53,7 @@ void DLLtype::bufferFirstSample() {
     memcpy(nextBuffer,refData,dataSize);
 }
 
-bool DLLtype::buffer2flash(uint32_t writeAddr,SPIflash* flash) {
+bool DLLtype::buffer2flash(uint32_t writeAddr,SPIFlash* flash) {
     
 }
 
@@ -107,17 +107,21 @@ char* DLLtype::getID() {
 
 DLLflash::DLLflash(int flashpin) 
 {
-    DLLflash::flash = new SPIFlash(flashpin);
+    // Tell SPIFlash class to yeet the flash chip into action
+    flash = new SPIFlash(flashpin);
 
     // Initialize flash chip
     if(!flash->begin())
     {
-      while(true)
-      {
-        Serial.println("Failed to initialize the Flash Chip");
-      }
+        // If the flash chip doesn't successfully initialize
+        while(true)
+        {
+            // Absolutely spam over Serial, and also don't do anything
+            Serial.println("Failed to initialize the Flash Chip");
+        }
     }
-    DLLflash::flashsize = flash->getCapacity();
+    // Store the size of the flash chip to flashSize
+    flashSize = flash->getCapacity();
 }
 
 DLLflash::~DLLflash() {
@@ -137,4 +141,10 @@ void DLLflash::addType(T* data,char* id) {
     DLLtype* newType = new DLLtype(dataPtr,dataSize,id);
     types.push_back(newType);
 }
-bool DLLflash::writeSample(char*) {}
+
+bool DLLflash::writeSample(char*) {
+
+    // Loop over vector of data types until finding the one with the correct ID
+    // for () {}
+
+}

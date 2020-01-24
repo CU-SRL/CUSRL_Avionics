@@ -39,7 +39,7 @@ class DLLtype {
 
         bool init();
         void bufferFirstSample();
-        bool buffer2flash(uint32_t,SPIflash*);
+        bool buffer2flash(uint32_t,SPIFlash*);
     public:
         DLLtype(void*,int,char*);
         ~DLLtype();
@@ -62,10 +62,12 @@ class DLLflash {
         uint32_t addr_next_available = 0; // Next available address
         std::vector <DLLtype*> types; // Vector of instantiated types
         SPIFlash* flash = NULL; // Pointer to SPIflash object (flash chip)
+        uint32_t flashSize = 0;
 
         bool READ_WRITE = true; // true if in reading mode, false if in writing mode
     public:
         DLLflash();
+        DLLflash(int);
         ~DLLflash();
         template <class T>
         void addType(T*,char*);
