@@ -9,7 +9,8 @@
 #include <Arduino.h>
 #include<vector>
 // #include "StructDefs.hpp"
-#include "SPIMemory.h"
+// #include "SPIMemory.h"
+#include <SPIMemory.h>
 
 /*
 class DLLtype
@@ -61,10 +62,14 @@ class DLLflash {
         uint32_t addr_next_available = 0; // Next available address
         std::vector <DLLtype*> types; // Vector of instantiated types
         SPIFlash* flash = NULL; // Pointer to SPIflash object (flash chip)
+
+        bool READ_WRITE = true; // true if in reading mode, false if in writing mode
     public:
         DLLflash();
         ~DLLflash();
         template <class T>
         void addType(T*,char*);
         bool writeSample(char*);
+        void setToWrite();
+        void setToRead();
 };

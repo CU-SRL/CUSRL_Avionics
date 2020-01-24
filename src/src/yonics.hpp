@@ -9,7 +9,6 @@
 #include "Thread.h"
 #include <ThreadController.h>
 #include <utility/imumaths.h>
-#include <SPIMemory.h>
 #include <SdFat.h>
 #include "RFM96W.hpp"
 #include "DLLflash.hpp"
