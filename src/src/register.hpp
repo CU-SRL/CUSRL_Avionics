@@ -31,7 +31,7 @@
 // WIP FINISH COMMENTS based on the BNO055 Datasheet
                                           // bit 7      ||      bit 6       ||      bit 5       ||      bit 4       ||      bit 3       ||      bit 2       ||      bit 1       ||      bit 0
 
-#define BNO055_AXIS_MAP_SIGN         0x42 //                                                                                            ||Remapped X-Ax Sign||Remapped Y-Ax Sign||Remapped Z-Ax Sign
+#define BNO055_AXIS_MAP_SIGN         0x42 //                                                                                                        ||Remapped X-Ax Sign||Remapped Y-Ax Sign||Remapped Z-Ax Sign
 #define BNO055_AXIS_MAP_CONFIG       0x41 //                                ||        Remapped Z axis value         ||         Remapped Y axis value        ||        Remapped X axis value
 #define BNO055_TEMP_SOURCE           0x40 //                                                                                                                ||          TEMP_Source <1:0>
 #define BNO055_SYS_TRIGGER           0x3F // CLK_SEL    ||     RST_INT      ||      RST_SYS     ||                                                                               ||    Self_Test
@@ -153,6 +153,46 @@
 #define MPL3115_CTRL_REG5            0x2A // Control Register 5
 #define MPL3115_OFF_P                0x2B // Pressure Data User Offset
 #define MPL3115_OFF_T                0x2C // Temperature Data User Offset
-#define MPL3115_OFF_H                0x2D // Altitude Data User Offset Register
+#define MPL3115_OFF_H                0x2D // Altitude Data User Offset Register                
+
+//-------------------------------------------------------
+//                  IAM-20380 Registers
+//-------------------------------------------------------
+
+#define IAM20380_SELF_TEST_X_GYRO   0X00  //Gyro Self Test 
+#define IAM20380_SELF_TEST_Y_GYRO   0X01  //^^               
+#define IAM20380_SELF_TEST_Z_GYRO   0X02  //^^
+#define IAM20380_XG_OFFS_USRH       0X13  //Remove DC Bias [15:8]
+#define IAM20380_XG_OFFS_USRL       0X14  //Remove DC Bias [7:0]
+#define IAM20380_YG_OFFS_USRH       0X15  //Remove DC Bias [15:8]
+#define IAM20380_YG_OFFS_USRL       0X16  //Remove DC Bias [7:0]
+#define IAM20380_ZG_OFFS_USRH       0X17  //Remove DC Bias [15:8]  
+#define IAM20380_ZG_OFFS_USRL       0X18  //Remove DC Bias [7:0]
+#define IAM20380_SMPLRT_DIV         0X19  //Divide Internal Sample Rate 
+#define IAM20380_CONFIG             0X1A  //SEE TABLE 14
+#define IAM20380_GYRO_CONFIG        0X1B  //SEE SECTION 9.10 
+#define IAM20380_LP_MODE_CFG        0X1E  //Low Power Mode CONFIG  SEE Table 15
+#define IAM20380_FIFO_EN            0X23  //FIFO ENABLE 
+#define IAM20380_FSYNC_INT          0X36  //FSYNC Interupt Status
+#define IAM20380_INT_PIN_CFG        0X37  //INT/DRDY PIN / BYPASS ENABLE CONFIGURATION
+#define IAM20380_INT_ENABLE         0X38  //Interupt Enable
+#define IAM20380_INT_STATUS         0X3A  //Interupt Status
+#define IAM20380_TEMP_OUT_H         0X41  //Temperature Measurements 
+#define IAM20380_TEMP_OUT_L         0X42  //^^
+#define IAM20380_GYRO_XOUT_H        0X43  //Gyroscope Measurements 
+#define IAM20380_GYRO_XOUT_L        0X44  //^^
+#define IAM20380_GYRO_YOUT_H        0X45  //^^
+#define IAM20380_GYRO_YOUT_L        0X46  //^^
+#define IAM20380_GYRO_ZOUT_H        0X47  //^^
+#define IAM20380_GYRO_ZOUT_L        0X48  //^^
+#define IAM20380_SIGNAL_PATH_RESET  0X68  //Signal Path Reset 
+#define IAM20380_USER_CTRL          0X6A  //User Control 
+#define IAM20380_PWR_MGMT_1         0X6B  //Power Managment 1 
+#define IAM20380_PWR_MGMT_2         0X6C  //Power Managment 2
+#define IAM20380_FIFO_COUNTH        0X72  //FIFO Count Register
+#define IAM20380_FIFO_COUNTL        0X73  //^^
+#define IAM20380_FIFO_R_W           0X74  //FIFO Read/Write
+#define IAM20380_WHO_AM_1           0X75  //Device Indicator 
+
 
 #endif
