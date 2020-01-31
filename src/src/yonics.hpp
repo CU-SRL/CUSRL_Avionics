@@ -106,7 +106,6 @@ class DigitalIMU {
         DigitalIMU(int32_t sensorID, uint8_t address);
         bool begin();
         void sample(IMUdata* data);
-        
 };
 
 class DigitalBAROM {

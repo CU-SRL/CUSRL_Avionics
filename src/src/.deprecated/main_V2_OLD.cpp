@@ -44,7 +44,7 @@ Thread* ThreadACCEL = new Thread();
 // Define the GPS hardware serial port
 #define GPSSerial Serial3
 // Initialize the GPS on the hardware port
-//Adafruit_GPS GPS(&GPSSerial);
+// Adafruit_GPS GPS(&GPSSerial);
 #define GPSECHO false // False to turn off echoing of GPS Data to Serial
 
 // Initializes Sensors

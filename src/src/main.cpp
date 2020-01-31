@@ -167,8 +167,8 @@ void setup() {
     // ThreadIMU->setInterval(interval_IMU);
 
     // Configure Barometer thread
-    /*ThreadBAROM->onRun(thread_BAROM);
-    ThreadBAROM->setInterval(interval_BAROM);*/
+    ThreadBAROM->onRun(thread_BAROM);
+    ThreadBAROM->setInterval(interval_BAROM);
 
     // Configure Accelerometer thread
     // ThreadACCEL->onRun(thread_HIGHG);
@@ -184,7 +184,7 @@ void setup() {
 
     // Add threads to controller
     // thread_control.add(ThreadIMU);
-    //thread_control.add(ThreadBAROM);
+    thread_control.add(ThreadBAROM);
     // thread_control.add(ThreadACCEL);
     // thread_control.add(ThreadRF);
     //thread_control.add(ThreadGPS);
