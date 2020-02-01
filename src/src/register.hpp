@@ -155,4 +155,46 @@
 #define MPL3115_OFF_T                0x2C // Temperature Data User Offset
 #define MPL3115_OFF_H                0x2D // Altitude Data User Offset Register
 
+
+//-------------------------------------------------------
+//                  AK8963C Registers
+//-------------------------------------------------------
+#define AK8963C_WAI                  0x0H // Device ID
+#define AK8963C_INFO                 0x1H // Information
+#define AK8963C_STI                  0x2H // Status I (Data Status)
+#define AK8963C_HXL                  0x3H // X-axis Data <7:0>
+#define AK8963C_HXH                  0x4H // X-axis Data <15:8>
+#define AK8963C_HYL                  0x5H // Y-axis Data <7:0>
+#define AK8963C_HYH                  0x6H // Y-axis Data <15:8>
+#define AK8963C_HZL                  0x7H // Z-axis Data <7:0>
+#define AK8963C_HZH                  0x8H // Z-axis Data <15:8>
+#define AK8963C_ST2                  0x9H // Data Status (Status 2)
+#define AK8963C_CNTL1                0xAH // Control 1(Function Control)
+#define AK8963C_CNTL2                0xBH // Control 2(Function Control)
+#define AK8963C_ASTC                 0xCH // Self-Test
+#define AK8963C_TS1                  0xDH // Test 1 (DO NOT ACCESS)
+#define AK8963C_TS2                  0xEH // Test 2 (DO NOT ACCESS)
+#define AK8963C_I2DCIS               0xFH // I2C Disable
+#define AK8963C_ASAX                 1x0H // X-axis Sensitivity Adjustment Value (Fuse ROM)
+#define AK8963C_ASAY                 1x1H // Y-axis Sensitivity Adjustment Value (Fuse ROM)
+#define AK8963C_ASAZ                 1x2H // Z-axis Sensitivity Adjustment Value (Fuse ROM)
+#define AK8963C_RSV                  1x3H // Reserved (DO NOT ACCESS)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #endif
