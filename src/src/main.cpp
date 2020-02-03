@@ -28,6 +28,9 @@ int interval_ACCEL = 50;
 int interval_GPS = 1/10;
 int interval_RF = 2000;
 
+// Fire Main altitude (m)
+int fireAtAlt = 500;
+
 // ========== PROTOTHREADING ===========
 
 // ThreadController that will control all threads
@@ -38,6 +41,7 @@ Thread* ThreadIMU = new Thread();
 Thread* ThreadBAROM = new Thread();
 Thread* ThreadACCEL = new Thread();
 Thread* ThreadRF = new Thread();
+Thread* ThreadPyro = new Thread();
 //Thread* ThreadGPS = new Thread();
 
 // ========== SENSORS AND DATA ==========
@@ -47,7 +51,7 @@ Thread* ThreadRF = new Thread();
 #define GPSECHO false // False to turn off echoing of GPS Data to Serial
 
 // Initializes Sensor classes
-DigitalIMU IMU = DigitalIMU(55,0x28);
+DigitalIMU IMU = new DigitalIMU(55,0x28);
 DigitalBAROM BAROM;
 AnalogIMU HIGHG = AnalogIMU(highG_xPin,highG_yPin,highG_zPin,true);
 
@@ -61,6 +65,12 @@ GPSdata gps_data;
 IMUdata imu_data;
 BAROMdata barom_data;
 ACCELdata accel_data;
+
+
+//pyro-tekniks
+pyroPorts pyro(fireAtAlt, &barom_data);
+
+intAndFilter filter(&imu_data);
 
 // Piezo beeper!
 BeepyBOI berp = BeepyBOI(speakerPin);
@@ -90,6 +100,14 @@ void thread_BAROM() {
     BAROM.sample(&barom_data);
 
     //saver.sampleBAROM(&barom_data);
+}
+
+void thread_pyro(){
+    //check and fire if...
+    pyro.fireAtApogee();
+
+    pyro.fireAtAlt(&barom_data);
+
 }
 
 void thread_HIGHG() {
@@ -168,6 +186,11 @@ void setup() {
     // Configure Barometer thread
     ThreadBAROM->onRun(thread_BAROM);
     ThreadBAROM->setInterval(interval_BAROM);
+    
+    //configure pyro thread
+    ThreadPyro->onRun(thread_pyro);
+    ThreadPyro->setInterval(interval_Barom);
+    
 
     // Configure Accelerometer thread
     // ThreadACCEL->onRun(thread_HIGHG);
@@ -184,6 +207,7 @@ void setup() {
     // Add threads to controller
     // thread_control.add(ThreadIMU);
     thread_control.add(ThreadBAROM);
+    thread_control.add(ThreadPyro);
     // thread_control.add(ThreadACCEL);
     // thread_control.add(ThreadRF);
     // thread_control.add(ThreadGPS);

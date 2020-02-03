@@ -13,6 +13,8 @@
 #include <SdFat.h>
 #include "RFM96W.hpp"
 #include "register.hpp"
+#include <Eigen/Dense>
+#include <math.h>
 
 struct GPSdata  {
     float lat = 0;
@@ -151,6 +153,75 @@ class BeepyBOI {
         void midBeep();
         void  hiBeep();
         void bombBeep();
+};
+
+class pyroPorts {
+    private:
+        int fireAlt;
+
+        int pyro1 = 24;
+        int pyro2 = 25;
+        int pyro3 = 26;
+        int pyro4 = 27;
+        // ^^^^^^^^^^^^ up to date with "teensy" page in pin allocations
+    
+        BAROMdata* BAROM_ptr;
+    public:
+        pyroPorts(int fireAlt, BAROMdata* BAROM_ptr);
+        void fireAtApogee();
+        void fireAtAlt();
+};
+
+class intAndFilter{
+    private:
+        // some of the basic stuff for rk4
+        // this one only integrates for velocity in the z_hat direction bc it's only need for drogue
+        //deployment at apogee
+        // double zVel_n = 0; //velocity in the z_hat direction
+        // double dzVel_dtminus //the last accel data point
+        // double dzVel_dt; //discrete acceleration in the z_hat direction at the instant time_n
+        // double zVel_0 = 0; // our initial velocity in the z_hat direction, is 0 at launch
+        // double zVel_nplus; // the velocity in the z_hat direction at time_nplus
+
+        // double zTheta_nplus; //cos of this angle is the direction of the rocket relative to a flat earth
+       
+        double a_x = 0;
+        double a_y = 0;
+        double a_z = 0;
+
+        double v_x = 0;
+        double v_y = 0;
+        double v_z = 0;
+
+        double v_xB = 0;
+        double v_yB = 0;
+        double v_zB = 0;
+
+        double alpha_x = 0;
+        double alpha_y = 0;
+        double alpha_z = 0;
+
+        double omega_x = 0;
+        double omega_y = 0;
+        double omega_z = 0;
+
+        double theta_x = 0;
+        double theta_y = 0;
+        double theta_z = 0;
+
+        double g = 9.81; // this changes to appogee--need look up table
+
+        uint32_t t_minus = 0; //one h ago
+        uint32_t t_n = 0; //current time
+       
+        
+        IMUdata* IMU_ptr = nullptr;
+   
+    public:
+        // intAndFilter();
+        intAndFilter(IMUdata* IMU_ptr);
+        double integrate();
+
 };
 
 static bool write_reg(uint8_t i2c, uint8_t addr, uint8_t val)
