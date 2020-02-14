@@ -49,6 +49,13 @@ struct BAROMdata {
     uint32_t t = 0;
 };
 
+struct MAGNOdata {
+    float x = 0;
+    float y = 0;
+    float z = 0;
+    uint32_t t;
+};
+
 class SaveSD {
     private:
         bool running = false;
@@ -133,6 +140,14 @@ class DigitalGPS {
         void refresh_GPSData(bool GPSECHO);
         void pullGPSFlashData();
         void pullRawGPS(/*GPSdata* data*/);
+};
+
+class DigitalMAGNO {
+    private:
+    public:
+        DigitalMAGNO();
+        ~DigitalMAGNO();
+        bool begin();
 };
 
 class BeepyBOI {
