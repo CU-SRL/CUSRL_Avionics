@@ -7,20 +7,20 @@ bool DigitalBAROM::begin()
     const uint8_t i2c_addr=MPL3115_I2C_ADDR;
     uint8_t b;
 
-	if (!read_regs(i2c_addr, MPL3115_WHO_AM_I, &b, 1)) return false;
+	if (!I2C::read_regs(i2c_addr, MPL3115_WHO_AM_I, &b, 1)) return false;
 	if (b != 0xC4) return false;
 
 	// place into standby mode
-	if (!write_reg(i2c_addr, MPL3115_CTRL_REG1, 0)) return false;
+	if (!I2C::write_reg(i2c_addr, MPL3115_CTRL_REG1, 0)) return false;
 
     // switch to 34ms
-	if (!write_reg(i2c_addr, MPL3115_CTRL_REG1, 0x98)) return false;
+	if (!I2C::write_reg(i2c_addr, MPL3115_CTRL_REG1, 0x98)) return false;
 
 	// switch to active, altimeter mode, polling mode
-	if (!write_reg(i2c_addr, MPL3115_CTRL_REG1, 0xB9)) return false;
+	if (!I2C::write_reg(i2c_addr, MPL3115_CTRL_REG1, 0xB9)) return false;
 
 	// enable events
-	if (!write_reg(i2c_addr, MPL3115_PT_DATA_CFG, 0x07)) return false;
+	if (!I2C::write_reg(i2c_addr, MPL3115_PT_DATA_CFG, 0x07)) return false;
 	return true;
 }
 
@@ -36,10 +36,10 @@ bool DigitalBAROM::sample(BAROMdata* data) {
 	if (usec + 500 < usec_history) return false;
 
     // GRAB DATA and stick into buffer
-	if (!read_regs(i2c_addr, 0x00, buf, 1)) return false;
+	if (!I2C::read_regs(i2c_addr, 0x00, buf, 1)) return false;
 	if (buf[0] == 0) return false;
 
-	if (!read_regs(i2c_addr, buf, 6)) return false;
+	if (!I2C::read_regs(i2c_addr, buf, 6)) return false;
 
     // Updating time.
 	usec_since -= usec;
@@ -61,4 +61,6 @@ bool DigitalBAROM::sample(BAROMdata* data) {
     Serial.println(data->temperature);
 
     data->t = millis();
+
+	return true;
 }

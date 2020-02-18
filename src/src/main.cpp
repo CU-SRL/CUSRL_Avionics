@@ -12,187 +12,70 @@
 /***************************************************************/
 #include "yonics.hpp"
 
-
-// ========== DEFINE SOME VARS ==========
-
-// Pin assignments
-int speakerPin = 2;
-int highG_xPin = 33;
-int highG_yPin = 34;
-int highG_zPin = 35;
-
-// Intervals (ms)
-int interval_IMU = 45;
-int interval_BAROM = 2000;
-int interval_ACCEL = 50;
-int interval_GPS = 1/10;
-int interval_RF = 2000;
-
-// ========== PROTOTHREADING ===========
-
-// ThreadController that will control all threads
-ThreadController thread_control = ThreadController();
-
-// Throw some threads on the heap
-Thread* ThreadIMU = new Thread();
-Thread* ThreadBAROM = new Thread();
-Thread* ThreadACCEL = new Thread();
-Thread* ThreadRF = new Thread();
-//Thread* ThreadGPS = new Thread();
-
-// ========== SENSORS AND DATA ==========
-
-// Define the GPS hardware serial port
-#define GPSSerial Serial3
-#define GPSECHO false // False to turn off echoing of GPS Data to Serial
-
-// Initializes Sensor classes
-DigitalIMU IMU = DigitalIMU(55,0x28);
-DigitalBAROM BAROM;
-AnalogIMU HIGHG = AnalogIMU(highG_xPin,highG_yPin,highG_zPin,true);
-
-#define RF_TYPE 0 // SERVER(1) or CLIENT(0)
-
-RFM96W_Server *GROUND_STATION;
-RFM96W_Client *CLIENT;
-
-// Variables to store sensor data
-GPSdata gps_data;
-IMUdata imu_data;
-BAROMdata barom_data;
-ACCELdata accel_data;
-
-// Piezo beeper!
-BeepyBOI berp = BeepyBOI(speakerPin);
-
-// ========== DATA SAVING ==========
-
-
-SaveSD saver;
-DigitalGPS* gps_ptr;
-DLLflash* flash;
-
-void thread_GPS() {
-    //saver.sampleGPS(&gps_data);
-    // Refresh the GPS Data
-    gps_ptr->refresh_GPSData(GPSECHO);
-    gps_ptr->pullRawGPS(/*&gps_data*/);
-}
-
 void thread_IMU() {
-    // Sample IMU
-    IMU.sample(&imu_data);
-
-    //saver.sampleIMU(&imu_data);
+    INITS::IMU.sample(&INITS::imu_data); /*!< Sample the IMU by calling the IMU Sample function */
 }
 
 void thread_BAROM() {
-    // Sample barometer
-    BAROM.sample(&barom_data);
-
-    //saver.sampleBAROM(&barom_data);
+    INITS::BAROM.sample(&INITS::barom_data); /*!< Sample barometer by calling the BAROM Sample function */
 }
 
 void thread_HIGHG() {
-    // Sample high-g accelerometer
-    HIGHG.sample(&accel_data);
-
-    //saver.sampleACCEL(&accel_data);
-}
-
-void thread_RF() {
-    float float_data = imu_data.gyro_fused[0];
-    // Proxy array of uint8_t values
-    uint8_t proxyArr[sizeof(float)];
-    // Populate array with zeros
-    for (int i=0;i<sizeof(float);i++) {proxyArr[i] = 0;}
-    // Copy float data to array
-    memcpy(&proxyArr,&float_data,sizeof(float));
-
-    CLIENT->loop(proxyArr);
+    INITS::HIGHG.sample(&INITS::accel_data); /*!< Sample high-g accelerometer by calling the HIGHG Sample function */
 }
 
 void KILLSYSTEM() {
+    /*! TO RESET THE SYSTEM POWER MUST BE REMOVED AND THEN REAPPLIED */
     while(true) {
-        delay(500); // Just to make it do something
-        berp.error();
+        delay(500);
+        INITS::berp.error(); /*! Continous loud obnoxious beeping to alert that the system is kill */
     }
 }
 
 void setup() {
 
-    delay(2500);
+    delay(2500); /*!< Wait 2.5 seconds before starting everything up */
 
-    // Start serial
-    Serial.begin(115200);
+    Serial.begin(115200); /*!< Start serial comms */
 
-    // Hello beep
-    berp.hello();
+    INITS::berp.hello(); /*!< Hello beep */
 
-    // flash = new DLLflash(10);
+    INITS::flash = new DLLflash(10); /*!< STILL VERY WIP FLASH INITIALIZATION */
 
-    // Initialize file saving
-    //saver.initFolder();
-
-    // Initialize BNO055 IMU sensor
-    // if (!IMU.begin()) {
-    //     KILLSYSTEM();
-    // }
-
-    // Initialize MPL3115A2 sensor
-    /*if (!BAROM.begin()) {
+    /* Initialize BNO055 IMU sensor */
+    if (!INITS::IMU.begin()) {
         KILLSYSTEM();
-    }*/
+    }
 
-    //gps_ptr = new DigitalGPS(&Serial3);
+    /* Initialize MPL3115A2 sensor */
+    if (!INITS::BAROM.begin()) {
+        KILLSYSTEM();
+    }
 
-    // Initialize the GPS Data Dump
-    //gps_ptr->GPSData_dump_setup();
+    /* Configure IMU thread */
+    PROTOTHREADING::ThreadIMU->onRun(thread_IMU); /*!< Set the ThreadIMU looping function for the ThreadController */
+    PROTOTHREADING::ThreadIMU->setInterval(PROTOTHREADING::interval_IMU); /*!< Set the ThreadIMU refresh rate (Interval) */
 
-    // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    //gps_ptr->eraseLOCUS();
-    //gps_ptr->initGPS();
-    // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    // if(RF_TYPE==1)
-    // {
-    //     GROUND_STATION = new RFM96W_Server(16, 14, hardware_spi);
-    // }
-    // else if (RF_TYPE==0)
-    // {
-    //     CLIENT = new RFM96W_Client(16, 14, hardware_spi);
-    // }
+    /* Configure Barometer thread */
+    PROTOTHREADING::ThreadBAROM->onRun(thread_BAROM); /*!< Set the ThreadBAROM looping function for the ThreadController */
+    PROTOTHREADING::ThreadBAROM->setInterval(PROTOTHREADING::interval_BAROM); /*!< Set the ThreadBAROM refresh rate (Interval) */
 
-    // Configure IMU thread
-    // ThreadIMU->onRun(thread_IMU);
-    // ThreadIMU->setInterval(interval_IMU);
+    /* Configure Accelerometer thread */
+    PROTOTHREADING::ThreadACCEL->onRun(thread_HIGHG); /*!< Set the ThreadACCEL looping function for the ThreadController */
+    PROTOTHREADING::ThreadACCEL->setInterval(PROTOTHREADING::interval_ACCEL); /*!< Set the ThreadACCEL refresh rate (Interval) */
 
-    // Configure Barometer thread
-    ThreadBAROM->onRun(thread_BAROM);
-    ThreadBAROM->setInterval(interval_BAROM);
+    /* Add threads to ThreadController */
+    PROTOTHREADING::thread_control.add(PROTOTHREADING::ThreadIMU); /*!< Add the ThreadIMU to the ThreadController for continous processing */
+    PROTOTHREADING::thread_control.add(PROTOTHREADING::ThreadBAROM); /*!< Add the ThreadBAROM to the ThreadController for continous processing */
+    PROTOTHREADING::thread_control.add(PROTOTHREADING::ThreadACCEL); /*!< Add the ThreadACCEL to the ThreadController for continous processing */
 
-    // Configure Accelerometer thread
-    // ThreadACCEL->onRun(thread_HIGHG);
-    // ThreadACCEL->setInterval(interval_ACCEL);
+    /*! Beep the piezo again */
+    INITS::berp.bombBeep();
 
-    // Configure GPS thread
-    //ThreadGPS->onRun(thread_GPS);
-    //ThreadGPS->setInterval(interval_GPS);
-
-    // Configure RF thread
-    // ThreadRF->onRun(thread_RF);
-    // ThreadRF->setInterval(interval_RF);
-
-    // Add threads to controller
-    // thread_control.add(ThreadIMU);
-    thread_control.add(ThreadBAROM);
-    // thread_control.add(ThreadACCEL);
-    // thread_control.add(ThreadRF);
-    //thread_control.add(ThreadGPS);
-
-    // Beep the piezo again
-    berp.bombBeep();
+    // START LOOP AFTER THIS IN VOID() LOOP
 }
 
 void loop() {
-    thread_control.run();
+    /*!< Loop the ThreadController */
+    PROTOTHREADING::thread_control.run();
 }

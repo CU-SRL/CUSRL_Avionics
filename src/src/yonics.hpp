@@ -1,4 +1,11 @@
+#ifndef _YONICS_HPP_
+#define _YONICS_HPP_
 
+//! HEADER FILES
+/*!
+*   All the main header files that the project uses are linked here.
+*   Libraries, Sensors, Etc...
+*/
 #include <Arduino.h>
 #include <Wire.h>
 #include <SPI.h>
@@ -10,19 +17,14 @@
 #include <ThreadController.h>
 #include <utility/imumaths.h>
 #include <SdFat.h>
-#include "RFM96W.hpp"
 #include "DLLflash.hpp"
 #include "register.hpp"
 
-struct GPSdata  {
-    float lat = 0;
-    float lon = 0;
-    float altitude = 0;
-    float speed = 0;
-    float angle = 0;
-    float sat_num = 0;
-    uint32_t t;
-};
+// MACROS
+/*
+*   Some MACROS that need to be defined beforehand
+*/
+#define GPSSerial Serial3 /*!< Define the GPS hardware Serial Port */
 
 struct ACCELdata {
     float x;
@@ -47,34 +49,6 @@ struct BAROMdata {
     float altitude = 0;
     float temperature = 0;
     uint32_t t = 0;
-};
-
-class SaveSD {
-    private:
-        bool running = false;
-        SdFatSdio sd;
-        File of;
-        char foldername[10];
-
-        void printIMU(IMUdata* data);
-        void printBAROM(BAROMdata* data);
-        void printACCEL(ACCELdata* data);
-        void printGPS(GPSdata* data);
-
-        bool openIMU();
-        bool openBAROM();
-        bool openACCEL();
-        bool openGPS();
-
-    public:
-        SaveSD();
-
-        bool initFolder();
-        
-        bool sampleIMU(IMUdata* data);
-        bool sampleBAROM(BAROMdata* data);
-        bool sampleACCEL(ACCELdata* data);
-        bool sampleGPS(GPSdata* data);
 };
 
 class AnalogIMU {
@@ -117,23 +91,6 @@ class DigitalBAROM {
         bool sample(BAROMdata* data);
 };
 
-class DigitalGPS {
-    private:
-    public:
-        Adafruit_GPS* GPS;
-        HardwareSerial* GPSSerial;
-
-        DigitalGPS(HardwareSerial *ser);
-
-        void dummyPrint();
-        void initGPS();
-        void eraseLOCUS();
-        void GPSData_dump_setup();
-        void refresh_GPSData(bool GPSECHO);
-        void pullGPSFlashData();
-        void pullRawGPS(/*GPSdata* data*/);
-};
-
 class BeepyBOI {
     private:
         int pin;
@@ -153,35 +110,87 @@ class BeepyBOI {
         void bombBeep();
 };
 
-static bool write_reg(uint8_t i2c, uint8_t addr, uint8_t val)
+/*!
+*   In this namespace the I2C drivers are declared and then defined for use with the I2C protocol
+*   In order to achieve I2C communication, the Arduino Wire library is used to simplify the complexity of the functions.
+*/
+namespace I2C
 {
-	Wire.beginTransmission(i2c);
-	Wire.write(addr);
-	Wire.write(val);
-	return Wire.endTransmission() == 0;
-}
+    extern bool write_reg(uint8_t i2c, uint8_t addr, uint8_t val);
 
-static bool read_regs(uint8_t i2c, uint8_t addr, uint8_t *data, uint8_t num)
-{
-	Wire.beginTransmission(i2c);
-	Wire.write(addr);
-	if (Wire.endTransmission(false) != 0) return false;
-	Wire.requestFrom(i2c, num);
-	if (Wire.available() != num) return false;
-	while (num > 0) {
-		*data++ = Wire.read();
-		num--;
-	}
-	return true;
-}
+    extern bool read_regs(uint8_t i2c, uint8_t addr, uint8_t *data, uint8_t num);
 
-static bool read_regs(uint8_t i2c, uint8_t *data, uint8_t num)
+    extern bool read_regs(uint8_t i2c, uint8_t *data, uint8_t num);
+};
+
+/*!
+*   All pointers and objects that are required in the main file are put
+*   within the INITS namespace to avoid global variables and their implications
+*/
+namespace INITS
 {
-	Wire.requestFrom(i2c, num);
-	if (Wire.available() != num) return false;
-	while (num > 0) {
-		*data++ = Wire.read();
-		num--;
-	}
-	return true;
-}
+    // PIN ASSIGNMENTS
+    extern int speakerPin;
+    extern int highG_xPin;
+    extern int highG_yPin;
+    extern int highG_zPin;
+
+    // CLASS INITIALIZATIONS
+    extern DigitalIMU IMU;
+    extern DigitalBAROM BAROM;
+    extern AnalogIMU HIGHG;
+    extern BeepyBOI berp;
+
+    // POINTERS
+    extern DLLflash* flash;
+
+    // DATA STRUCTS
+    extern IMUdata imu_data; /*!< The struct IMUData object, or Instance, that holds all IMU data for processing and transmission */
+    extern BAROMdata barom_data; /*!< The struct BAROMdata object, or Instance, that holds all BAROM data for processing and transmission */
+    extern ACCELdata accel_data; /*!< The struct ACCELdata object, or Instance, that holds all the HIGHG Accelerometer data for processing and transmission */
+};
+
+/*!
+*   The protothreading system is implemented by the ArduinoThread library
+*
+*   The Teensy 3.6 / 4.0 micro-controllers are one core, one thread therefore true asynchronous operation cannot be accomplished
+*   This is unfortunate because optimally all sampling of the data should be done at the same time
+*   Therefore in order to work around this limitation, a form of threading was introduced that approaches asynchronous operation
+*   without actually achieving it, aka protothreading
+*    
+*   The way it works is essentially by having a(n) overall controller (i.e. ThreadController class) that manages the timing of all functions
+*   you want to run
+*   Whenever a function has reached the time it needs to be called again the ThreadController will call the the function and interrupt
+*   whatever is currently running
+*
+*   The pro about this is that it also allows us to deal with different intervals that sensors or components require
+*   Such as one component needing more time over the other
+*   Every process interval is based off of the datasheet and its recommendations on sampling time
+*
+*/
+namespace PROTOTHREADING
+{
+    // PROTOTHREADING TIME INTERVALS
+    /*
+    *   Defining the time intervals (in milliseconds) at which to call the "threads"
+    *   
+    *   Every important task (i.e. sampling, writing to flash, RF, etc...) has a "thread"
+    *   and their intervals are defined here.
+    */  
+    extern int interval_IMU; /*!< The interval at which the IMU will refresh */
+    extern int interval_BAROM; /*!< The interval at which the Barometer will refresh */
+    extern int interval_ACCEL; /*!< The inverval at which the High-G Accelerometer will refresh */
+
+    // PROTOTHREADING Declaration and Definitions
+    /*
+    *   All the required thread objects and pointers are declared and defined here
+    */
+    extern ThreadController thread_control; /*!< thread_control is the overarching ThreadController that handles all the timing */
+
+    // Every thread is a pointer that is pointing to an object, or instance, of the Thread class initiated dynimically in order to use them in any scope
+    extern Thread* ThreadIMU; /*!< The pointer that will point to the instance of the Thread for IMU */
+    extern Thread* ThreadBAROM; /*!< The pointer that will point to the instance of the Thread for the Barometeer */
+    extern Thread* ThreadACCEL; /*!< The pointer that will point to the instance of the Thread for the High-G Accelerometer */
+};
+
+#endif
