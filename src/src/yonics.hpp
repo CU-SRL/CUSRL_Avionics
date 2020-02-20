@@ -1,9 +1,13 @@
+/**
+ * @file yonics.hpp
+ * @brief The main header file for the CUSRL_Avionics Code Base
+ */
 #ifndef _YONICS_HPP_
 #define _YONICS_HPP_
 
-//! HEADER FILES
-/*!
-*   All the main header files that the project uses are linked here.
+// HEADER FILES
+/*
+*   All the header files that the project uses are linked here.
 *   Libraries, Sensors, Etc...
 */
 #include <Arduino.h>
@@ -20,12 +24,10 @@
 #include "DLLflash.hpp"
 #include "register.hpp"
 
-// MACROS
-/*
-*   Some MACROS that need to be defined beforehand
+//! HIGH-G Accelerometer Struct
+/*!
+*   This structs holds the ADXL377 sample at a point in time to be stored and processed. 
 */
-#define GPSSerial Serial3 /*!< Define the GPS hardware Serial Port */
-
 struct ACCELdata {
     float x;
     float y;
@@ -33,6 +35,10 @@ struct ACCELdata {
     uint32_t t;
 };
 
+//! IMU Struct
+/*!
+*   This structs holds the BNO055 sample at a point in time to be stored and processed.
+*/
 struct IMUdata {
     double orient_euler[3] = {0,0,0};
     double gyro_fused[3] = {0,0,0};
@@ -44,6 +50,10 @@ struct IMUdata {
     uint32_t t = 0;
 };
 
+//! Barometer Struct
+/*!
+*   This structs holds the MPL3115A2 sample at a point in time to be stored and processed.
+*/
 struct BAROMdata {
     float pressure = 0;
     float altitude = 0;
@@ -51,8 +61,11 @@ struct BAROMdata {
     uint32_t t = 0;
 };
 
+//! ADXL377 High-G Accelerometer Class
+/*!
+*   Class to manage the Adafruit ADXL377 High-G Accelerometer breakout board
+*/
 class AnalogIMU {
-    // Class to manage the Adafruit ADXL377 breakout board
     private:
         int xPin, yPin, zPin;
         int bitDepth;
@@ -69,6 +82,10 @@ class AnalogIMU {
         void sample(ACCELdata* data);
 };
 
+//! BNO055 IMU Class
+/*!
+*   Class to manage the Adafruit BNO055 Absolute Orientation IMU Fusion breakout board
+*/
 class DigitalIMU {
     private:
         Adafruit_BNO055 board;
@@ -82,22 +99,33 @@ class DigitalIMU {
         void sample(IMUdata* data);
 };
 
+//! MPL3115A2 Barometer Class
+/*!
+*   Class to manage the MPL3115A2 I2C breakout board
+*/
 class DigitalBAROM {
     private:
-        Adafruit_MPL3115A2 BAROM = Adafruit_MPL3115A2();
     public:
         DigitalBAROM();
         bool begin();
         bool sample(BAROMdata* data);
 };
 
+//! Piezo Buzzer Class
+/*!
+*   This class handles all the Piezo Buzzer interactions.
+*   The Buzzer will sound certain noises to indicate errors, startup, etc...
+*/
 class BeepyBOI {
     private:
-        int pin;
-        int errTone = 300;
-        int lowTone = 220;
-        int midTone = 440;
-        int  hiTone = 880;
+        int pin; /*<! The pin that the piezo buzzer is connected to. */
+
+        // Some predefined tones for simplicity in the code...
+        // Define all the tones here.
+        int errTone = 300; /*<! Predefined Error Tone */
+        int lowTone = 220; /*<! Predefined Low Tone */
+        int midTone = 440; /*<! Predefined Mid Tone */
+        int  hiTone = 880; /*<! Predefined High Tone */
     public:
         BeepyBOI();
         BeepyBOI(int pin);
@@ -130,19 +158,19 @@ namespace I2C
 namespace INITS
 {
     // PIN ASSIGNMENTS
-    extern int speakerPin;
-    extern int highG_xPin;
-    extern int highG_yPin;
-    extern int highG_zPin;
+    extern int speakerPin; /*!< The Piezo Buzzer pin */
+    extern int highG_xPin; /*!< The High-G Accelerometer X Pin Assignment */
+    extern int highG_yPin; /*!< The High-G Accelerometer Y Pin Assignment */
+    extern int highG_zPin; /*!< The High-G Accelerometer Z Pin Assignment */
 
     // CLASS INITIALIZATIONS
-    extern DigitalIMU IMU;
-    extern DigitalBAROM BAROM;
-    extern AnalogIMU HIGHG;
-    extern BeepyBOI berp;
+    extern DigitalIMU IMU; /*!< The DigitalIMU class object, that will be initialized for the BNO055 IMU */
+    extern DigitalBAROM BAROM; /*!< The DigitalBAROM class object, that will be initialized for the MPL3115A2 Barometer*/
+    extern AnalogIMU HIGHG; /*!< The AnalogIMU class object, that will be initialized for the ADXL377 High-G Accelerometer */
+    extern BeepyBOI berp; /*!< The BeepyBOI class object, that will be initialized for the Piezo Buzzer */
 
     // POINTERS
-    extern DLLflash* flash;
+    extern DLLflash* flash; /*!< The DLLflash pointer that will point to the DLLflash class instance */
 
     // DATA STRUCTS
     extern IMUdata imu_data; /*!< The struct IMUData object, or Instance, that holds all IMU data for processing and transmission */

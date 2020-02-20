@@ -128,7 +128,7 @@ DLLflash::~DLLflash() {
     // Free memory
     for (std::vector<DLLtype*>::iterator it = types.begin();it!=types.end();it++) {
         delete *it;
-        *it = NULL;
+        *it = nullptr;
     }
 }
 
@@ -142,9 +142,8 @@ void DLLflash::addType(T* data,char* id) {
     types.push_back(newType);
 }
 
-bool DLLflash::writeSample(char*) {
-
+bool DLLflash::writeSample(char*) 
+{
     // Loop over vector of data types until finding the one with the correct ID
     // for () {}
-
 }

@@ -1,3 +1,12 @@
+/**
+ * @file main.cpp
+ * @brief The main source file for the CUSRL_Avionics Code Base
+ * 
+ * This source file initializes all the threads and defines them.
+ * Furthermore, the void setup() and void loop() functions are defined here also.
+ * 
+ */
+
 /***************************************************************/
 /*                                                             */
 /*                                                             */
