@@ -1,0 +1,214 @@
+\hypertarget{yonics_8hpp_source}{}\doxysection{yonics.\+hpp}
+\label{yonics_8hpp_source}\index{src/src/yonics.hpp@{src/src/yonics.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 \textcolor{preprocessor}{\#ifndef \_YONICS\_HPP\_}}
+\DoxyCodeLine{00002 \textcolor{preprocessor}{\#define \_YONICS\_HPP\_}}
+\DoxyCodeLine{00003 }
+\DoxyCodeLine{00005 }
+\DoxyCodeLine{00009 \textcolor{preprocessor}{\#include <Arduino.h>}}
+\DoxyCodeLine{00010 \textcolor{preprocessor}{\#include <Wire.h>}}
+\DoxyCodeLine{00011 \textcolor{preprocessor}{\#include <SPI.h>}}
+\DoxyCodeLine{00012 \textcolor{preprocessor}{\#include <Adafruit\_MPL3115A2.h>}}
+\DoxyCodeLine{00013 \textcolor{preprocessor}{\#include <Adafruit\_Sensor.h>}}
+\DoxyCodeLine{00014 \textcolor{preprocessor}{\#include <Adafruit\_BNO055.h>}}
+\DoxyCodeLine{00015 \textcolor{preprocessor}{\#include <Adafruit\_GPS.h>}}
+\DoxyCodeLine{00016 \textcolor{preprocessor}{\#include "Thread.h"}}
+\DoxyCodeLine{00017 \textcolor{preprocessor}{\#include <ThreadController.h>}}
+\DoxyCodeLine{00018 \textcolor{preprocessor}{\#include <utility/imumaths.h>}}
+\DoxyCodeLine{00019 \textcolor{preprocessor}{\#include <SdFat.h>}}
+\DoxyCodeLine{00020 \textcolor{preprocessor}{\#include "\mbox{\hyperlink{_r_f_m96_w_8hpp}{RFM96W.hpp}}"}}
+\DoxyCodeLine{00021 \textcolor{preprocessor}{\#include "\mbox{\hyperlink{_d_l_lflash_8hpp}{DLLflash.hpp}}"}}
+\DoxyCodeLine{00022 \textcolor{preprocessor}{\#include "\mbox{\hyperlink{register_8hpp}{register.hpp}}"}}
+\DoxyCodeLine{00023 }
+\DoxyCodeLine{00025 }
+\DoxyCodeLine{\Hypertarget{yonics_8hpp_source_l00028}\mbox{\hyperlink{yonics_8hpp_a2e81a3da2c16c2835fbdc871086767ef}{00028}} \textcolor{preprocessor}{\#define GPSSerial Serial3 }}
+\DoxyCodeLine{00030 \textcolor{preprocessor}{struct GPSdata  \{}}
+\DoxyCodeLine{00031     \textcolor{keywordtype}{float} lat = 0;}
+\DoxyCodeLine{00032     \textcolor{keywordtype}{float} lon = 0;}
+\DoxyCodeLine{00033     \textcolor{keywordtype}{float} altitude = 0;}
+\DoxyCodeLine{00034     \textcolor{keywordtype}{float} speed = 0;}
+\DoxyCodeLine{00035     \textcolor{keywordtype}{float} angle = 0;}
+\DoxyCodeLine{00036     \textcolor{keywordtype}{float} sat\_num = 0;}
+\DoxyCodeLine{00037     uint32\_t t;}
+\DoxyCodeLine{00038 \};}
+\DoxyCodeLine{00039 }
+\DoxyCodeLine{00040 \textcolor{keyword}{struct }\mbox{\hyperlink{struct_a_c_c_e_ldata}{ACCELdata}} \{}
+\DoxyCodeLine{00041     \textcolor{keywordtype}{float} \mbox{\hyperlink{struct_a_c_c_e_ldata_a20029fa6c5aa627506bf25bb9628917c}{x}};}
+\DoxyCodeLine{00042     \textcolor{keywordtype}{float} \mbox{\hyperlink{struct_a_c_c_e_ldata_a73cebc590cbbc675dcc5142e8159c968}{y}};}
+\DoxyCodeLine{00043     \textcolor{keywordtype}{float} \mbox{\hyperlink{struct_a_c_c_e_ldata_afba4af39591962fd20ae12a34ed1accc}{z}};}
+\DoxyCodeLine{00044     uint32\_t \mbox{\hyperlink{struct_a_c_c_e_ldata_a41591e5a60814f6adcb5b5d1d6631f0e}{t}};}
+\DoxyCodeLine{00045 \};}
+\DoxyCodeLine{00046 }
+\DoxyCodeLine{00047 \textcolor{keyword}{struct }\mbox{\hyperlink{struct_i_m_udata}{IMUdata}} \{}
+\DoxyCodeLine{00048     \textcolor{keywordtype}{double} \mbox{\hyperlink{struct_i_m_udata_aec419cc306af3b00b96b260ba9b475e5}{orient\_euler}}[3] = \{0,0,0\};}
+\DoxyCodeLine{00049     \textcolor{keywordtype}{double} \mbox{\hyperlink{struct_i_m_udata_a12624d29b026a45a053338af91406c88}{gyro\_fused}}[3] = \{0,0,0\};}
+\DoxyCodeLine{00050     \textcolor{keywordtype}{double} \mbox{\hyperlink{struct_i_m_udata_a9fa499e7662b1773aef391dfa2ed24a0}{accel\_fused}}[3] = \{0,0,0\};}
+\DoxyCodeLine{00051     \textcolor{keywordtype}{double} \mbox{\hyperlink{struct_i_m_udata_a58c1c2cf58c6984f8f5ab389a2abf76e}{accel\_raw}}[3] = \{0,0,0\};}
+\DoxyCodeLine{00052     \textcolor{keywordtype}{double} \mbox{\hyperlink{struct_i_m_udata_adc0a275bb1706efad7beecbfd1fffe3f}{gyro\_raw}}[3] = \{0,0,0\};}
+\DoxyCodeLine{00053     \textcolor{keywordtype}{double} \mbox{\hyperlink{struct_i_m_udata_aafe0d61a2501e9aad029df6533cf3424}{magnetometer}}[3] = \{0,0,0\};}
+\DoxyCodeLine{00054     \textcolor{keywordtype}{double} \mbox{\hyperlink{struct_i_m_udata_ac700a2fa6ef29665459b79bca7222bcf}{orient\_quat}}[4] = \{0,0,0,0\}; \textcolor{comment}{// \{w,x,y,z\}}}
+\DoxyCodeLine{00055     uint32\_t \mbox{\hyperlink{struct_i_m_udata_a0519905a9275654027c5ff42d4bcbbd1}{t}} = 0;}
+\DoxyCodeLine{00056 \};}
+\DoxyCodeLine{00057 }
+\DoxyCodeLine{00058 \textcolor{keyword}{struct }\mbox{\hyperlink{struct_b_a_r_o_mdata}{BAROMdata}} \{}
+\DoxyCodeLine{00059     \textcolor{keywordtype}{float} \mbox{\hyperlink{struct_b_a_r_o_mdata_a7d377aa1e75b5cdbc8fa7ebedd6478b2}{pressure}} = 0;}
+\DoxyCodeLine{00060     \textcolor{keywordtype}{float} \mbox{\hyperlink{struct_b_a_r_o_mdata_ad9d347997a99fce14a6685af477367f2}{altitude}} = 0;}
+\DoxyCodeLine{00061     \textcolor{keywordtype}{float} \mbox{\hyperlink{struct_b_a_r_o_mdata_ac39f6e914bb18438c1e0c30cdff682c3}{temperature}} = 0;}
+\DoxyCodeLine{00062     uint32\_t \mbox{\hyperlink{struct_b_a_r_o_mdata_aaac87b3e94b6fa8108b01fef42c204d1}{t}} = 0;}
+\DoxyCodeLine{00063 \};}
+\DoxyCodeLine{00064 }
+\DoxyCodeLine{\Hypertarget{yonics_8hpp_source_l00065}\mbox{\hyperlink{class_save_s_d}{00065}} \textcolor{keyword}{class }\mbox{\hyperlink{class_save_s_d}{SaveSD}} \{}
+\DoxyCodeLine{00066     \textcolor{keyword}{private}:}
+\DoxyCodeLine{00067         \textcolor{keywordtype}{bool} running = \textcolor{keyword}{false};}
+\DoxyCodeLine{00068         SdFatSdio sd;}
+\DoxyCodeLine{00069         File of;}
+\DoxyCodeLine{00070         \textcolor{keywordtype}{char} foldername[10];}
+\DoxyCodeLine{00071 }
+\DoxyCodeLine{00072         \textcolor{keywordtype}{void} printIMU(\mbox{\hyperlink{struct_i_m_udata}{IMUdata}}* data);}
+\DoxyCodeLine{00073         \textcolor{keywordtype}{void} printBAROM(\mbox{\hyperlink{struct_b_a_r_o_mdata}{BAROMdata}}* data);}
+\DoxyCodeLine{00074         \textcolor{keywordtype}{void} printACCEL(\mbox{\hyperlink{struct_a_c_c_e_ldata}{ACCELdata}}* data);}
+\DoxyCodeLine{00075         \textcolor{keywordtype}{void} printGPS(\mbox{\hyperlink{struct_g_p_sdata}{GPSdata}}* data);}
+\DoxyCodeLine{00076 }
+\DoxyCodeLine{00077         \textcolor{keywordtype}{bool} openIMU();}
+\DoxyCodeLine{00078         \textcolor{keywordtype}{bool} openBAROM();}
+\DoxyCodeLine{00079         \textcolor{keywordtype}{bool} openACCEL();}
+\DoxyCodeLine{00080         \textcolor{keywordtype}{bool} openGPS();}
+\DoxyCodeLine{00081 }
+\DoxyCodeLine{00082     \textcolor{keyword}{public}:}
+\DoxyCodeLine{00083         \mbox{\hyperlink{class_save_s_d_a62623d4ba2e432d62dfc233a0956bfad}{SaveSD}}();}
+\DoxyCodeLine{00084 }
+\DoxyCodeLine{00085         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_save_s_d_ac1f221fead3ebe6001b7bd7fb4a8bb1a}{initFolder}}();}
+\DoxyCodeLine{00086         }
+\DoxyCodeLine{00087         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_save_s_d_a5834e36f17666883bc09cc694001a416}{sampleIMU}}(\mbox{\hyperlink{struct_i_m_udata}{IMUdata}}* data);}
+\DoxyCodeLine{00088         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_save_s_d_a758cdb95cd01c44008d8f101f485ee40}{sampleBAROM}}(\mbox{\hyperlink{struct_b_a_r_o_mdata}{BAROMdata}}* data);}
+\DoxyCodeLine{00089         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_save_s_d_a869168a6a80747f252a8f360fd69eaf8}{sampleACCEL}}(\mbox{\hyperlink{struct_a_c_c_e_ldata}{ACCELdata}}* data);}
+\DoxyCodeLine{00090         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_save_s_d_a275e05c515400142e258fbba1cdff070}{sampleGPS}}(\mbox{\hyperlink{struct_g_p_sdata}{GPSdata}}* data);}
+\DoxyCodeLine{00091 \};}
+\DoxyCodeLine{00092 }
+\DoxyCodeLine{\Hypertarget{yonics_8hpp_source_l00093}\mbox{\hyperlink{class_analog_i_m_u}{00093}} \textcolor{keyword}{class }\mbox{\hyperlink{class_analog_i_m_u}{AnalogIMU}} \{}
+\DoxyCodeLine{00094     \textcolor{comment}{// Class to manage the Adafruit ADXL377 breakout board}}
+\DoxyCodeLine{00095     \textcolor{keyword}{private}:}
+\DoxyCodeLine{00096         \textcolor{keywordtype}{int} xPin, yPin, zPin;}
+\DoxyCodeLine{00097         \textcolor{keywordtype}{int} bitDepth;}
+\DoxyCodeLine{00098         \textcolor{keywordtype}{int} offset;}
+\DoxyCodeLine{00099         \textcolor{keywordtype}{float} ratio;}
+\DoxyCodeLine{00100         \textcolor{keywordtype}{int} maxG = 200;}
+\DoxyCodeLine{00101 }
+\DoxyCodeLine{00102         \textcolor{keywordtype}{void} init();}
+\DoxyCodeLine{00103         \textcolor{keywordtype}{float} formatVal(\textcolor{keywordtype}{int} rawVal);}
+\DoxyCodeLine{00104     \textcolor{keyword}{public}:}
+\DoxyCodeLine{00105         \mbox{\hyperlink{class_analog_i_m_u_aba948283550c48b89050745dd0e9adc1}{AnalogIMU}}();}
+\DoxyCodeLine{00106         \mbox{\hyperlink{class_analog_i_m_u_aba948283550c48b89050745dd0e9adc1}{AnalogIMU}}(\textcolor{keywordtype}{int} xPin, \textcolor{keywordtype}{int} yPin, \textcolor{keywordtype}{int} zPin);}
+\DoxyCodeLine{00107         \mbox{\hyperlink{class_analog_i_m_u_aba948283550c48b89050745dd0e9adc1}{AnalogIMU}}(\textcolor{keywordtype}{int} xPin, \textcolor{keywordtype}{int} yPin, \textcolor{keywordtype}{int} zPin, \textcolor{keywordtype}{bool} highBitDepth);}
+\DoxyCodeLine{00108         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_analog_i_m_u_a6d877aa67de677386ffa262f3e931fae}{sample}}(\mbox{\hyperlink{struct_a_c_c_e_ldata}{ACCELdata}}* data);}
+\DoxyCodeLine{00109 \};}
+\DoxyCodeLine{00110 }
+\DoxyCodeLine{\Hypertarget{yonics_8hpp_source_l00111}\mbox{\hyperlink{class_digital_i_m_u}{00111}} \textcolor{keyword}{class }\mbox{\hyperlink{class_digital_i_m_u}{DigitalIMU}} \{}
+\DoxyCodeLine{00112     \textcolor{keyword}{private}:}
+\DoxyCodeLine{00113         Adafruit\_BNO055 board;}
+\DoxyCodeLine{00114         sensors\_event\_t event;}
+\DoxyCodeLine{00115         imu::Quaternion quat;}
+\DoxyCodeLine{00116         imu::Vector<3> accel;}
+\DoxyCodeLine{00117     \textcolor{keyword}{public}:}
+\DoxyCodeLine{00118         \mbox{\hyperlink{class_digital_i_m_u_aa70009e81d6e8c87a1e5a3d057ae3f17}{DigitalIMU}}();}
+\DoxyCodeLine{00119         \mbox{\hyperlink{class_digital_i_m_u_aa70009e81d6e8c87a1e5a3d057ae3f17}{DigitalIMU}}(int32\_t sensorID, uint8\_t address);}
+\DoxyCodeLine{00120         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_digital_i_m_u_a272fd8ba31b4ab932238a61287c30d3d}{begin}}();}
+\DoxyCodeLine{00121         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_digital_i_m_u_aa7481cc820a5cd69c6a7e4b757214571}{sample}}(\mbox{\hyperlink{struct_i_m_udata}{IMUdata}}* data);}
+\DoxyCodeLine{00122 \};}
+\DoxyCodeLine{00123 }
+\DoxyCodeLine{\Hypertarget{yonics_8hpp_source_l00124}\mbox{\hyperlink{class_digital_b_a_r_o_m}{00124}} \textcolor{keyword}{class }\mbox{\hyperlink{class_digital_b_a_r_o_m}{DigitalBAROM}} \{}
+\DoxyCodeLine{00125     \textcolor{keyword}{private}:}
+\DoxyCodeLine{00126         Adafruit\_MPL3115A2 BAROM = Adafruit\_MPL3115A2();}
+\DoxyCodeLine{00127     \textcolor{keyword}{public}:}
+\DoxyCodeLine{00128         \mbox{\hyperlink{class_digital_b_a_r_o_m_a9841b4779c0ace7302c3245fd1fc8865}{DigitalBAROM}}();}
+\DoxyCodeLine{00129         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_digital_b_a_r_o_m_a0ee0077d47b0a68d200d875a125af6eb}{begin}}();}
+\DoxyCodeLine{00130         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_digital_b_a_r_o_m_adbdff826bd6d799d9b88862c2d80c067}{sample}}(\mbox{\hyperlink{struct_b_a_r_o_mdata}{BAROMdata}}* data);}
+\DoxyCodeLine{00131 \};}
+\DoxyCodeLine{00132 }
+\DoxyCodeLine{\Hypertarget{yonics_8hpp_source_l00133}\mbox{\hyperlink{class_digital_g_p_s}{00133}} \textcolor{keyword}{class }\mbox{\hyperlink{class_digital_g_p_s}{DigitalGPS}} \{}
+\DoxyCodeLine{00134     \textcolor{keyword}{private}:}
+\DoxyCodeLine{00135     \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{yonics_8hpp_source_l00136}\mbox{\hyperlink{class_digital_g_p_s_a57e1f1185e1aae70b8100cd3f52a939f}{00136}}         Adafruit\_GPS* \mbox{\hyperlink{class_digital_g_p_s_a57e1f1185e1aae70b8100cd3f52a939f}{GPS}};}
+\DoxyCodeLine{\Hypertarget{yonics_8hpp_source_l00137}\mbox{\hyperlink{class_digital_g_p_s_ab1aba2289fe5e4e5554104c0f3a55e7c}{00137}}         HardwareSerial* \mbox{\hyperlink{class_digital_g_p_s_ab1aba2289fe5e4e5554104c0f3a55e7c}{GPSSerial}};}
+\DoxyCodeLine{00138 }
+\DoxyCodeLine{00139         \mbox{\hyperlink{class_digital_g_p_s_af29ec55719c68b776516617bc6448345}{DigitalGPS}}(HardwareSerial *ser);}
+\DoxyCodeLine{00140 }
+\DoxyCodeLine{00141         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_digital_g_p_s_aca336d8a5f8917f3fb292bbbd306ca1c}{dummyPrint}}();}
+\DoxyCodeLine{00142         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_digital_g_p_s_a923674bbb59fa1b772feb65d83c26ad2}{initGPS}}();}
+\DoxyCodeLine{00143         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_digital_g_p_s_a44c8827a9496f2477e6424d0af57d335}{eraseLOCUS}}();}
+\DoxyCodeLine{00144         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_digital_g_p_s_a34116826eeb2f79f3ab21a854a0e0ab9}{GPSData\_dump\_setup}}();}
+\DoxyCodeLine{00145         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_digital_g_p_s_a68e981ba8b15b4d12fa052a143982caa}{refresh\_GPSData}}(\textcolor{keywordtype}{bool} gpsecho);}
+\DoxyCodeLine{00146         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_digital_g_p_s_a1df0a2961769fea9de577d0192911a94}{pullGPSFlashData}}();}
+\DoxyCodeLine{00147         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_digital_g_p_s_ac46a19bc34eed6d899b33d5dbd7f5e33}{pullRawGPS}}(\textcolor{comment}{/*GPSdata* data*/});}
+\DoxyCodeLine{00148 \};}
+\DoxyCodeLine{00149 }
+\DoxyCodeLine{\Hypertarget{yonics_8hpp_source_l00150}\mbox{\hyperlink{class_beepy_b_o_i}{00150}} \textcolor{keyword}{class }\mbox{\hyperlink{class_beepy_b_o_i}{BeepyBOI}} \{}
+\DoxyCodeLine{00151     \textcolor{keyword}{private}:}
+\DoxyCodeLine{00152         \textcolor{keywordtype}{int} pin;}
+\DoxyCodeLine{00153         \textcolor{keywordtype}{int} errTone = 300;}
+\DoxyCodeLine{00154         \textcolor{keywordtype}{int} lowTone = 220;}
+\DoxyCodeLine{00155         \textcolor{keywordtype}{int} midTone = 440;}
+\DoxyCodeLine{00156         \textcolor{keywordtype}{int}  hiTone = 880;}
+\DoxyCodeLine{00157     \textcolor{keyword}{public}:}
+\DoxyCodeLine{00158         \mbox{\hyperlink{class_beepy_b_o_i_afc31895831dc1ddd29e774e26154a110}{BeepyBOI}}();}
+\DoxyCodeLine{00159         \mbox{\hyperlink{class_beepy_b_o_i_afc31895831dc1ddd29e774e26154a110}{BeepyBOI}}(\textcolor{keywordtype}{int} pin);}
+\DoxyCodeLine{00160         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_beepy_b_o_i_aeb6de1f9cf9b2de375997ff67e3d592a}{hello}}();}
+\DoxyCodeLine{00161         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_beepy_b_o_i_af6f9d615d16c35d390994b02f359d11b}{error}}();}
+\DoxyCodeLine{00162         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_beepy_b_o_i_af3f5a1bc7e2ae70bba356f193fefb2de}{countdown}}(\textcolor{keywordtype}{int} s);}
+\DoxyCodeLine{00163         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_beepy_b_o_i_ab51c9558963125b0b58128d54a88984c}{lowBeep}}();}
+\DoxyCodeLine{00164         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_beepy_b_o_i_a79ecb0b0cac1f51323f87ccff8bbb831}{midBeep}}();}
+\DoxyCodeLine{00165         \textcolor{keywordtype}{void}  \mbox{\hyperlink{class_beepy_b_o_i_a115d999a0990ac7a6ae3b00fdc7ece80}{hiBeep}}();}
+\DoxyCodeLine{00166         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_beepy_b_o_i_a28194438ff9615a94b16f5924bb10470}{bombBeep}}();}
+\DoxyCodeLine{00167 \};}
+\DoxyCodeLine{00168 }
+\DoxyCodeLine{00172 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_i2_c}{I2C}}}
+\DoxyCodeLine{00173 \{}
+\DoxyCodeLine{00174     \textcolor{keyword}{extern} \textcolor{keywordtype}{bool} \mbox{\hyperlink{namespace_i2_c_a58f9f273aee1f164d418113388636b71}{write\_reg}}(uint8\_t i2c, uint8\_t addr, uint8\_t val);}
+\DoxyCodeLine{00175 }
+\DoxyCodeLine{00176     \textcolor{keyword}{extern} \textcolor{keywordtype}{bool} \mbox{\hyperlink{namespace_i2_c_aadebed13d47a15472baeb0f430a8f932}{read\_regs}}(uint8\_t i2c, uint8\_t addr, uint8\_t *data, uint8\_t num);}
+\DoxyCodeLine{00177 }
+\DoxyCodeLine{00178     \textcolor{keyword}{extern} \textcolor{keywordtype}{bool} \mbox{\hyperlink{namespace_i2_c_aadebed13d47a15472baeb0f430a8f932}{read\_regs}}(uint8\_t i2c, uint8\_t *data, uint8\_t num);}
+\DoxyCodeLine{00179 \};}
+\DoxyCodeLine{00180 }
+\DoxyCodeLine{00185 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_i_n_i_t_s}{INITS}}}
+\DoxyCodeLine{00186 \{}
+\DoxyCodeLine{00187     \textcolor{comment}{// PIN ASSIGNMENTS}}
+\DoxyCodeLine{00188     \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespace_i_n_i_t_s_a1f025845c806415d58a3bc101cbbaa45}{speakerPin}};}
+\DoxyCodeLine{00189     \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespace_i_n_i_t_s_a5d30e7ae47dca499ef70abc0b7cff4ef}{highG\_xPin}};}
+\DoxyCodeLine{00190     \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespace_i_n_i_t_s_ae8b36d880fccf8008ec5382c8516bd63}{highG\_yPin}};}
+\DoxyCodeLine{00191     \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespace_i_n_i_t_s_a4cba28b03e09c2f8e967ab1339e19d40}{highG\_zPin}};}
+\DoxyCodeLine{00192 }
+\DoxyCodeLine{00193     \textcolor{comment}{// CLASS INITIALIZATIONS}}
+\DoxyCodeLine{00194     \textcolor{keyword}{extern} \mbox{\hyperlink{class_digital_i_m_u}{DigitalIMU}} \mbox{\hyperlink{namespace_i_n_i_t_s_ac9da1547f5a699c7f46f56b920d43fb6}{IMU}};}
+\DoxyCodeLine{00195     \textcolor{keyword}{extern} \mbox{\hyperlink{class_digital_b_a_r_o_m}{DigitalBAROM}} \mbox{\hyperlink{namespace_i_n_i_t_s_a4086c662375b91ff0dd841d408fec0fd}{BAROM}};}
+\DoxyCodeLine{00196     \textcolor{keyword}{extern} \mbox{\hyperlink{class_analog_i_m_u}{AnalogIMU}} \mbox{\hyperlink{namespace_i_n_i_t_s_a961b11d4d2381ea51457e14974084320}{HIGHG}};}
+\DoxyCodeLine{00197     \textcolor{keyword}{extern} \mbox{\hyperlink{class_beepy_b_o_i}{BeepyBOI}} \mbox{\hyperlink{namespace_i_n_i_t_s_a5f1ffe3be225987efe9e0f5b5b318123}{berp}};}
+\DoxyCodeLine{00198 }
+\DoxyCodeLine{00199     \textcolor{comment}{// POINTERS}}
+\DoxyCodeLine{00200     \textcolor{keyword}{extern} \mbox{\hyperlink{class_d_l_lflash}{DLLflash}}* \mbox{\hyperlink{namespace_i_n_i_t_s_a96dd29db36c81773e3922717ae9ef869}{flash}};}
+\DoxyCodeLine{00201 }
+\DoxyCodeLine{00202     \textcolor{comment}{// DATA STRUCTS}}
+\DoxyCodeLine{00203     \textcolor{keyword}{extern} \mbox{\hyperlink{struct_g_p_sdata}{GPSdata}} \mbox{\hyperlink{namespace_i_n_i_t_s_a2520a03ff5b7eea37e52eabe02ce84ff}{gps\_data}};}
+\DoxyCodeLine{00204     \textcolor{keyword}{extern} \mbox{\hyperlink{struct_i_m_udata}{IMUdata}} \mbox{\hyperlink{namespace_i_n_i_t_s_ac1b9c4cb67bd8af1eb8a216f3ad8df9c}{imu\_data}};}
+\DoxyCodeLine{00205     \textcolor{keyword}{extern} \mbox{\hyperlink{struct_b_a_r_o_mdata}{BAROMdata}} \mbox{\hyperlink{namespace_i_n_i_t_s_aee91897642dd46037641d2119d740123}{barom\_data}};}
+\DoxyCodeLine{00206     \textcolor{keyword}{extern} \mbox{\hyperlink{struct_a_c_c_e_ldata}{ACCELdata}} \mbox{\hyperlink{namespace_i_n_i_t_s_abdffaa8c4b6dda37a2b92665dab31eb4}{accel\_data}};}
+\DoxyCodeLine{00207 \};}
+\DoxyCodeLine{00208 }
+\DoxyCodeLine{00227 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g}{PROTOTHREADING}}}
+\DoxyCodeLine{00228 \{}
+\DoxyCodeLine{00230 }
+\DoxyCodeLine{00237     \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a4bf5dee68a42f69a5b4413aad7f4da73}{interval\_IMU}};}
+\DoxyCodeLine{00238     \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a0263f929d0bde77e2cf156748d912f52}{interval\_BAROM}};}
+\DoxyCodeLine{00239     \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_ad9e0d8c1cc58c135abcb6553b2da35b8}{interval\_ACCEL}};}
+\DoxyCodeLine{00240 }
+\DoxyCodeLine{00242 }
+\DoxyCodeLine{00245     \textcolor{keyword}{extern} ThreadController \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a835e1bc833505fb52669fa29fa1f6f80}{thread\_control}}; }
+\DoxyCodeLine{00248     \textcolor{keyword}{extern} Thread* \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a74187a4e49e5ec1475e7e748a7ef1e9c}{ThreadIMU}};}
+\DoxyCodeLine{00249     \textcolor{keyword}{extern} Thread* \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a22cb9e6fa249e40307fa4da319712c43}{ThreadBAROM}};}
+\DoxyCodeLine{00250     \textcolor{keyword}{extern} Thread* \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_ad274ec96024e09ea8bdd90bd37bf7447}{ThreadACCEL}};}
+\DoxyCodeLine{00251 \};}
+\DoxyCodeLine{00252 }
+\DoxyCodeLine{00253 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

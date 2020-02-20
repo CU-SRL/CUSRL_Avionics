@@ -1,0 +1,92 @@
+\hypertarget{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g}{}\doxysection{P\+R\+O\+T\+O\+T\+H\+R\+E\+A\+D\+I\+NG Namespace Reference}
+\label{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g}\index{PROTOTHREADING@{PROTOTHREADING}}
+
+
+\mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g}{P\+R\+O\+T\+O\+T\+H\+R\+E\+A\+D\+I\+NG}} D\+E\+F\+I\+N\+I\+T\+I\+O\+NS.  
+
+
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a4bf5dee68a42f69a5b4413aad7f4da73}{interval\+\_\+\+I\+MU}} = 45
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g}{P\+R\+O\+T\+O\+T\+H\+R\+E\+A\+D\+I\+NG}} T\+I\+ME I\+N\+T\+E\+R\+V\+A\+LS. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a0263f929d0bde77e2cf156748d912f52}{interval\+\_\+\+B\+A\+R\+OM}} = 2000
+\item 
+int \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_ad9e0d8c1cc58c135abcb6553b2da35b8}{interval\+\_\+\+A\+C\+C\+EL}} = 50
+\item 
+Thread\+Controller \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a835e1bc833505fb52669fa29fa1f6f80}{thread\+\_\+control}} = Thread\+Controller()
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g}{P\+R\+O\+T\+O\+T\+H\+R\+E\+A\+D\+I\+NG}} Declaration and Definitions. \end{DoxyCompactList}\item 
+Thread $\ast$ \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a74187a4e49e5ec1475e7e748a7ef1e9c}{Thread\+I\+MU}} = new Thread()
+\item 
+Thread $\ast$ \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a22cb9e6fa249e40307fa4da319712c43}{Thread\+B\+A\+R\+OM}} = new Thread()
+\item 
+Thread $\ast$ \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_ad274ec96024e09ea8bdd90bd37bf7447}{Thread\+A\+C\+C\+EL}} = new Thread()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g}{P\+R\+O\+T\+O\+T\+H\+R\+E\+A\+D\+I\+NG}} D\+E\+F\+I\+N\+I\+T\+I\+O\+NS. 
+
+T\+HE V\+A\+R\+I\+A\+B\+L\+ES A\+RE D\+E\+F\+I\+N\+ED H\+E\+RE
+
+The protothreading system is implemented by the Arduino\+Thread library
+
+The Teensy 3.\+6 / 4.\+0 micro-\/controllers are one core, one thread therefore true asynchronous operation cannot be accomplished This is unfortunate because optimally all sampling of the data should be done at the same time Therefore in order to work around this limitation, a form of threading was introduced that approaches asynchronous operation without actually achieving it, aka protothreading
+
+The way it works is essentially by having a(n) overall controller (i.\+e. Thread\+Controller class) that manages the timing of all functions you want to run Whenever a function has reached the time it needs to be called again the Thread\+Controller will call the the function and interrupt whatever is currently running
+
+The pro about this is that it also allows us to deal with different intervals that sensors or components require Such as one component needing more time over the other Every process interval is based off of the datasheet and its recommendations on sampling time 
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_ad9e0d8c1cc58c135abcb6553b2da35b8}\label{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_ad9e0d8c1cc58c135abcb6553b2da35b8}} 
+\index{PROTOTHREADING@{PROTOTHREADING}!interval\_ACCEL@{interval\_ACCEL}}
+\index{interval\_ACCEL@{interval\_ACCEL}!PROTOTHREADING@{PROTOTHREADING}}
+\doxysubsubsection{\texorpdfstring{interval\_ACCEL}{interval\_ACCEL}}
+{\footnotesize\ttfamily int P\+R\+O\+T\+O\+T\+H\+R\+E\+A\+D\+I\+N\+G\+::interval\+\_\+\+A\+C\+C\+EL = 50}
+
+\mbox{\Hypertarget{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a0263f929d0bde77e2cf156748d912f52}\label{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a0263f929d0bde77e2cf156748d912f52}} 
+\index{PROTOTHREADING@{PROTOTHREADING}!interval\_BAROM@{interval\_BAROM}}
+\index{interval\_BAROM@{interval\_BAROM}!PROTOTHREADING@{PROTOTHREADING}}
+\doxysubsubsection{\texorpdfstring{interval\_BAROM}{interval\_BAROM}}
+{\footnotesize\ttfamily int P\+R\+O\+T\+O\+T\+H\+R\+E\+A\+D\+I\+N\+G\+::interval\+\_\+\+B\+A\+R\+OM = 2000}
+
+\mbox{\Hypertarget{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a4bf5dee68a42f69a5b4413aad7f4da73}\label{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a4bf5dee68a42f69a5b4413aad7f4da73}} 
+\index{PROTOTHREADING@{PROTOTHREADING}!interval\_IMU@{interval\_IMU}}
+\index{interval\_IMU@{interval\_IMU}!PROTOTHREADING@{PROTOTHREADING}}
+\doxysubsubsection{\texorpdfstring{interval\_IMU}{interval\_IMU}}
+{\footnotesize\ttfamily int P\+R\+O\+T\+O\+T\+H\+R\+E\+A\+D\+I\+N\+G\+::interval\+\_\+\+I\+MU = 45}
+
+
+
+\mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g}{P\+R\+O\+T\+O\+T\+H\+R\+E\+A\+D\+I\+NG}} T\+I\+ME I\+N\+T\+E\+R\+V\+A\+LS. 
+
+Defining the time intervals (in milliseconds) at which to call the \char`\"{}threads\char`\"{}
+
+Every important task (i.\+e. sampling, writing to flash, RF, etc...) has a \char`\"{}thread\char`\"{} and their intervals are defined here. \mbox{\Hypertarget{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a835e1bc833505fb52669fa29fa1f6f80}\label{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a835e1bc833505fb52669fa29fa1f6f80}} 
+\index{PROTOTHREADING@{PROTOTHREADING}!thread\_control@{thread\_control}}
+\index{thread\_control@{thread\_control}!PROTOTHREADING@{PROTOTHREADING}}
+\doxysubsubsection{\texorpdfstring{thread\_control}{thread\_control}}
+{\footnotesize\ttfamily Thread\+Controller P\+R\+O\+T\+O\+T\+H\+R\+E\+A\+D\+I\+N\+G\+::thread\+\_\+control = Thread\+Controller()}
+
+
+
+\mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g}{P\+R\+O\+T\+O\+T\+H\+R\+E\+A\+D\+I\+NG}} Declaration and Definitions. 
+
+All the required thread objects and pointers are declared and defined here thread\+\_\+control is the overarching Thread\+Controller that handles all the timing Every thread is a pointer that is pointing to an object, or instance, of the Thread class initiated dynimically in order to use them in any scope \mbox{\Hypertarget{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_ad274ec96024e09ea8bdd90bd37bf7447}\label{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_ad274ec96024e09ea8bdd90bd37bf7447}} 
+\index{PROTOTHREADING@{PROTOTHREADING}!ThreadACCEL@{ThreadACCEL}}
+\index{ThreadACCEL@{ThreadACCEL}!PROTOTHREADING@{PROTOTHREADING}}
+\doxysubsubsection{\texorpdfstring{ThreadACCEL}{ThreadACCEL}}
+{\footnotesize\ttfamily Thread $\ast$ P\+R\+O\+T\+O\+T\+H\+R\+E\+A\+D\+I\+N\+G\+::\+Thread\+A\+C\+C\+EL = new Thread()}
+
+\mbox{\Hypertarget{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a22cb9e6fa249e40307fa4da319712c43}\label{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a22cb9e6fa249e40307fa4da319712c43}} 
+\index{PROTOTHREADING@{PROTOTHREADING}!ThreadBAROM@{ThreadBAROM}}
+\index{ThreadBAROM@{ThreadBAROM}!PROTOTHREADING@{PROTOTHREADING}}
+\doxysubsubsection{\texorpdfstring{ThreadBAROM}{ThreadBAROM}}
+{\footnotesize\ttfamily Thread $\ast$ P\+R\+O\+T\+O\+T\+H\+R\+E\+A\+D\+I\+N\+G\+::\+Thread\+B\+A\+R\+OM = new Thread()}
+
+\mbox{\Hypertarget{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a74187a4e49e5ec1475e7e748a7ef1e9c}\label{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a74187a4e49e5ec1475e7e748a7ef1e9c}} 
+\index{PROTOTHREADING@{PROTOTHREADING}!ThreadIMU@{ThreadIMU}}
+\index{ThreadIMU@{ThreadIMU}!PROTOTHREADING@{PROTOTHREADING}}
+\doxysubsubsection{\texorpdfstring{ThreadIMU}{ThreadIMU}}
+{\footnotesize\ttfamily Thread $\ast$ P\+R\+O\+T\+O\+T\+H\+R\+E\+A\+D\+I\+N\+G\+::\+Thread\+I\+MU = new Thread()}
+

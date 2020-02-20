@@ -1,0 +1,56 @@
+\hypertarget{_r_f_m96_w_8hpp_source}{}\doxysection{R\+F\+M96\+W.\+hpp}
+\label{_r_f_m96_w_8hpp_source}\index{src/src/RFM96W.hpp@{src/src/RFM96W.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 \textcolor{preprocessor}{\#ifndef \_MAIN\_HPP\_}}
+\DoxyCodeLine{00002 \textcolor{preprocessor}{\#define \_MAIN\_HPP\_}}
+\DoxyCodeLine{00003 }
+\DoxyCodeLine{00004 \textcolor{preprocessor}{\#include <RHReliableDatagram.h>}}
+\DoxyCodeLine{00005 \textcolor{preprocessor}{\#include <RH\_RF95.h>}}
+\DoxyCodeLine{00006 \textcolor{preprocessor}{\#include <SPI.h>}}
+\DoxyCodeLine{00007 }
+\DoxyCodeLine{\Hypertarget{_r_f_m96_w_8hpp_source_l00008}\mbox{\hyperlink{_r_f_m96_w_8hpp_ac4e0fb05b3ec3c8df22b642c2226ecc5}{00008}} \textcolor{preprocessor}{\#define CLIENT\_ADDRESS 1}}
+\DoxyCodeLine{\Hypertarget{_r_f_m96_w_8hpp_source_l00009}\mbox{\hyperlink{_r_f_m96_w_8hpp_aa6cecb8c404241c624e83aee8a3979d2}{00009}} \textcolor{preprocessor}{\#define SERVER\_ADDRESS 2}}
+\DoxyCodeLine{00010 }
+\DoxyCodeLine{00011 \textcolor{comment}{// RFM96W Server is the ground station}}
+\DoxyCodeLine{\Hypertarget{_r_f_m96_w_8hpp_source_l00012}\mbox{\hyperlink{class_r_f_m96_w___server}{00012}} \textcolor{keyword}{class }\mbox{\hyperlink{class_r_f_m96_w___server}{RFM96W\_Server}}}
+\DoxyCodeLine{00013 \{}
+\DoxyCodeLine{00014     \textcolor{keyword}{public}:}
+\DoxyCodeLine{00015         \mbox{\hyperlink{class_r_f_m96_w___server_a59e9652f2e828ad0d3176ad2aec8e41b}{RFM96W\_Server}}(uint8\_t slaveSelectPin, uint8\_t interruptPin, RHHardwareSPI hardware\_spi); \textcolor{comment}{// Constructor}}
+\DoxyCodeLine{00016         \mbox{\hyperlink{class_r_f_m96_w___server_accf4ec10956ab1739effb363ac0069c2}{~RFM96W\_Server}}(); \textcolor{comment}{// Destructor}}
+\DoxyCodeLine{00017 }
+\DoxyCodeLine{\Hypertarget{_r_f_m96_w_8hpp_source_l00018}\mbox{\hyperlink{class_r_f_m96_w___server_a686d36a663f1eddaaca3310d8d5fb9c5}{00018}}         RH\_RF95 *\mbox{\hyperlink{class_r_f_m96_w___server_a686d36a663f1eddaaca3310d8d5fb9c5}{Server\_Driver}};}
+\DoxyCodeLine{\Hypertarget{_r_f_m96_w_8hpp_source_l00019}\mbox{\hyperlink{class_r_f_m96_w___server_ac7e9807824a0c92b6c222fa99977927f}{00019}}         RHReliableDatagram *\mbox{\hyperlink{class_r_f_m96_w___server_ac7e9807824a0c92b6c222fa99977927f}{Server\_Manager}};}
+\DoxyCodeLine{00020 }
+\DoxyCodeLine{00021         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_r_f_m96_w___server_a8b59df69f58c85dc0b423a0b97bc1362}{init}}();}
+\DoxyCodeLine{00022         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_r_f_m96_w___server_a5ba95c6adb55e408ae7fecb168faf18d}{loop}}();}
+\DoxyCodeLine{00023         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_r_f_m96_w___server_a86d0d4795a3a8001ef64cbb1b8b065b3}{TX}}();}
+\DoxyCodeLine{00024         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_r_f_m96_w___server_a4653b79c0d690ad83d1b01daf49a053b}{RX}}();}
+\DoxyCodeLine{00025 }
+\DoxyCodeLine{00026     \textcolor{keyword}{private}:}
+\DoxyCodeLine{00027     \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00028 \};}
+\DoxyCodeLine{00029 }
+\DoxyCodeLine{00030 }
+\DoxyCodeLine{00031 \textcolor{comment}{// RFM96W Client is the rocket station}}
+\DoxyCodeLine{\Hypertarget{_r_f_m96_w_8hpp_source_l00032}\mbox{\hyperlink{class_r_f_m96_w___client}{00032}} \textcolor{keyword}{class }\mbox{\hyperlink{class_r_f_m96_w___client}{RFM96W\_Client}}}
+\DoxyCodeLine{00033 \{}
+\DoxyCodeLine{00034     \textcolor{keyword}{public}:}
+\DoxyCodeLine{00035         \mbox{\hyperlink{class_r_f_m96_w___client_a853c67b3431102cd08c47bcbb1bdac17}{RFM96W\_Client}}(uint8\_t slaveSelectPin, uint8\_t interruptPin, RHHardwareSPI hardware\_spi); \textcolor{comment}{// Constructor}}
+\DoxyCodeLine{00036         \mbox{\hyperlink{class_r_f_m96_w___client_abc6c9c8c24848bf2b41f5f587d1072c5}{~RFM96W\_Client}}();}
+\DoxyCodeLine{00037 }
+\DoxyCodeLine{\Hypertarget{_r_f_m96_w_8hpp_source_l00038}\mbox{\hyperlink{class_r_f_m96_w___client_a45f1d2ecbd04f3a6da439890e8c01507}{00038}}         RH\_RF95 *\mbox{\hyperlink{class_r_f_m96_w___client_a45f1d2ecbd04f3a6da439890e8c01507}{Client\_Driver}};}
+\DoxyCodeLine{\Hypertarget{_r_f_m96_w_8hpp_source_l00039}\mbox{\hyperlink{class_r_f_m96_w___client_a116286ca868d5cb7ccc7fff1f83442f2}{00039}}         RHReliableDatagram *\mbox{\hyperlink{class_r_f_m96_w___client_a116286ca868d5cb7ccc7fff1f83442f2}{Client\_Manager}};}
+\DoxyCodeLine{00040 }
+\DoxyCodeLine{00041         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_r_f_m96_w___client_abd3c4116b22deb76a891fdb8daaa3f57}{init}}();}
+\DoxyCodeLine{00042         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_r_f_m96_w___client_ac410d8df9d59069317bd8ad81b1107f4}{loop}}(uint8\_t *data);}
+\DoxyCodeLine{00043         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_r_f_m96_w___client_a58b30571f86ddd4a728305e815f9db85}{TX}}(\textcolor{keyword}{const} uint8\_t *data);}
+\DoxyCodeLine{00044         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_r_f_m96_w___client_ad92fdff7448a27e0cd94bac5dbe0bd39}{RX}}();}
+\DoxyCodeLine{00045 }
+\DoxyCodeLine{00046     \textcolor{keyword}{private}:}
+\DoxyCodeLine{00047     \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00048 \};}
+\DoxyCodeLine{00049 }
+\DoxyCodeLine{00050 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}
