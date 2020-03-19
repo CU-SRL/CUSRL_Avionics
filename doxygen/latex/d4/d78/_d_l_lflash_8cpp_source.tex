@@ -1,0 +1,148 @@
+\hypertarget{_d_l_lflash_8cpp_source}{}\doxysection{D\+L\+Lflash.\+cpp}
+\label{_d_l_lflash_8cpp_source}\index{src/src/DLLflash.cpp@{src/src/DLLflash.cpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 }
+\DoxyCodeLine{00006 \textcolor{preprocessor}{\#include "\mbox{\hyperlink{_d_l_lflash_8hpp}{DLLflash.hpp}}"}}
+\DoxyCodeLine{00007 }
+\DoxyCodeLine{\Hypertarget{_d_l_lflash_8cpp_source_l00008}\mbox{\hyperlink{class_d_l_ltype_a6e156d6c8aaf564242929f6f2c8711f7}{00008}} \mbox{\hyperlink{class_d_l_ltype_a6e156d6c8aaf564242929f6f2c8711f7}{DLLtype::DLLtype}}(\textcolor{keywordtype}{void}* dataPtr,\textcolor{keywordtype}{int} dataSize,\textcolor{keywordtype}{char}* \textcolor{keywordtype}{id}) \{}
+\DoxyCodeLine{00009     \textcolor{comment}{/*}}
+\DoxyCodeLine{00010 \textcolor{comment}{    Parameterized constructor}}
+\DoxyCodeLine{00011 \textcolor{comment}{    */}}
+\DoxyCodeLine{00012 }
+\DoxyCodeLine{00013     \textcolor{comment}{// Set ID}}
+\DoxyCodeLine{00014     strcpy(this-\/>\textcolor{keywordtype}{id},\textcolor{keywordtype}{id});}
+\DoxyCodeLine{00015 }
+\DoxyCodeLine{00016     \textcolor{comment}{// Set values}}
+\DoxyCodeLine{00017     refData = dataPtr;}
+\DoxyCodeLine{00018     this-\/>dataSize = dataSize;}
+\DoxyCodeLine{00019 }
+\DoxyCodeLine{00020     addrSize = \textcolor{keyword}{sizeof}(uint32\_t);}
+\DoxyCodeLine{00021 \}}
+\DoxyCodeLine{00022 }
+\DoxyCodeLine{\Hypertarget{_d_l_lflash_8cpp_source_l00023}\mbox{\hyperlink{class_d_l_ltype_aeb46d596fa7940ed32fe9688a9f113e6}{00023}} \mbox{\hyperlink{class_d_l_ltype_aeb46d596fa7940ed32fe9688a9f113e6}{DLLtype::~DLLtype}}() \{}
+\DoxyCodeLine{00024     free(nextBuffer);}
+\DoxyCodeLine{00025     free(currBuffer);}
+\DoxyCodeLine{00026 \}}
+\DoxyCodeLine{00027 }
+\DoxyCodeLine{00028 \textcolor{keywordtype}{bool} DLLtype::init() \{}
+\DoxyCodeLine{00029     \textcolor{comment}{/*}}
+\DoxyCodeLine{00030 \textcolor{comment}{    Allocates memory for the data buffers using the dataSize member. Fails if the buffers have already been allocated.}}
+\DoxyCodeLine{00031 \textcolor{comment}{    */}}
+\DoxyCodeLine{00032 }
+\DoxyCodeLine{00033     \textcolor{comment}{// If data size hasn't been initialized, return false}}
+\DoxyCodeLine{00034     \textcolor{keywordflow}{if} (~dataSize) \{\textcolor{keywordflow}{return} \textcolor{keyword}{false};\}}
+\DoxyCodeLine{00035 }
+\DoxyCodeLine{00036     \textcolor{comment}{// If data buffers have already been allocated, return false}}
+\DoxyCodeLine{00037     \textcolor{keywordflow}{if} (nextBuffer || currBuffer) \{\textcolor{keywordflow}{return} \textcolor{keyword}{false};\}}
+\DoxyCodeLine{00038 }
+\DoxyCodeLine{00039     \textcolor{comment}{// Check that dataSize is populated with something reasonable}}
+\DoxyCodeLine{00040     \textcolor{keywordflow}{if} (dataSize>1000) \{\textcolor{keywordflow}{return} \textcolor{keyword}{false};\}}
+\DoxyCodeLine{00041 }
+\DoxyCodeLine{00042     \textcolor{comment}{// Allocate buffers}}
+\DoxyCodeLine{00043     nextBuffer = malloc(dataSize);}
+\DoxyCodeLine{00044     currBuffer = malloc(dataSize);}
+\DoxyCodeLine{00045 }
+\DoxyCodeLine{00046     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00047 \}}
+\DoxyCodeLine{00048 }
+\DoxyCodeLine{00049 \textcolor{keywordtype}{void} DLLtype::bufferFirstSample() \{}
+\DoxyCodeLine{00050     memcpy(nextBuffer,refData,dataSize);}
+\DoxyCodeLine{00051 \}}
+\DoxyCodeLine{00052 }
+\DoxyCodeLine{00053 \textcolor{keywordtype}{bool} DLLtype::buffer2flash(uint32\_t writeAddr,SPIFlash* \mbox{\hyperlink{namespace_i_n_i_t_s_a96dd29db36c81773e3922717ae9ef869}{flash}}) \{}
+\DoxyCodeLine{00054     }
+\DoxyCodeLine{00055 \}}
+\DoxyCodeLine{00056 }
+\DoxyCodeLine{\Hypertarget{_d_l_lflash_8cpp_source_l00057}\mbox{\hyperlink{class_d_l_ltype_a6cd037465d51fe36068f3540b17b73f4}{00057}} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_l_ltype_a6cd037465d51fe36068f3540b17b73f4}{DLLtype::setType}}(\textcolor{keywordtype}{void}* dataPtr,\textcolor{keywordtype}{int} dataSize) \{}
+\DoxyCodeLine{00058     \textcolor{comment}{// Check whether type is already set}}
+\DoxyCodeLine{00059     \textcolor{keywordflow}{if} (dataSize) \{\textcolor{keywordflow}{return} \textcolor{keyword}{false};\}}
+\DoxyCodeLine{00060 }
+\DoxyCodeLine{00061     \textcolor{comment}{// Set values}}
+\DoxyCodeLine{00062     refData = dataPtr;}
+\DoxyCodeLine{00063     this-\/>dataSize = dataSize;}
+\DoxyCodeLine{00064 }
+\DoxyCodeLine{00065     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00066 \}}
+\DoxyCodeLine{00067 }
+\DoxyCodeLine{\Hypertarget{_d_l_lflash_8cpp_source_l00068}\mbox{\hyperlink{class_d_l_ltype_ab3a28578770c4da1ca1b5cb72c992c1e}{00068}} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_l_ltype_ab3a28578770c4da1ca1b5cb72c992c1e}{DLLtype::writeSample}}(uint32\_t next,SPIFlash* \mbox{\hyperlink{namespace_i_n_i_t_s_a96dd29db36c81773e3922717ae9ef869}{flash}}) \{}
+\DoxyCodeLine{00069     \textcolor{comment}{/*}}
+\DoxyCodeLine{00070 \textcolor{comment}{    TODO: The rest of this function}}
+\DoxyCodeLine{00071 \textcolor{comment}{    -\/ Error checking}}
+\DoxyCodeLine{00072 \textcolor{comment}{    -\/ Correctly assign the head/tail addresses}}
+\DoxyCodeLine{00073 \textcolor{comment}{    -\/ Copy over the correct data}}
+\DoxyCodeLine{00074 \textcolor{comment}{}}
+\DoxyCodeLine{00075 \textcolor{comment}{    */}}
+\DoxyCodeLine{00076 }
+\DoxyCodeLine{00077     this-\/>next = next;}
+\DoxyCodeLine{00078     uint32\_t writeAddr = curr;}
+\DoxyCodeLine{00079 }
+\DoxyCodeLine{00080     \textcolor{comment}{// Write next address}}
+\DoxyCodeLine{00081     \mbox{\hyperlink{namespace_i_n_i_t_s_a96dd29db36c81773e3922717ae9ef869}{flash}}-\/>writeULong(writeAddr,next);}
+\DoxyCodeLine{00082     writeAddr+=addrSize;}
+\DoxyCodeLine{00083 }
+\DoxyCodeLine{00084     \textcolor{comment}{// Write prev address}}
+\DoxyCodeLine{00085     \mbox{\hyperlink{namespace_i_n_i_t_s_a96dd29db36c81773e3922717ae9ef869}{flash}}-\/>writeULong(writeAddr,prev);}
+\DoxyCodeLine{00086     writeAddr+=addrSize;}
+\DoxyCodeLine{00087 }
+\DoxyCodeLine{00088     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i=0;i<dataSize;i++) \{}
+\DoxyCodeLine{00089         \mbox{\hyperlink{namespace_i_n_i_t_s_a96dd29db36c81773e3922717ae9ef869}{flash}}-\/>writeByte(writeAddr+=1,*(uint8\_t*)(currBuffer+i));}
+\DoxyCodeLine{00090     \}}
+\DoxyCodeLine{00091     }
+\DoxyCodeLine{00092     \textcolor{comment}{// Copy next to curr}}
+\DoxyCodeLine{00093     memcpy(currBuffer,nextBuffer,dataSize);}
+\DoxyCodeLine{00094 }
+\DoxyCodeLine{00095     \textcolor{comment}{// Copy data from reference pointer to next}}
+\DoxyCodeLine{00096     memcpy(nextBuffer,refData,dataSize);}
+\DoxyCodeLine{00097 }
+\DoxyCodeLine{00098     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00099 \}}
+\DoxyCodeLine{00100 }
+\DoxyCodeLine{\Hypertarget{_d_l_lflash_8cpp_source_l00101}\mbox{\hyperlink{class_d_l_ltype_aea26529271159fd0d337a367b850a83b}{00101}} \textcolor{keywordtype}{char}* \mbox{\hyperlink{class_d_l_ltype_aea26529271159fd0d337a367b850a83b}{DLLtype::getID}}() \{}
+\DoxyCodeLine{00102     \textcolor{keywordflow}{return} id;}
+\DoxyCodeLine{00103 \}}
+\DoxyCodeLine{00104 }
+\DoxyCodeLine{\Hypertarget{_d_l_lflash_8cpp_source_l00105}\mbox{\hyperlink{class_d_l_lflash_a24763886992984fb0a1410d555976e5f}{00105}} \mbox{\hyperlink{class_d_l_lflash_a2b9a209ac7b123aa29c8a52f4a6b628a}{DLLflash::DLLflash}}(\textcolor{keywordtype}{int} flashpin) }
+\DoxyCodeLine{00106 \{}
+\DoxyCodeLine{00107     \textcolor{comment}{// Tell SPIFlash class to yeet the flash chip into action}}
+\DoxyCodeLine{00108     flash = \textcolor{keyword}{new} SPIFlash(flashpin);}
+\DoxyCodeLine{00109 }
+\DoxyCodeLine{00110     \textcolor{comment}{// Initialize flash chip}}
+\DoxyCodeLine{00111     \textcolor{keywordflow}{if}(!flash-\/>begin())}
+\DoxyCodeLine{00112     \{}
+\DoxyCodeLine{00113         \textcolor{comment}{// If the flash chip doesn't successfully initialize}}
+\DoxyCodeLine{00114         \textcolor{keywordflow}{while}(\textcolor{keyword}{true})}
+\DoxyCodeLine{00115         \{}
+\DoxyCodeLine{00116             \textcolor{comment}{// Absolutely spam over Serial, and also don't do anything}}
+\DoxyCodeLine{00117             Serial.println(\textcolor{stringliteral}{"Failed to initialize the Flash Chip"});}
+\DoxyCodeLine{00118         \}}
+\DoxyCodeLine{00119     \}}
+\DoxyCodeLine{00120     \textcolor{comment}{// Store the size of the flash chip to flashSize}}
+\DoxyCodeLine{00121     flashSize = flash-\/>getCapacity();}
+\DoxyCodeLine{00122 \}}
+\DoxyCodeLine{00123 }
+\DoxyCodeLine{\Hypertarget{_d_l_lflash_8cpp_source_l00124}\mbox{\hyperlink{class_d_l_lflash_a4aaac33c7b03678e1762fe98763cb5b0}{00124}} \mbox{\hyperlink{class_d_l_lflash_a4aaac33c7b03678e1762fe98763cb5b0}{DLLflash::~DLLflash}}() \{}
+\DoxyCodeLine{00125     \textcolor{comment}{// Free memory}}
+\DoxyCodeLine{00126     \textcolor{keywordflow}{for} (std::vector<DLLtype*>::iterator it = types.begin();it!=types.end();it++) \{}
+\DoxyCodeLine{00127         \textcolor{keyword}{delete} *it;}
+\DoxyCodeLine{00128         *it = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00129     \}}
+\DoxyCodeLine{00130 \}}
+\DoxyCodeLine{00131 }
+\DoxyCodeLine{00132 \textcolor{keyword}{template} <\textcolor{keyword}{class} T>}
+\DoxyCodeLine{\Hypertarget{_d_l_lflash_8cpp_source_l00133}\mbox{\hyperlink{class_d_l_lflash_a0c23f9c6e5d585e6f9d66b4b5218f21f}{00133}} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_l_lflash_a0c23f9c6e5d585e6f9d66b4b5218f21f}{DLLflash::addType}}(T* data,\textcolor{keywordtype}{char}* \textcolor{keywordtype}{id}) \{}
+\DoxyCodeLine{00134 }
+\DoxyCodeLine{00135     \textcolor{keywordtype}{int} dataSize = \textcolor{keyword}{sizeof}(*data);}
+\DoxyCodeLine{00136     \textcolor{keywordtype}{void}* dataPtr = (\textcolor{keywordtype}{void}*) data;}
+\DoxyCodeLine{00137 }
+\DoxyCodeLine{00138     \mbox{\hyperlink{class_d_l_ltype}{DLLtype}}* newType = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_l_ltype}{DLLtype}}(dataPtr,dataSize,\textcolor{keywordtype}{id});}
+\DoxyCodeLine{00139     types.push\_back(newType);}
+\DoxyCodeLine{00140 \}}
+\DoxyCodeLine{00141 }
+\DoxyCodeLine{\Hypertarget{_d_l_lflash_8cpp_source_l00142}\mbox{\hyperlink{class_d_l_lflash_a57f8d7cfe59a6f682dcca7aadf174f3d}{00142}} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_l_lflash_a57f8d7cfe59a6f682dcca7aadf174f3d}{DLLflash::writeSample}}(\textcolor{keywordtype}{char}*) }
+\DoxyCodeLine{00143 \{}
+\DoxyCodeLine{00144     \textcolor{comment}{// Loop over vector of data types until finding the one with the correct ID}}
+\DoxyCodeLine{00145     \textcolor{comment}{// for () \{\}}}
+\DoxyCodeLine{00146 \}}
+
+\end{DoxyCode}
