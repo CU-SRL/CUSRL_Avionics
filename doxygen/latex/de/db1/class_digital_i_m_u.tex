@@ -2,6 +2,11 @@
 \label{class_digital_i_m_u}\index{DigitalIMU@{DigitalIMU}}
 
 
+B\+N\+O055 I\+MU Class.  
+
+
+
+
 {\ttfamily \#include $<$yonics.\+hpp$>$}
 
 \doxysubsection*{Public Member Functions}
@@ -14,8 +19,13 @@
 bool \mbox{\hyperlink{class_digital_i_m_u_a272fd8ba31b4ab932238a61287c30d3d}{begin}} ()
 \item 
 void \mbox{\hyperlink{class_digital_i_m_u_aa7481cc820a5cd69c6a7e4b757214571}{sample}} (\mbox{\hyperlink{struct_i_m_udata}{I\+M\+Udata}} $\ast$data)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_digital_i_m_u}{Digital\+I\+MU}} Sample Function. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
+
+\doxysubsection{Detailed Description}
+B\+N\+O055 I\+MU Class. 
+
+Class to manage the Adafruit B\+N\+O055 Absolute Orientation I\+MU Fusion breakout board K\+E\+EP IN M\+I\+ND NO D\+I\+F\+F\+E\+R\+E\+N\+CE B\+E\+T\+W\+E\+EN R\+AW A\+ND F\+U\+S\+ED D\+A\+TA F\+R\+OM B\+N\+O055... 
 
 \doxysubsection{Constructor \& Destructor Documentation}
 \mbox{\Hypertarget{class_digital_i_m_u_aa70009e81d6e8c87a1e5a3d057ae3f17}\label{class_digital_i_m_u_aa70009e81d6e8c87a1e5a3d057ae3f17}} 
@@ -24,13 +34,13 @@ void \mbox{\hyperlink{class_digital_i_m_u_aa7481cc820a5cd69c6a7e4b757214571}{sam
 \doxysubsubsection{\texorpdfstring{DigitalIMU()}{DigitalIMU()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily Digital\+I\+M\+U\+::\+Digital\+I\+MU (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{class_digital_i_m_u_a8ba3d30c2df89d6f1a4077063cb71955}\label{class_digital_i_m_u_a8ba3d30c2df89d6f1a4077063cb71955}} 
+\mbox{\hyperlink{class_digital_i_m_u}{Digital\+I\+MU}} Default Constructor \mbox{\Hypertarget{class_digital_i_m_u_a8ba3d30c2df89d6f1a4077063cb71955}\label{class_digital_i_m_u_a8ba3d30c2df89d6f1a4077063cb71955}} 
 \index{DigitalIMU@{DigitalIMU}!DigitalIMU@{DigitalIMU}}
 \index{DigitalIMU@{DigitalIMU}!DigitalIMU@{DigitalIMU}}
 \doxysubsubsection{\texorpdfstring{DigitalIMU()}{DigitalIMU()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
 {\footnotesize\ttfamily Digital\+I\+M\+U\+::\+Digital\+I\+MU (\begin{DoxyParamCaption}\item[{int32\+\_\+t}]{sensor\+ID,  }\item[{uint8\+\_\+t}]{address }\end{DoxyParamCaption})}
 
-
+\mbox{\hyperlink{class_digital_i_m_u}{Digital\+I\+MU}} Constructor with arguments for sensor\+ID and address per the library 
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{class_digital_i_m_u_a272fd8ba31b4ab932238a61287c30d3d}\label{class_digital_i_m_u_a272fd8ba31b4ab932238a61287c30d3d}} 
@@ -39,12 +49,21 @@ void \mbox{\hyperlink{class_digital_i_m_u_aa7481cc820a5cd69c6a7e4b757214571}{sam
 \doxysubsubsection{\texorpdfstring{begin()}{begin()}}
 {\footnotesize\ttfamily bool Digital\+I\+M\+U\+::begin (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{class_digital_i_m_u_aa7481cc820a5cd69c6a7e4b757214571}\label{class_digital_i_m_u_aa7481cc820a5cd69c6a7e4b757214571}} 
+Function that initializes the B\+N\+O055 I\+MU \mbox{\Hypertarget{class_digital_i_m_u_aa7481cc820a5cd69c6a7e4b757214571}\label{class_digital_i_m_u_aa7481cc820a5cd69c6a7e4b757214571}} 
 \index{DigitalIMU@{DigitalIMU}!sample@{sample}}
 \index{sample@{sample}!DigitalIMU@{DigitalIMU}}
 \doxysubsubsection{\texorpdfstring{sample()}{sample()}}
 {\footnotesize\ttfamily void Digital\+I\+M\+U\+::sample (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_i_m_udata}{I\+M\+Udata}} $\ast$}]{data }\end{DoxyParamCaption})}
 
+
+
+\mbox{\hyperlink{class_digital_i_m_u}{Digital\+I\+MU}} Sample Function. 
+
+A function that will called from the thread\+I\+MU to sample from the B\+N\+O055 I\+MU 
+\begin{DoxyParams}{Parameters}
+{\em data} & The Pointer Argument for the \mbox{\hyperlink{struct_i_m_udata}{I\+M\+Udata}} struct \\
+\hline
+\end{DoxyParams}
 Here is the caller graph for this function\+:
 \nopagebreak
 \begin{figure}[H]

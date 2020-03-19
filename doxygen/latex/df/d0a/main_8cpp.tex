@@ -1,5 +1,10 @@
 \hypertarget{main_8cpp}{}\doxysection{src/src/main.cpp File Reference}
 \label{main_8cpp}\index{src/src/main.cpp@{src/src/main.cpp}}
+
+
+The main source file for the C\+U\+S\+R\+L\+\_\+\+Avionics Code Base.  
+
+
 {\ttfamily \#include \char`\"{}yonics.\+hpp\char`\"{}}\newline
 Include dependency graph for main.\+cpp\+:
 \nopagebreak
@@ -26,6 +31,11 @@ void \mbox{\hyperlink{main_8cpp_afe461d27b9c48d5921c00d521181f12f}{loop}} ()
 \end{DoxyCompactItemize}
 
 
+\doxysubsection{Detailed Description}
+The main source file for the C\+U\+S\+R\+L\+\_\+\+Avionics Code Base. 
+
+This source file initializes all the threads and defines them. Furthermore, the void \mbox{\hyperlink{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d}{setup()}} and void \mbox{\hyperlink{main_8cpp_afe461d27b9c48d5921c00d521181f12f}{loop()}} functions are defined here also. 
+
 \doxysubsection{Function Documentation}
 \mbox{\Hypertarget{main_8cpp_a24855038c09096fbd0c8a171642fece4}\label{main_8cpp_a24855038c09096fbd0c8a171642fece4}} 
 \index{main.cpp@{main.cpp}!KILLSYSTEM@{KILLSYSTEM}}
@@ -33,7 +43,7 @@ void \mbox{\hyperlink{main_8cpp_afe461d27b9c48d5921c00d521181f12f}{loop}} ()
 \doxysubsubsection{\texorpdfstring{KILLSYSTEM()}{KILLSYSTEM()}}
 {\footnotesize\ttfamily void K\+I\+L\+L\+S\+Y\+S\+T\+EM (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-TO R\+E\+S\+ET T\+HE S\+Y\+S\+T\+EM P\+O\+W\+ER M\+U\+ST BE R\+E\+M\+O\+V\+ED A\+ND T\+H\+EN R\+E\+A\+P\+P\+L\+I\+EDHere is the call graph for this function\+:
+Continous loud obnoxious beeping to alert that the system is killHere is the call graph for this function\+:
 \nopagebreak
 \begin{figure}[H]
 \begin{center}
@@ -55,31 +65,23 @@ Here is the caller graph for this function\+:
 \doxysubsubsection{\texorpdfstring{loop()}{loop()}}
 {\footnotesize\ttfamily void loop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-$<$ Loop the Thread\+Controller\mbox{\Hypertarget{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d}\label{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d}} 
+Loop the Thread\+Controller\mbox{\Hypertarget{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d}\label{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d}} 
 \index{main.cpp@{main.cpp}!setup@{setup}}
 \index{setup@{setup}!main.cpp@{main.cpp}}
 \doxysubsubsection{\texorpdfstring{setup()}{setup()}}
 {\footnotesize\ttfamily void setup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-$<$ Wait 2.\+5 seconds before starting everything up
+Wait 2.\+5 seconds before starting everything up
 
-$<$ Start serial comms
+Start serial comms
 
-$<$ Hello beep
+Hello beep
 
-$<$ S\+T\+I\+LL V\+E\+RY W\+IP F\+L\+A\+SH I\+N\+I\+T\+I\+A\+L\+I\+Z\+A\+T\+I\+ON
+Set the Thread\+I\+MU looping function for the Thread\+Controller
 
-Initialize B\+N\+O055 I\+MU sensor
+Set the Thread\+I\+MU refresh rate (Interval)
 
-Initialize M\+P\+L3115\+A2 sensor
-
-Configure I\+MU thread
-
-Configure Barometer thread
-
-Configure Accelerometer thread
-
-Add threads to Thread\+Controller
+Add the Thread\+I\+MU to the Thread\+Controller for continous processing
 
 Beep the piezo againHere is the call graph for this function\+:
 \nopagebreak
@@ -95,20 +97,12 @@ Beep the piezo againHere is the call graph for this function\+:
 \doxysubsubsection{\texorpdfstring{thread\_BAROM()}{thread\_BAROM()}}
 {\footnotesize\ttfamily void thread\+\_\+\+B\+A\+R\+OM (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-$<$ Sample barometer by calling the Sample functionHere is the call graph for this function\+:
+Sample barometer by calling the B\+A\+R\+OM Sample functionHere is the call graph for this function\+:
 \nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{df/d0a/main_8cpp_a4c41375613b83f0fbd2935a25f02df66_cgraph}
-\end{center}
-\end{figure}
-Here is the caller graph for this function\+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=243pt]{df/d0a/main_8cpp_a4c41375613b83f0fbd2935a25f02df66_icgraph}
 \end{center}
 \end{figure}
 \mbox{\Hypertarget{main_8cpp_a44c33c06360504ce7ee1b9f69cfda4c9}\label{main_8cpp_a44c33c06360504ce7ee1b9f69cfda4c9}} 
@@ -117,20 +111,12 @@ Here is the caller graph for this function\+:
 \doxysubsubsection{\texorpdfstring{thread\_HIGHG()}{thread\_HIGHG()}}
 {\footnotesize\ttfamily void thread\+\_\+\+H\+I\+G\+HG (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-$<$ Sample high-\/g accelerometer by calling the Sample functionHere is the call graph for this function\+:
+Sample high-\/g accelerometer by calling the H\+I\+G\+HG Sample functionHere is the call graph for this function\+:
 \nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=302pt]{df/d0a/main_8cpp_a44c33c06360504ce7ee1b9f69cfda4c9_cgraph}
-\end{center}
-\end{figure}
-Here is the caller graph for this function\+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=239pt]{df/d0a/main_8cpp_a44c33c06360504ce7ee1b9f69cfda4c9_icgraph}
+\includegraphics[width=324pt]{df/d0a/main_8cpp_a44c33c06360504ce7ee1b9f69cfda4c9_cgraph}
 \end{center}
 \end{figure}
 \mbox{\Hypertarget{main_8cpp_ae469de29626401639bd4169d260f63bb}\label{main_8cpp_ae469de29626401639bd4169d260f63bb}} 
@@ -139,7 +125,7 @@ Here is the caller graph for this function\+:
 \doxysubsubsection{\texorpdfstring{thread\_IMU()}{thread\_IMU()}}
 {\footnotesize\ttfamily void thread\+\_\+\+I\+MU (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-$<$ Sample the I\+MU by calling the I\+MU Sample functionHere is the call graph for this function\+:
+Sample the I\+MU by calling the I\+MU Sample functionHere is the call graph for this function\+:
 \nopagebreak
 \begin{figure}[H]
 \begin{center}

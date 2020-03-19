@@ -1,10 +1,7 @@
-/*
-==================================================
-================    Carter Mak   =================
-================ CU SRL Avionics =================
-================  November, 2019 =================
-==================================================
-*/
+/**
+ * @file DLLflash.cpp
+ * @brief The main source file for the flash chip classes
+ */
 
 #include "DLLflash.hpp"
 

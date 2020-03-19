@@ -1,3 +1,7 @@
+/**
+ * @file DigitalIMU.cpp
+ * @brief The main source file for the DigitalIMU class
+ */
 #include "yonics.hpp"
 
 DigitalIMU::DigitalIMU() {

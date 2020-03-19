@@ -1,3 +1,7 @@
+/**
+ * @file DigitalBAROM.cpp
+ * @brief The main source file for the DigitalBAROM class
+ */
 #include "yonics.hpp"
 
 DigitalBAROM::DigitalBAROM() {}

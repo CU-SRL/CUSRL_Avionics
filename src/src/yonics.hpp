@@ -29,10 +29,17 @@
 *   This structs holds the ADXL377 sample at a point in time to be stored and processed. 
 */
 struct ACCELdata {
-    float x;    /*!< Acceleration in X axis */
-    float y;    /*!< Acceleration in Y axis */ 
-    float z;    /*!< Acceleration in Z axis */
-    uint32_t t; /*!< Time */
+    /*! Acceleration in X axis */
+    float x;
+
+    /*! Acceleration in Y axis */ 
+    float y;
+
+    /*! Acceleration in Z axis */
+    float z;
+
+    /*! Time */
+    uint32_t t;
 };
 
 //! IMU Struct
@@ -40,14 +47,29 @@ struct ACCELdata {
 *   This structs holds the BNO055 sample at a point in time to be stored and processed.
 */
 struct IMUdata {
-    double orient_euler[3] = {0,0,0};   /*!< Orientation in Euler {x,y,z} */
-    double gyro_fused[3] = {0,0,0};     /*!< Fused Gyro Data {x,y,z} */
-    double accel_fused[3] = {0,0,0};    /*!< Fused Accel Data {x,y,z} */
-    double accel_raw[3] = {0,0,0};      /*!< Raw Accel Data {x,y,z} */
-    double gyro_raw[3] = {0,0,0};       /*!< Raw Gyro Data {x,y,z} */
-    double magnetometer[3] = {0,0,0};   /*!< Magnetometer Data {x,y,z} */
-    double orient_quat[4] = {0,0,0,0};  /*!< Orientation in Quaternions {w,x,y,z} */
-    uint32_t t = 0; /*!< Time */
+    /*! Orientation in Euler {x,y,z} */
+    double orient_euler[3] = {0,0,0};
+
+    /*! Fused Gyro Data {x,y,z} */
+    double gyro_fused[3] = {0,0,0};
+
+    /*! Fused Accel Data {x,y,z} */
+    double accel_fused[3] = {0,0,0};
+
+    /*! Raw Accel Data {x,y,z} */
+    double accel_raw[3] = {0,0,0};
+
+    /*! Raw Gyro Data {x,y,z} */
+    double gyro_raw[3] = {0,0,0};
+
+    /*! Magnetometer Data {x,y,z} */
+    double magnetometer[3] = {0,0,0};
+
+    /*! Orientation in Quaternions {w,x,y,z} */
+    double orient_quat[4] = {0,0,0,0};
+
+    /*! Time */
+    uint32_t t = 0;
 };
 
 //! Barometer Struct
@@ -55,10 +77,17 @@ struct IMUdata {
 *   This structs holds the MPL3115A2 sample at a point in time to be stored and processed.
 */
 struct BAROMdata {
-    float pressure = 0;     /*!< MPL3115A2 Barometric Pressure */
-    float altitude = 0;     /*!< MPL3115A2 Altitude */
-    float temperature = 0;  /*!< MPL3115A2 temperature in C */
-    uint32_t t = 0;         /*!< Time */
+    /*! MPL3115A2 Barometric Pressure */
+    float pressure = 0;
+
+    /*! MPL3115A2 Altitude */
+    float altitude = 0;
+
+    /*! MPL3115A2 temperature in C */
+    float temperature = 0;
+
+    /*! Time */
+    uint32_t t = 0;
 };
 
 //! ADXL377 High-G Accelerometer Class
@@ -75,10 +104,17 @@ class HIGHG_ACCEL {
 
         void init();
         float formatVal(int rawVal);
+
     public:
-        HIGHG_ACCEL();                                                      /*!< HIGHG_ACCEL Default Constructor */
-        HIGHG_ACCEL(int xPin, int yPin, int zPin);                          /*!< HIGHG_ACCEL with arguments for pin assignments of the HIGHG_ACCEL */
-        HIGHG_ACCEL(int xPin, int yPin, int zPin, bool highBitDepth);       /*!< HIGHG_ACCEL with arguments for pin assignments of the HIGHG_ACCEL and bitDepth for analog input */
+
+        /*! HIGHG_ACCEL Default Constructor */
+        HIGHG_ACCEL();
+
+        /*! HIGHG_ACCEL with arguments for pin assignments of the HIGHG_ACCEL */
+        HIGHG_ACCEL(int xPin, int yPin, int zPin);
+
+        /*! HIGHG_ACCEL with arguments for pin assignments of the HIGHG_ACCEL and bitDepth for analog input */
+        HIGHG_ACCEL(int xPin, int yPin, int zPin, bool highBitDepth);
 
         //! HIGHG_ACCEL Sample Function
         /*!
@@ -99,10 +135,17 @@ class DigitalIMU {
         sensors_event_t event;
         imu::Quaternion quat;
         imu::Vector<3> accel;
+
     public:
-        DigitalIMU();                                   /*!< DigitalIMU Default Constructor */
-        DigitalIMU(int32_t sensorID, uint8_t address);  /*!< DigitalIMU Constructor with arguments for sensorID and address per the library */
-        bool begin();                                   /*!< Function that initializes the BNO055 IMU */
+
+        /*! DigitalIMU Default Constructor */
+        DigitalIMU();
+
+        /*! DigitalIMU Constructor with arguments for sensorID and address per the library */
+        DigitalIMU(int32_t sensorID, uint8_t address);
+
+        /*! Function that initializes the BNO055 IMU */
+        bool begin();
 
         //! DigitalIMU Sample Function
         /*!
@@ -119,8 +162,12 @@ class DigitalIMU {
 class DigitalBAROM {
     private:
     public:
-        DigitalBAROM();                 /*!< DigitalBAROM Default Constructor */
-        bool begin();                   /*!< Function that initializes the MPL3115A2 Barometer */
+
+        /*! DigitalBAROM Default Constructor */
+        DigitalBAROM();
+
+        /*! Function that initializes the MPL3115A2 Barometer */
+        bool begin();
 
         //! DigitalBAROM Sample Function
         /*!
@@ -137,17 +184,34 @@ class DigitalBAROM {
 */
 class BeepyBOI {
     private:
-        int pin; /*<! The pin that the piezo buzzer is connected to. */
+
+        /*! The pin that the piezo buzzer is connected to. */
+        int pin;
 
         // Some predefined tones for simplicity in the code...
         // Define all the tones here.
-        int errTone = 300;      /*!< Predefined Error Tone */
-        int lowTone = 220;      /*!< Predefined Low Tone */
-        int midTone = 440;      /*!< Predefined Mid Tone */
-        int  hiTone = 880;      /*!< Predefined High Tone */
+
+        /*! Predefined Error Tone */
+        int errTone = 300;
+
+        /*! Predefined Low Tone */
+        int lowTone = 220;
+
+        /*! Predefined Mid Tone */
+        int midTone = 440;
+
+        /*! Predefined High Tone */
+        int  hiTone = 880;
+
     public:
-        BeepyBOI();             /*!< BeepyBOI Default Constructor */
-        BeepyBOI(int pin);      /*!< BeepyBOI Constructor */
+
+        /*! BeepyBOI Default Constructor */
+        BeepyBOI();
+
+        /*! BeepyBOI Constructor */
+        BeepyBOI(int pin);
+
+
         void hello();
         void error();
         void countdown(int s);
@@ -174,7 +238,7 @@ namespace I2C
     extern bool write_reg(uint8_t i2c, uint8_t addr, uint8_t val);
 
     /**
-     * I2C - first read from registry function that takes in the I2C device address, Device Registry Address to read from, a data buffer to write to, and the amount of bytes to read
+     * I2C - first read from registry function that takes in the I2C device address, Device Registry Address to read from, a data buffer to write to, and the amount of bytes to read.
      * The difference with the second read_regs function is that this function requests data from a specific register on the device
      * @param i2c I2C Device Address
      * @param addr I2C Device Registry Address you are attempting to read from
@@ -184,7 +248,7 @@ namespace I2C
     extern bool read_regs(uint8_t i2c, uint8_t addr, uint8_t *data, uint8_t num);
 
     /**
-     * I2C - second read from registry function that takes in the I2C device address, a data buffer to write to, and the amount of bytes to read
+     * I2C - second read from registry function that takes in the I2C device address, a data buffer to write to, and the amount of bytes to read.
      * The difference with the first read_regs function is that this function does not request data from a specific register on the device
      * @param i2c I2C Device Address
      * @param data The data buffer you will place incoming data into for processing
@@ -199,25 +263,56 @@ namespace I2C
 */
 namespace INITS
 {
+    //-----
     // PIN ASSIGNMENTS
-    extern int speakerPin;       /*!< The Piezo Buzzer pin */
-    extern int highG_xPin;       /*!< The High-G Accelerometer X Pin Assignment */
-    extern int highG_yPin;       /*!< The High-G Accelerometer Y Pin Assignment */
-    extern int highG_zPin;       /*!< The High-G Accelerometer Z Pin Assignment */
+    //-----
+    /*! The Piezo Buzzer pin */
+    extern int speakerPin;
 
+    /*! The High-G Accelerometer X Pin Assignment */
+    extern int highG_xPin;
+
+    /*! The High-G Accelerometer Y Pin Assignment */
+    extern int highG_yPin;
+
+    /*! The High-G Accelerometer Z Pin Assignment */
+    extern int highG_zPin; 
+
+    //-----
     // CLASS INITIALIZATIONS
-    extern DigitalIMU IMU;       /*!< The DigitalIMU class object, that will be initialized for the BNO055 IMU */
-    extern DigitalBAROM BAROM;   /*!< The DigitalBAROM class object, that will be initialized for the MPL3115A2 Barometer*/
-    extern HIGHG_ACCEL HIGHG;      /*!< The AnalogIMU class object, that will be initialized for the ADXL377 High-G Accelerometer */
-    extern BeepyBOI berp;        /*!< The BeepyBOI class object, that will be initialized for the Piezo Buzzer */
+    //-----
 
+    /*! The DigitalIMU class object, that will be initialized for the BNO055 IMU */
+    extern DigitalIMU IMU;
+
+    /*! The DigitalBAROM class object, that will be initialized for the MPL3115A2 Barometer*/
+    extern DigitalBAROM BAROM;
+
+    /*! The HIGHG_ACCEL class object, that will be initialized for the ADXL377 High-G Accelerometer */
+    extern HIGHG_ACCEL HIGHG;
+
+    /*! The BeepyBOI class object, that will be initialized for the Piezo Buzzer */
+    extern BeepyBOI berp;
+
+    //-----
     // POINTERS
-    extern DLLflash* flash;      /*!< The DLLflash pointer that will point to the DLLflash class instance */
+    //-----
 
+    /*! The DLLflash pointer that will point to the DLLflash class instance */
+    extern DLLflash* flash;
+
+    //----- 
     // DATA STRUCTS
-    extern IMUdata imu_data;     /*!< The struct IMUData object, or Instance, that holds all IMU data for processing and transmission */
-    extern BAROMdata barom_data; /*!< The struct BAROMdata object, or Instance, that holds all BAROM data for processing and transmission */
-    extern ACCELdata accel_data; /*!< The struct ACCELdata object, or Instance, that holds all the HIGHG Accelerometer data for processing and transmission */
+    //-----
+
+    /*! The struct IMUData object, or Instance, that holds all IMU data for processing and transmission */
+    extern IMUdata imu_data;
+
+    /*! The struct BAROMdata object, or Instance, that holds all BAROM data for processing and transmission */
+    extern BAROMdata barom_data;
+
+    /*! The struct ACCELdata object, or Instance, that holds all the HIGHG Accelerometer data for processing and transmission */
+    extern ACCELdata accel_data;
 };
 
 /*!
@@ -247,20 +342,36 @@ namespace PROTOTHREADING
     *   Every important task (i.e. sampling, writing to flash, RF, etc...) has a "thread"
     *   and their intervals are defined here.
     */  
-    extern int interval_IMU;   /*!< The interval at which the IMU will refresh */
-    extern int interval_BAROM; /*!< The interval at which the Barometer will refresh */
-    extern int interval_ACCEL; /*!< The inverval at which the High-G Accelerometer will refresh */
+
+    /*! The interval at which the IMU will refresh */
+    extern int interval_IMU;
+
+    /*! The interval at which the Barometer will refresh */
+    extern int interval_BAROM;
+
+    /*! The inverval at which the High-G Accelerometer will refresh */
+    extern int interval_ACCEL;
 
     // PROTOTHREADING Declaration and Definitions
-    /*
-    *   All the required thread objects and pointers are declared and defined here
-    */
-    extern ThreadController thread_control; /*!< thread_control is the overarching ThreadController that handles all the timing and calling of threads */
+    //
+    //  All the required thread objects and pointers are declared and defined here
+    //
 
+    /*! thread_control is the overarching ThreadController that handles all the timing and calling of threads */
+    extern ThreadController thread_control;
+
+    //----- 
     // Every thread is a pointer that is pointing to an object, or instance, of the Thread class initiated dynamically in order to use them in any scope
-    extern Thread* ThreadIMU;   /*!< The pointer that will point to the instance of the Thread for IMU */
-    extern Thread* ThreadBAROM; /*!< The pointer that will point to the instance of the Thread for the Barometeer */
-    extern Thread* ThreadACCEL; /*!< The pointer that will point to the instance of the Thread for the High-G Accelerometer */
+    //-----
+
+    /*! The pointer that will point to the instance of the Thread for IMU */
+    extern Thread* ThreadIMU;
+
+    /*! The pointer that will point to the instance of the Thread for the Barometeer */
+    extern Thread* ThreadBAROM;
+
+    /*! The pointer that will point to the instance of the Thread for the High-G Accelerometer */
+    extern Thread* ThreadACCEL;
 };
 
 #endif

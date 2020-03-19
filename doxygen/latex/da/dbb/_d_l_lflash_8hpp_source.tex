@@ -2,82 +2,75 @@
 \label{_d_l_lflash_8hpp_source}\index{src/src/DLLflash.hpp@{src/src/DLLflash.hpp}}
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00001 \textcolor{comment}{/*}}
-\DoxyCodeLine{00002 \textcolor{comment}{==================================================}}
-\DoxyCodeLine{00003 \textcolor{comment}{================    Carter Mak   =================}}
-\DoxyCodeLine{00004 \textcolor{comment}{================ CU SRL Avionics =================}}
-\DoxyCodeLine{00005 \textcolor{comment}{================  November, 2019 =================}}
-\DoxyCodeLine{00006 \textcolor{comment}{==================================================}}
-\DoxyCodeLine{00007 \textcolor{comment}{*/}}
-\DoxyCodeLine{00008 }
-\DoxyCodeLine{00009 \textcolor{preprocessor}{\#include <Arduino.h>}}
-\DoxyCodeLine{00010 \textcolor{preprocessor}{\#include<vector>}}
-\DoxyCodeLine{00011 \textcolor{comment}{// \#include "StructDefs.hpp"}}
-\DoxyCodeLine{00012 \textcolor{comment}{// \#include "SPIMemory.h"}}
-\DoxyCodeLine{00013 \textcolor{preprocessor}{\#include <SPIMemory.h>}}
-\DoxyCodeLine{00014 }
-\DoxyCodeLine{00015 \textcolor{comment}{/*}}
-\DoxyCodeLine{00016 \textcolor{comment}{class DLLtype}}
-\DoxyCodeLine{00017 \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00018 \textcolor{comment}{}}
-\DoxyCodeLine{00019 \textcolor{comment}{Class definition to store, manage, and operate a single data type being stored to flash memory}}
-\DoxyCodeLine{00020 \textcolor{comment}{*/}}
-\DoxyCodeLine{\Hypertarget{_d_l_lflash_8hpp_source_l00021}\mbox{\hyperlink{class_d_l_ltype}{00021}} \textcolor{keyword}{class }\mbox{\hyperlink{class_d_l_ltype}{DLLtype}} \{}
-\DoxyCodeLine{00022     \textcolor{keyword}{private}:}
-\DoxyCodeLine{00023         \textcolor{keywordtype}{void}* nextBuffer = NULL; \textcolor{comment}{// Buffer of next sample}}
-\DoxyCodeLine{00024         \textcolor{keywordtype}{void}* currBuffer = NULL; \textcolor{comment}{// Buffer of current sample}}
-\DoxyCodeLine{00025         \textcolor{keywordtype}{void}* refData = NULL; \textcolor{comment}{// Pointer to struct containing data}}
+\DoxyCodeLine{00001 }
+\DoxyCodeLine{00006 \textcolor{preprocessor}{\#include <Arduino.h>}}
+\DoxyCodeLine{00007 \textcolor{preprocessor}{\#include<vector>}}
+\DoxyCodeLine{00008 \textcolor{comment}{// \#include "StructDefs.hpp"}}
+\DoxyCodeLine{00009 \textcolor{comment}{// \#include "SPIMemory.h"}}
+\DoxyCodeLine{00010 \textcolor{preprocessor}{\#include <SPIMemory.h>}}
+\DoxyCodeLine{00011 }
+\DoxyCodeLine{00012 \textcolor{comment}{/*}}
+\DoxyCodeLine{00013 \textcolor{comment}{class DLLtype}}
+\DoxyCodeLine{00014 \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00015 \textcolor{comment}{}}
+\DoxyCodeLine{00016 \textcolor{comment}{Class definition to store, manage, and operate a single data type being stored to flash memory}}
+\DoxyCodeLine{00017 \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{_d_l_lflash_8hpp_source_l00018}\mbox{\hyperlink{class_d_l_ltype}{00018}} \textcolor{keyword}{class }\mbox{\hyperlink{class_d_l_ltype}{DLLtype}} \{}
+\DoxyCodeLine{00019     \textcolor{keyword}{private}:}
+\DoxyCodeLine{00020         \textcolor{keywordtype}{void}* nextBuffer = NULL; \textcolor{comment}{// Buffer of next sample}}
+\DoxyCodeLine{00021         \textcolor{keywordtype}{void}* currBuffer = NULL; \textcolor{comment}{// Buffer of current sample}}
+\DoxyCodeLine{00022         \textcolor{keywordtype}{void}* refData = NULL; \textcolor{comment}{// Pointer to struct containing data}}
+\DoxyCodeLine{00023 }
+\DoxyCodeLine{00024         uint32\_t head = 0; \textcolor{comment}{// Flash chip addr of head}}
+\DoxyCodeLine{00025         uint32\_t tail = 0; \textcolor{comment}{// Flash chip addr of tail}}
 \DoxyCodeLine{00026 }
-\DoxyCodeLine{00027         uint32\_t head = 0; \textcolor{comment}{// Flash chip addr of head}}
-\DoxyCodeLine{00028         uint32\_t tail = 0; \textcolor{comment}{// Flash chip addr of tail}}
-\DoxyCodeLine{00029 }
-\DoxyCodeLine{00030         uint32\_t prev = 0; \textcolor{comment}{// Address on flash chip of prev sample}}
-\DoxyCodeLine{00031         uint32\_t curr = 0; \textcolor{comment}{// Address on flash chip of curr sample}}
-\DoxyCodeLine{00032         uint32\_t next = 0; \textcolor{comment}{// Address on flash chip allocated for next sample}}
-\DoxyCodeLine{00033         \textcolor{keywordtype}{int} nSamplesWritten = 0; \textcolor{comment}{// Number of samples stored to flash chip}}
-\DoxyCodeLine{00034 }
-\DoxyCodeLine{00035 }
-\DoxyCodeLine{00036         \textcolor{keywordtype}{int} dataSize = 0; \textcolor{comment}{// Size of one sample (i.e. size of refData)}}
-\DoxyCodeLine{00037         \textcolor{keywordtype}{int} addrSize; \textcolor{comment}{// Size of one flash chip address}}
-\DoxyCodeLine{00038         \textcolor{keywordtype}{char} \textcolor{keywordtype}{id}[3];  \textcolor{comment}{// Three-\/character identifier (e.g. IMU)}}
-\DoxyCodeLine{00039 }
-\DoxyCodeLine{00040         \textcolor{keywordtype}{bool} init();}
-\DoxyCodeLine{00041         \textcolor{keywordtype}{void} bufferFirstSample();}
-\DoxyCodeLine{00042         \textcolor{keywordtype}{bool} buffer2flash(uint32\_t,SPIFlash*);}
-\DoxyCodeLine{00043     \textcolor{keyword}{public}:}
-\DoxyCodeLine{00044         \mbox{\hyperlink{class_d_l_ltype_a6e156d6c8aaf564242929f6f2c8711f7}{DLLtype}}(\textcolor{keywordtype}{void}*,\textcolor{keywordtype}{int},\textcolor{keywordtype}{char}*);}
-\DoxyCodeLine{00045         \mbox{\hyperlink{class_d_l_ltype_aeb46d596fa7940ed32fe9688a9f113e6}{~DLLtype}}();}
-\DoxyCodeLine{00046         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_l_ltype_a6cd037465d51fe36068f3540b17b73f4}{setType}}(\textcolor{keywordtype}{void}*,\textcolor{keywordtype}{int});}
-\DoxyCodeLine{00047         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_l_ltype_ab3a28578770c4da1ca1b5cb72c992c1e}{writeSample}}(uint32\_t,SPIFlash*);}
-\DoxyCodeLine{00048         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_l_ltype_a419b09f201c14d9dc38d6be0abb39622}{readSample}}();}
-\DoxyCodeLine{00049         \textcolor{keywordtype}{char}* \mbox{\hyperlink{class_d_l_ltype_aea26529271159fd0d337a367b850a83b}{getID}}();}
+\DoxyCodeLine{00027         uint32\_t prev = 0; \textcolor{comment}{// Address on flash chip of prev sample}}
+\DoxyCodeLine{00028         uint32\_t curr = 0; \textcolor{comment}{// Address on flash chip of curr sample}}
+\DoxyCodeLine{00029         uint32\_t next = 0; \textcolor{comment}{// Address on flash chip allocated for next sample}}
+\DoxyCodeLine{00030         \textcolor{keywordtype}{int} nSamplesWritten = 0; \textcolor{comment}{// Number of samples stored to flash chip}}
+\DoxyCodeLine{00031 }
+\DoxyCodeLine{00032 }
+\DoxyCodeLine{00033         \textcolor{keywordtype}{int} dataSize = 0; \textcolor{comment}{// Size of one sample (i.e. size of refData)}}
+\DoxyCodeLine{00034         \textcolor{keywordtype}{int} addrSize; \textcolor{comment}{// Size of one flash chip address}}
+\DoxyCodeLine{00035         \textcolor{keywordtype}{char} \textcolor{keywordtype}{id}[3];  \textcolor{comment}{// Three-\/character identifier (e.g. IMU)}}
+\DoxyCodeLine{00036 }
+\DoxyCodeLine{00037         \textcolor{keywordtype}{bool} init();}
+\DoxyCodeLine{00038         \textcolor{keywordtype}{void} bufferFirstSample();}
+\DoxyCodeLine{00039         \textcolor{keywordtype}{bool} buffer2flash(uint32\_t,SPIFlash*);}
+\DoxyCodeLine{00040     \textcolor{keyword}{public}:}
+\DoxyCodeLine{00041         \mbox{\hyperlink{class_d_l_ltype_a6e156d6c8aaf564242929f6f2c8711f7}{DLLtype}}(\textcolor{keywordtype}{void}*,\textcolor{keywordtype}{int},\textcolor{keywordtype}{char}*);}
+\DoxyCodeLine{00042         \mbox{\hyperlink{class_d_l_ltype_aeb46d596fa7940ed32fe9688a9f113e6}{~DLLtype}}();}
+\DoxyCodeLine{00043         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_l_ltype_a6cd037465d51fe36068f3540b17b73f4}{setType}}(\textcolor{keywordtype}{void}*,\textcolor{keywordtype}{int});}
+\DoxyCodeLine{00044         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_l_ltype_ab3a28578770c4da1ca1b5cb72c992c1e}{writeSample}}(uint32\_t,SPIFlash*);}
+\DoxyCodeLine{00045         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_l_ltype_a419b09f201c14d9dc38d6be0abb39622}{readSample}}();}
+\DoxyCodeLine{00046         \textcolor{keywordtype}{char}* \mbox{\hyperlink{class_d_l_ltype_aea26529271159fd0d337a367b850a83b}{getID}}();}
+\DoxyCodeLine{00047 }
+\DoxyCodeLine{00048 }
+\DoxyCodeLine{00049 \};}
 \DoxyCodeLine{00050 }
-\DoxyCodeLine{00051 }
-\DoxyCodeLine{00052 \};}
-\DoxyCodeLine{00053 }
-\DoxyCodeLine{00054 \textcolor{comment}{/*}}
-\DoxyCodeLine{00055 \textcolor{comment}{class DLLflash}}
-\DoxyCodeLine{00056 \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00057 \textcolor{comment}{}}
-\DoxyCodeLine{00058 \textcolor{comment}{Class to manage and operate all flash memory interactions}}
-\DoxyCodeLine{00059 \textcolor{comment}{*/}}
-\DoxyCodeLine{\Hypertarget{_d_l_lflash_8hpp_source_l00060}\mbox{\hyperlink{class_d_l_lflash}{00060}} \textcolor{keyword}{class }\mbox{\hyperlink{class_d_l_lflash}{DLLflash}} \{}
-\DoxyCodeLine{00061     \textcolor{keyword}{private}:}
-\DoxyCodeLine{00062         uint32\_t addr\_next\_available = 0; \textcolor{comment}{// Next available address}}
-\DoxyCodeLine{00063         std::vector <DLLtype*> types; \textcolor{comment}{// Vector of instantiated types}}
-\DoxyCodeLine{00064         SPIFlash* flash = NULL; \textcolor{comment}{// Pointer to SPIflash object (flash chip)}}
-\DoxyCodeLine{00065         uint32\_t flashSize = 0;}
-\DoxyCodeLine{00066 }
-\DoxyCodeLine{00067         \textcolor{keywordtype}{bool} READ\_WRITE = \textcolor{keyword}{true}; \textcolor{comment}{// true if in reading mode, false if in writing mode}}
-\DoxyCodeLine{00068     \textcolor{keyword}{public}:}
-\DoxyCodeLine{00069         \mbox{\hyperlink{class_d_l_lflash_a2b9a209ac7b123aa29c8a52f4a6b628a}{DLLflash}}();}
-\DoxyCodeLine{00070         \mbox{\hyperlink{class_d_l_lflash_a2b9a209ac7b123aa29c8a52f4a6b628a}{DLLflash}}(\textcolor{keywordtype}{int});}
-\DoxyCodeLine{00071         \mbox{\hyperlink{class_d_l_lflash_a4aaac33c7b03678e1762fe98763cb5b0}{~DLLflash}}();}
-\DoxyCodeLine{00072         \textcolor{keyword}{template} <\textcolor{keyword}{class} T>}
-\DoxyCodeLine{00073         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_l_lflash_a0c23f9c6e5d585e6f9d66b4b5218f21f}{addType}}(T*,\textcolor{keywordtype}{char}*);}
-\DoxyCodeLine{00074         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_l_lflash_a57f8d7cfe59a6f682dcca7aadf174f3d}{writeSample}}(\textcolor{keywordtype}{char}*);}
-\DoxyCodeLine{00075         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_l_lflash_adf8b98c4dd47eefabc244c712cd64de4}{setToWrite}}();}
-\DoxyCodeLine{00076         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_l_lflash_a2d101ca68dfbd42739fcfaa2c2fdfafa}{setToRead}}();}
-\DoxyCodeLine{00077 \};}
+\DoxyCodeLine{00051 \textcolor{comment}{/*}}
+\DoxyCodeLine{00052 \textcolor{comment}{class DLLflash}}
+\DoxyCodeLine{00053 \textcolor{comment}{-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00054 \textcolor{comment}{}}
+\DoxyCodeLine{00055 \textcolor{comment}{Class to manage and operate all flash memory interactions}}
+\DoxyCodeLine{00056 \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{_d_l_lflash_8hpp_source_l00057}\mbox{\hyperlink{class_d_l_lflash}{00057}} \textcolor{keyword}{class }\mbox{\hyperlink{class_d_l_lflash}{DLLflash}} \{}
+\DoxyCodeLine{00058     \textcolor{keyword}{private}:}
+\DoxyCodeLine{00059         uint32\_t addr\_next\_available = 0; \textcolor{comment}{// Next available address}}
+\DoxyCodeLine{00060         std::vector <DLLtype*> types; \textcolor{comment}{// Vector of instantiated types}}
+\DoxyCodeLine{00061         SPIFlash* flash = NULL; \textcolor{comment}{// Pointer to SPIflash object (flash chip)}}
+\DoxyCodeLine{00062         uint32\_t flashSize = 0;}
+\DoxyCodeLine{00063 }
+\DoxyCodeLine{00064         \textcolor{keywordtype}{bool} READ\_WRITE = \textcolor{keyword}{true}; \textcolor{comment}{// true if in reading mode, false if in writing mode}}
+\DoxyCodeLine{00065     \textcolor{keyword}{public}:}
+\DoxyCodeLine{00066         \mbox{\hyperlink{class_d_l_lflash_a2b9a209ac7b123aa29c8a52f4a6b628a}{DLLflash}}();}
+\DoxyCodeLine{00067         \mbox{\hyperlink{class_d_l_lflash_a2b9a209ac7b123aa29c8a52f4a6b628a}{DLLflash}}(\textcolor{keywordtype}{int});}
+\DoxyCodeLine{00068         \mbox{\hyperlink{class_d_l_lflash_a4aaac33c7b03678e1762fe98763cb5b0}{~DLLflash}}();}
+\DoxyCodeLine{00069         \textcolor{keyword}{template} <\textcolor{keyword}{class} T>}
+\DoxyCodeLine{00070         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_l_lflash_a0c23f9c6e5d585e6f9d66b4b5218f21f}{addType}}(T*,\textcolor{keywordtype}{char}*);}
+\DoxyCodeLine{00071         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_l_lflash_a57f8d7cfe59a6f682dcca7aadf174f3d}{writeSample}}(\textcolor{keywordtype}{char}*);}
+\DoxyCodeLine{00072         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_l_lflash_adf8b98c4dd47eefabc244c712cd64de4}{setToWrite}}();}
+\DoxyCodeLine{00073         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_l_lflash_a2d101ca68dfbd42739fcfaa2c2fdfafa}{setToRead}}();}
+\DoxyCodeLine{00074 \};}
 
 \end{DoxyCode}

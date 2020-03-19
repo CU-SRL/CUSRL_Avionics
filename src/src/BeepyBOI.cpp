@@ -1,3 +1,7 @@
+/**
+ * @file BeepyBOI.cpp
+ * @brief The main source file for the BeepyBOI class
+ */
 #include "yonics.hpp"
 
 BeepyBOI::BeepyBOI() {

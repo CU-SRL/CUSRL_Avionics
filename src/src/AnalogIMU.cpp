@@ -1,3 +1,7 @@
+/**
+ * @file AnalogIMU.cpp
+ * @brief The main source file for the HIGHG_ACCEL class
+ */
 #include "yonics.hpp"
 
 HIGHG_ACCEL::HIGHG_ACCEL() {
