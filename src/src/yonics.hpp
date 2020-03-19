@@ -119,7 +119,7 @@ class HIGHG_ACCEL {
         //! HIGHG_ACCEL Sample Function
         /*!
         * A function that will called from the threadACCEL to sample from the ADXL377 High G Accelerometer
-        * @param data The Pointer Argument for the ACCELdata struct
+        * @param data The pointer for the ACCELdata struct
         */
         void sample(ACCELdata* data);
 };
@@ -150,7 +150,7 @@ class DigitalIMU {
         //! DigitalIMU Sample Function
         /*!
         * A function that will called from the threadIMU to sample from the BNO055 IMU
-        * @param data The Pointer Argument for the IMUdata struct
+        * @param data The pointer for the IMUdata struct
         */
         void sample(IMUdata* data);
 };
@@ -172,7 +172,7 @@ class DigitalBAROM {
         //! DigitalBAROM Sample Function
         /*!
         * A function that will called from the threadBAROM to sample from the MPL3115A2 Barometric Sensor
-        * @param data The Pointer Argument for the BAROMdata struct
+        * @param data The pointer for the BAROMdata struct
         */
         bool sample(BAROMdata* data);
 };
@@ -230,7 +230,7 @@ class BeepyBOI {
 namespace I2C
 {
     /**
-     * I2C - write to registry function that takes in the I2C device address, Device Registry Address to write to, and the data to write
+     * I2C - Write to registry function that takes in the I2C device address, Device Registry Address to write to, and the data to write
      * @param i2c I2C Device Address
      * @param addr I2C Device Registry Address you are attempting to write to
      * @param val The data you are trying to write
@@ -238,7 +238,7 @@ namespace I2C
     extern bool write_reg(uint8_t i2c, uint8_t addr, uint8_t val);
 
     /**
-     * I2C - first read from registry function that takes in the I2C device address, Device Registry Address to read from, a data buffer to write to, and the amount of bytes to read.
+     * I2C - First read from registry function that takes in the I2C device address, Device Registry Address to read from, a data buffer to write to, and the amount of bytes to read.
      * The difference with the second read_regs function is that this function requests data from a specific register on the device
      * @param i2c I2C Device Address
      * @param addr I2C Device Registry Address you are attempting to read from
@@ -248,7 +248,7 @@ namespace I2C
     extern bool read_regs(uint8_t i2c, uint8_t addr, uint8_t *data, uint8_t num);
 
     /**
-     * I2C - second read from registry function that takes in the I2C device address, a data buffer to write to, and the amount of bytes to read.
+     * I2C - Second read from registry function that takes in the I2C device address, a data buffer to write to, and the amount of bytes to read.
      * The difference with the first read_regs function is that this function does not request data from a specific register on the device
      * @param i2c I2C Device Address
      * @param data The data buffer you will place incoming data into for processing
