@@ -29,10 +29,10 @@
 *   This structs holds the ADXL377 sample at a point in time to be stored and processed. 
 */
 struct ACCELdata {
-    float x;
-    float y;
-    float z;
-    uint32_t t;
+    float x;    /*!< Acceleration in X axis */
+    float y;    /*!< Acceleration in Y axis */ 
+    float z;    /*!< Acceleration in Z axis */
+    uint32_t t; /*!< Time */
 };
 
 //! IMU Struct
@@ -40,14 +40,14 @@ struct ACCELdata {
 *   This structs holds the BNO055 sample at a point in time to be stored and processed.
 */
 struct IMUdata {
-    double orient_euler[3] = {0,0,0};
-    double gyro_fused[3] = {0,0,0};
-    double accel_fused[3] = {0,0,0};
-    double accel_raw[3] = {0,0,0};
-    double gyro_raw[3] = {0,0,0};
-    double magnetometer[3] = {0,0,0};
-    double orient_quat[4] = {0,0,0,0}; // {w,x,y,z}
-    uint32_t t = 0;
+    double orient_euler[3] = {0,0,0};   /*!< Orientation in Euler {x,y,z} */
+    double gyro_fused[3] = {0,0,0};     /*!< Fused Gyro Data {x,y,z} */
+    double accel_fused[3] = {0,0,0};    /*!< Fused Accel Data {x,y,z} */
+    double accel_raw[3] = {0,0,0};      /*!< Raw Accel Data {x,y,z} */
+    double gyro_raw[3] = {0,0,0};       /*!< Raw Gyro Data {x,y,z} */
+    double magnetometer[3] = {0,0,0};   /*!< Magnetometer Data {x,y,z} */
+    double orient_quat[4] = {0,0,0,0};  /*!< Orientation in Quaternions {w,x,y,z} */
+    uint32_t t = 0; /*!< Time */
 };
 
 //! Barometer Struct
@@ -55,17 +55,17 @@ struct IMUdata {
 *   This structs holds the MPL3115A2 sample at a point in time to be stored and processed.
 */
 struct BAROMdata {
-    float pressure = 0;
-    float altitude = 0;
-    float temperature = 0;
-    uint32_t t = 0;
+    float pressure = 0;     /*!< MPL3115A2 Barometric Pressure */
+    float altitude = 0;     /*!< MPL3115A2 Altitude */
+    float temperature = 0;  /*!< MPL3115A2 temperature in C */
+    uint32_t t = 0;         /*!< Time */
 };
 
 //! ADXL377 High-G Accelerometer Class
 /*!
 *   Class to manage the Adafruit ADXL377 High-G Accelerometer breakout board
 */
-class AnalogIMU {
+class HIGHG_ACCEL {
     private:
         int xPin, yPin, zPin;
         int bitDepth;
@@ -76,15 +76,22 @@ class AnalogIMU {
         void init();
         float formatVal(int rawVal);
     public:
-        AnalogIMU();
-        AnalogIMU(int xPin, int yPin, int zPin);
-        AnalogIMU(int xPin, int yPin, int zPin, bool highBitDepth);
+        HIGHG_ACCEL();                                                      /*!< HIGHG_ACCEL Default Constructor */
+        HIGHG_ACCEL(int xPin, int yPin, int zPin);                          /*!< HIGHG_ACCEL with arguments for pin assignments of the HIGHG_ACCEL */
+        HIGHG_ACCEL(int xPin, int yPin, int zPin, bool highBitDepth);       /*!< HIGHG_ACCEL with arguments for pin assignments of the HIGHG_ACCEL and bitDepth for analog input */
+
+        //! HIGHG_ACCEL Sample Function
+        /*!
+        * A function that will called from the threadACCEL to sample from the ADXL377 High G Accelerometer
+        * @param data The Pointer Argument for the ACCELdata struct
+        */
         void sample(ACCELdata* data);
 };
 
 //! BNO055 IMU Class
 /*!
 *   Class to manage the Adafruit BNO055 Absolute Orientation IMU Fusion breakout board
+*   KEEP IN MIND NO DIFFERENCE BETWEEN RAW AND FUSED DATA FROM BNO055...
 */
 class DigitalIMU {
     private:
@@ -93,9 +100,15 @@ class DigitalIMU {
         imu::Quaternion quat;
         imu::Vector<3> accel;
     public:
-        DigitalIMU();
-        DigitalIMU(int32_t sensorID, uint8_t address);
-        bool begin();
+        DigitalIMU();                                   /*!< DigitalIMU Default Constructor */
+        DigitalIMU(int32_t sensorID, uint8_t address);  /*!< DigitalIMU Constructor with arguments for sensorID and address per the library */
+        bool begin();                                   /*!< Function that initializes the BNO055 IMU */
+
+        //! DigitalIMU Sample Function
+        /*!
+        * A function that will called from the threadIMU to sample from the BNO055 IMU
+        * @param data The Pointer Argument for the IMUdata struct
+        */
         void sample(IMUdata* data);
 };
 
@@ -106,8 +119,14 @@ class DigitalIMU {
 class DigitalBAROM {
     private:
     public:
-        DigitalBAROM();
-        bool begin();
+        DigitalBAROM();                 /*!< DigitalBAROM Default Constructor */
+        bool begin();                   /*!< Function that initializes the MPL3115A2 Barometer */
+
+        //! DigitalBAROM Sample Function
+        /*!
+        * A function that will called from the threadBAROM to sample from the MPL3115A2 Barometric Sensor
+        * @param data The Pointer Argument for the BAROMdata struct
+        */
         bool sample(BAROMdata* data);
 };
 
@@ -122,13 +141,13 @@ class BeepyBOI {
 
         // Some predefined tones for simplicity in the code...
         // Define all the tones here.
-        int errTone = 300; /*!< Predefined Error Tone */
-        int lowTone = 220; /*!< Predefined Low Tone */
-        int midTone = 440; /*!< Predefined Mid Tone */
-        int  hiTone = 880; /*!< Predefined High Tone */
+        int errTone = 300;      /*!< Predefined Error Tone */
+        int lowTone = 220;      /*!< Predefined Low Tone */
+        int midTone = 440;      /*!< Predefined Mid Tone */
+        int  hiTone = 880;      /*!< Predefined High Tone */
     public:
-        BeepyBOI();
-        BeepyBOI(int pin);
+        BeepyBOI();             /*!< BeepyBOI Default Constructor */
+        BeepyBOI(int pin);      /*!< BeepyBOI Constructor */
         void hello();
         void error();
         void countdown(int s);
@@ -189,7 +208,7 @@ namespace INITS
     // CLASS INITIALIZATIONS
     extern DigitalIMU IMU;       /*!< The DigitalIMU class object, that will be initialized for the BNO055 IMU */
     extern DigitalBAROM BAROM;   /*!< The DigitalBAROM class object, that will be initialized for the MPL3115A2 Barometer*/
-    extern AnalogIMU HIGHG;      /*!< The AnalogIMU class object, that will be initialized for the ADXL377 High-G Accelerometer */
+    extern HIGHG_ACCEL HIGHG;      /*!< The AnalogIMU class object, that will be initialized for the ADXL377 High-G Accelerometer */
     extern BeepyBOI berp;        /*!< The BeepyBOI class object, that will be initialized for the Piezo Buzzer */
 
     // POINTERS

@@ -30,16 +30,16 @@ namespace INITS
     int highG_yPin = 34;    // Board highG_yPin defintion
     int highG_zPin = 35;    // Board highG_zPin defintion
 
-    DigitalIMU IMU = DigitalIMU(55,0x28);                               // Define the DigitalIMU object and set it equal to the DigitalIMU instance
-    DigitalBAROM BAROM;                                                 // Create the DigitalBAROM class object
-    AnalogIMU HIGHG = AnalogIMU(highG_xPin,highG_yPin,highG_zPin,true); // Define the AnalogIMU object and set it equal to the AnalogIMU instance
-    BeepyBOI berp = BeepyBOI(speakerPin);                               // Define the BeepyBOI object and set it equal to the BeepBOI instance
-
-    DLLflash* flash = nullptr;                                          // Define the DLLflash object and set it equal to nullptr b/c it doesn't point to anything yet
-                                            
-    IMUdata imu_data;                                                   // Create the IMUData struct object
-    BAROMdata barom_data;                                               // Create the BAROMdata struct object
-    ACCELdata accel_data;                                               // Create the ACCELdata struct object
+    DigitalIMU IMU = DigitalIMU(55,0x28);                                   // Define the DigitalIMU object and set it equal to the DigitalIMU instance
+    DigitalBAROM BAROM;                                                     // Create the DigitalBAROM class object
+    HIGHG_ACCEL HIGHG = HIGHG_ACCEL(highG_xPin,highG_yPin,highG_zPin,true); // Define the AnalogIMU object and set it equal to the AnalogIMU instance
+    BeepyBOI berp = BeepyBOI(speakerPin);                                   // Define the BeepyBOI object and set it equal to the BeepBOI instance
+    
+    DLLflash* flash = nullptr;                                              // Define the DLLflash object and set it equal to nullptr b/c it doesn't point to anything yet
+                                                
+    IMUdata imu_data;                                                       // Create the IMUData struct object
+    BAROMdata barom_data;                                                   // Create the BAROMdata struct object
+    ACCELdata accel_data;                                                   // Create the ACCELdata struct object
 };
 
 // PROTOTHREADING Namespace Definitions
