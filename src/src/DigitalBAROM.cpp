@@ -16,7 +16,7 @@ bool DigitalBAROM::begin()
     // switch to 34ms
 	if (!I2C::write_reg(i2c_addr, MPL3115_CTRL_REG1, 0x98)) return false;
 
-	// switch to active, altimeter mode, polling mode
+	// switch to active, set altimeter mode, set polling mode
 	if (!I2C::write_reg(i2c_addr, MPL3115_CTRL_REG1, 0xB9)) return false;
 
 	// enable events
@@ -27,18 +27,18 @@ bool DigitalBAROM::begin()
 bool DigitalBAROM::sample(BAROMdata* data) {
 
     static elapsedMicros usec_since;
-	static int32_t usec_history=980000;
-	const uint8_t i2c_addr=MPL3115_I2C_ADDR;
+	static int32_t usec_history = 980000;
+	const uint8_t i2c_addr = MPL3115_I2C_ADDR;
 	uint8_t buf[6];
 
     // KEEPS TIME BECAUSE MPL3115A2 times out after 512ms
 	int32_t usec = usec_since;
 	if (usec + 500 < usec_history) return false;
 
-    // GRAB DATA and stick into buffer
 	if (!I2C::read_regs(i2c_addr, 0x00, buf, 1)) return false;
 	if (buf[0] == 0) return false;
 
+	// GRAB DATA and stick into buffer
 	if (!I2C::read_regs(i2c_addr, buf, 6)) return false;
 
     // Updating time.

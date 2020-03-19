@@ -122,10 +122,10 @@ class BeepyBOI {
 
         // Some predefined tones for simplicity in the code...
         // Define all the tones here.
-        int errTone = 300; /*<! Predefined Error Tone */
-        int lowTone = 220; /*<! Predefined Low Tone */
-        int midTone = 440; /*<! Predefined Mid Tone */
-        int  hiTone = 880; /*<! Predefined High Tone */
+        int errTone = 300; /*!< Predefined Error Tone */
+        int lowTone = 220; /*!< Predefined Low Tone */
+        int midTone = 440; /*!< Predefined Mid Tone */
+        int  hiTone = 880; /*!< Predefined High Tone */
     public:
         BeepyBOI();
         BeepyBOI(int pin);
@@ -141,13 +141,36 @@ class BeepyBOI {
 /*!
 *   In this namespace the I2C drivers are declared and then defined for use with the I2C protocol
 *   In order to achieve I2C communication, the Arduino Wire library is used to simplify the complexity of the functions.
+*
+*   THESE FUNCTIONS ONLY WORK ON I2C BUS 0 (WIP to work on all buses, simple fix but need to find a way of making it dynamic)
 */
 namespace I2C
 {
+    /**
+     * I2C - write to registry function that takes in the I2C device address, Device Registry Address to write to, and the data to write
+     * @param i2c I2C Device Address
+     * @param addr I2C Device Registry Address you are attempting to write to
+     * @param val The data you are trying to write
+     */
     extern bool write_reg(uint8_t i2c, uint8_t addr, uint8_t val);
 
+    /**
+     * I2C - first read from registry function that takes in the I2C device address, Device Registry Address to read from, a data buffer to write to, and the amount of bytes to read
+     * The difference with the second read_regs function is that this function requests data from a specific register on the device
+     * @param i2c I2C Device Address
+     * @param addr I2C Device Registry Address you are attempting to read from
+     * @param data The data buffer you will place incoming data into for processing
+     * @param num The number of bytes you are grabbing from the device.
+     */
     extern bool read_regs(uint8_t i2c, uint8_t addr, uint8_t *data, uint8_t num);
 
+    /**
+     * I2C - second read from registry function that takes in the I2C device address, a data buffer to write to, and the amount of bytes to read
+     * The difference with the first read_regs function is that this function does not request data from a specific register on the device
+     * @param i2c I2C Device Address
+     * @param data The data buffer you will place incoming data into for processing
+     * @param num The number of bytes you are grabbing from the device.
+     */
     extern bool read_regs(uint8_t i2c, uint8_t *data, uint8_t num);
 };
 
@@ -158,22 +181,22 @@ namespace I2C
 namespace INITS
 {
     // PIN ASSIGNMENTS
-    extern int speakerPin; /*!< The Piezo Buzzer pin */
-    extern int highG_xPin; /*!< The High-G Accelerometer X Pin Assignment */
-    extern int highG_yPin; /*!< The High-G Accelerometer Y Pin Assignment */
-    extern int highG_zPin; /*!< The High-G Accelerometer Z Pin Assignment */
+    extern int speakerPin;       /*!< The Piezo Buzzer pin */
+    extern int highG_xPin;       /*!< The High-G Accelerometer X Pin Assignment */
+    extern int highG_yPin;       /*!< The High-G Accelerometer Y Pin Assignment */
+    extern int highG_zPin;       /*!< The High-G Accelerometer Z Pin Assignment */
 
     // CLASS INITIALIZATIONS
-    extern DigitalIMU IMU; /*!< The DigitalIMU class object, that will be initialized for the BNO055 IMU */
-    extern DigitalBAROM BAROM; /*!< The DigitalBAROM class object, that will be initialized for the MPL3115A2 Barometer*/
-    extern AnalogIMU HIGHG; /*!< The AnalogIMU class object, that will be initialized for the ADXL377 High-G Accelerometer */
-    extern BeepyBOI berp; /*!< The BeepyBOI class object, that will be initialized for the Piezo Buzzer */
+    extern DigitalIMU IMU;       /*!< The DigitalIMU class object, that will be initialized for the BNO055 IMU */
+    extern DigitalBAROM BAROM;   /*!< The DigitalBAROM class object, that will be initialized for the MPL3115A2 Barometer*/
+    extern AnalogIMU HIGHG;      /*!< The AnalogIMU class object, that will be initialized for the ADXL377 High-G Accelerometer */
+    extern BeepyBOI berp;        /*!< The BeepyBOI class object, that will be initialized for the Piezo Buzzer */
 
     // POINTERS
-    extern DLLflash* flash; /*!< The DLLflash pointer that will point to the DLLflash class instance */
+    extern DLLflash* flash;      /*!< The DLLflash pointer that will point to the DLLflash class instance */
 
     // DATA STRUCTS
-    extern IMUdata imu_data; /*!< The struct IMUData object, or Instance, that holds all IMU data for processing and transmission */
+    extern IMUdata imu_data;     /*!< The struct IMUData object, or Instance, that holds all IMU data for processing and transmission */
     extern BAROMdata barom_data; /*!< The struct BAROMdata object, or Instance, that holds all BAROM data for processing and transmission */
     extern ACCELdata accel_data; /*!< The struct ACCELdata object, or Instance, that holds all the HIGHG Accelerometer data for processing and transmission */
 };
@@ -186,13 +209,13 @@ namespace INITS
 *   Therefore in order to work around this limitation, a form of threading was introduced that approaches asynchronous operation
 *   without actually achieving it, aka protothreading
 *    
-*   The way it works is essentially by having a(n) overall controller (i.e. ThreadController class) that manages the timing of all functions
-*   you want to run
-*   Whenever a function has reached the time it needs to be called again the ThreadController will call the the function and interrupt
-*   whatever is currently running
+*   The way it works is essentially by having a(n) overall controller (i.e. ThreadController class) that manages the timing of all the functions
+*   that you want to run, that timing keeps everything running in an orderly fashion.
+*   Whenever a function has reached the time it needs to be called again the ThreadController will call the function and interrupt
+*   whatever is currently running in order to keep order in the system.
 *
 *   The pro about this is that it also allows us to deal with different intervals that sensors or components require
-*   Such as one component needing more time over the other
+*   Such as one component needing to be called more frequently than the other...
 *   Every process interval is based off of the datasheet and its recommendations on sampling time
 *
 */
@@ -205,7 +228,7 @@ namespace PROTOTHREADING
     *   Every important task (i.e. sampling, writing to flash, RF, etc...) has a "thread"
     *   and their intervals are defined here.
     */  
-    extern int interval_IMU; /*!< The interval at which the IMU will refresh */
+    extern int interval_IMU;   /*!< The interval at which the IMU will refresh */
     extern int interval_BAROM; /*!< The interval at which the Barometer will refresh */
     extern int interval_ACCEL; /*!< The inverval at which the High-G Accelerometer will refresh */
 
@@ -213,10 +236,10 @@ namespace PROTOTHREADING
     /*
     *   All the required thread objects and pointers are declared and defined here
     */
-    extern ThreadController thread_control; /*!< thread_control is the overarching ThreadController that handles all the timing */
+    extern ThreadController thread_control; /*!< thread_control is the overarching ThreadController that handles all the timing and calling of threads */
 
-    // Every thread is a pointer that is pointing to an object, or instance, of the Thread class initiated dynimically in order to use them in any scope
-    extern Thread* ThreadIMU; /*!< The pointer that will point to the instance of the Thread for IMU */
+    // Every thread is a pointer that is pointing to an object, or instance, of the Thread class initiated dynamically in order to use them in any scope
+    extern Thread* ThreadIMU;   /*!< The pointer that will point to the instance of the Thread for IMU */
     extern Thread* ThreadBAROM; /*!< The pointer that will point to the instance of the Thread for the Barometeer */
     extern Thread* ThreadACCEL; /*!< The pointer that will point to the instance of the Thread for the High-G Accelerometer */
 };
