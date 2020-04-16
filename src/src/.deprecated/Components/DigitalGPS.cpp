@@ -1,5 +1,33 @@
 #include <yonics.hpp>
 
+struct GPSdata  {
+    float lat = 0;
+    float lon = 0;
+    float altitude = 0;
+    float speed = 0;
+    float angle = 0;
+    float sat_num = 0;
+    uint32_t t;
+};
+
+// CLASS DEFINITION
+class DigitalGPS {
+    private:
+    public:
+        Adafruit_GPS* GPS;
+        HardwareSerial* GPSSerial;
+
+        DigitalGPS(HardwareSerial *ser);
+
+        void dummyPrint();
+        void initGPS();
+        void eraseLOCUS();
+        void GPSData_dump_setup();
+        void refresh_GPSData(bool gpsecho);
+        void pullGPSFlashData();
+        void pullRawGPS(/*GPSdata* data*/);
+};
+
 DigitalGPS::DigitalGPS(HardwareSerial *ser)
 {
     DigitalGPS::GPS = new Adafruit_GPS(ser);

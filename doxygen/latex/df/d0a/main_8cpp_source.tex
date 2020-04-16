@@ -1,0 +1,82 @@
+\hypertarget{main_8cpp_source}{}\doxysection{main.\+cpp}
+\label{main_8cpp_source}\index{src/src/main.cpp@{src/src/main.cpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 }
+\DoxyCodeLine{00010 \textcolor{comment}{/***************************************************************/}}
+\DoxyCodeLine{00011 \textcolor{comment}{/*                                                             */}}
+\DoxyCodeLine{00012 \textcolor{comment}{/*                                                             */}}
+\DoxyCodeLine{00013 \textcolor{comment}{/*                    CU-\/SRL AVIONICS TEAM                     */}}
+\DoxyCodeLine{00014 \textcolor{comment}{/*                    MAIN FLIGHT COMPUTER                     */}}
+\DoxyCodeLine{00015 \textcolor{comment}{/*                                                             */}}
+\DoxyCodeLine{00016 \textcolor{comment}{/*                       Jason Popich                          */}}
+\DoxyCodeLine{00017 \textcolor{comment}{/*                       Lyon Foster                           */}}
+\DoxyCodeLine{00018 \textcolor{comment}{/*                       Carter Mak                            */}}
+\DoxyCodeLine{00019 \textcolor{comment}{/*                       Giselle Koo                           */}}
+\DoxyCodeLine{00020 \textcolor{comment}{/*                                                             */}}
+\DoxyCodeLine{00021 \textcolor{comment}{/***************************************************************/}}
+\DoxyCodeLine{00022 \textcolor{preprocessor}{\#include "\mbox{\hyperlink{yonics_8hpp}{yonics.hpp}}"}}
+\DoxyCodeLine{00023 }
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00024}\mbox{\hyperlink{main_8cpp_ae469de29626401639bd4169d260f63bb}{00024}} \textcolor{keywordtype}{void} \mbox{\hyperlink{main_8cpp_ae469de29626401639bd4169d260f63bb}{thread\_IMU}}() \{}
+\DoxyCodeLine{00025     \mbox{\hyperlink{namespace_i_n_i_t_s_ac9da1547f5a699c7f46f56b920d43fb6}{INITS::IMU}}.\mbox{\hyperlink{class_digital_i_m_u_aa7481cc820a5cd69c6a7e4b757214571}{sample}}(\&\mbox{\hyperlink{namespace_i_n_i_t_s_ac1b9c4cb67bd8af1eb8a216f3ad8df9c}{INITS::imu\_data}});     }
+\DoxyCodeLine{00026 \}}
+\DoxyCodeLine{00027 }
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00028}\mbox{\hyperlink{main_8cpp_a4c41375613b83f0fbd2935a25f02df66}{00028}} \textcolor{keywordtype}{void} \mbox{\hyperlink{main_8cpp_a4c41375613b83f0fbd2935a25f02df66}{thread\_BAROM}}() \{}
+\DoxyCodeLine{00029     \mbox{\hyperlink{namespace_i_n_i_t_s_a4086c662375b91ff0dd841d408fec0fd}{INITS::BAROM}}.\mbox{\hyperlink{class_digital_b_a_r_o_m_adbdff826bd6d799d9b88862c2d80c067}{sample}}(\&\mbox{\hyperlink{namespace_i_n_i_t_s_aee91897642dd46037641d2119d740123}{INITS::barom\_data}}); }
+\DoxyCodeLine{00030 \}}
+\DoxyCodeLine{00031 }
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00032}\mbox{\hyperlink{main_8cpp_a44c33c06360504ce7ee1b9f69cfda4c9}{00032}} \textcolor{keywordtype}{void} \mbox{\hyperlink{main_8cpp_a44c33c06360504ce7ee1b9f69cfda4c9}{thread\_HIGHG}}() \{}
+\DoxyCodeLine{00033     \mbox{\hyperlink{namespace_i_n_i_t_s_afc9e0b0d6a7afbfb3ea91ffae32f54f6}{INITS::HIGHG}}.\mbox{\hyperlink{class_h_i_g_h_g___a_c_c_e_l_ac7e36216f735ba04207be91118315e25}{sample}}(\&\mbox{\hyperlink{namespace_i_n_i_t_s_abdffaa8c4b6dda37a2b92665dab31eb4}{INITS::accel\_data}}); }
+\DoxyCodeLine{00034 \}}
+\DoxyCodeLine{00035 }
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00036}\mbox{\hyperlink{main_8cpp_a24855038c09096fbd0c8a171642fece4}{00036}} \textcolor{keywordtype}{void} \mbox{\hyperlink{main_8cpp_a24855038c09096fbd0c8a171642fece4}{KILLSYSTEM}}() \{}
+\DoxyCodeLine{00037     \textcolor{comment}{/* TO RESET THE SYSTEM, POWER MUST BE REMOVED AND THEN REAPPLIED */}}
+\DoxyCodeLine{00038     \textcolor{keywordflow}{while}(\textcolor{keyword}{true}) \{}
+\DoxyCodeLine{00039         delay(500);}
+\DoxyCodeLine{00040         \mbox{\hyperlink{namespace_i_n_i_t_s_a5f1ffe3be225987efe9e0f5b5b318123}{INITS::berp}}.\mbox{\hyperlink{class_beepy_b_o_i_af6f9d615d16c35d390994b02f359d11b}{error}}(); }
+\DoxyCodeLine{00041     \}}
+\DoxyCodeLine{00042 \}}
+\DoxyCodeLine{00043 }
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00044}\mbox{\hyperlink{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d}{00044}} \textcolor{keywordtype}{void} \mbox{\hyperlink{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d}{setup}}() \{}
+\DoxyCodeLine{00045 }
+\DoxyCodeLine{00046     delay(2500);          }
+\DoxyCodeLine{00048     Serial.begin(115200); }
+\DoxyCodeLine{00050     \mbox{\hyperlink{namespace_i_n_i_t_s_a5f1ffe3be225987efe9e0f5b5b318123}{INITS::berp}}.\mbox{\hyperlink{class_beepy_b_o_i_aeb6de1f9cf9b2de375997ff67e3d592a}{hello}}();  }
+\DoxyCodeLine{00052     \textcolor{comment}{// INITS::flash = new DLLflash(10); /*! STILL VERY WIP FLASH INITIALIZATION */}}
+\DoxyCodeLine{00053 }
+\DoxyCodeLine{00054     \textcolor{comment}{/* Initialize BNO055 IMU sensor */}}
+\DoxyCodeLine{00055     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{namespace_i_n_i_t_s_ac9da1547f5a699c7f46f56b920d43fb6}{INITS::IMU}}.begin()) \{}
+\DoxyCodeLine{00056         \mbox{\hyperlink{main_8cpp_a24855038c09096fbd0c8a171642fece4}{KILLSYSTEM}}();}
+\DoxyCodeLine{00057     \}}
+\DoxyCodeLine{00058 }
+\DoxyCodeLine{00059     \textcolor{comment}{/* Initialize MPL3115A2 sensor */}}
+\DoxyCodeLine{00060     \textcolor{comment}{// if (!INITS::BAROM.begin()) \{}}
+\DoxyCodeLine{00061     \textcolor{comment}{//     KILLSYSTEM();}}
+\DoxyCodeLine{00062     \textcolor{comment}{// \}}}
+\DoxyCodeLine{00063 }
+\DoxyCodeLine{00064     \textcolor{comment}{/* Configure IMU thread */}}
+\DoxyCodeLine{00065     \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a74187a4e49e5ec1475e7e748a7ef1e9c}{PROTOTHREADING::ThreadIMU}}-\/>onRun(\mbox{\hyperlink{main_8cpp_ae469de29626401639bd4169d260f63bb}{thread\_IMU}});                             }
+\DoxyCodeLine{00066     \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a74187a4e49e5ec1475e7e748a7ef1e9c}{PROTOTHREADING::ThreadIMU}}-\/>setInterval(\mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a4bf5dee68a42f69a5b4413aad7f4da73}{PROTOTHREADING::interval\_IMU}});     }
+\DoxyCodeLine{00068     \textcolor{comment}{/* Configure Barometer thread */}}
+\DoxyCodeLine{00069     \textcolor{comment}{// PROTOTHREADING::ThreadBAROM-\/>onRun(thread\_BAROM);                         /*! Set the ThreadBAROM looping function for the ThreadController */}}
+\DoxyCodeLine{00070     \textcolor{comment}{// PROTOTHREADING::ThreadBAROM-\/>setInterval(PROTOTHREADING::interval\_BAROM); /*! Set the ThreadBAROM refresh rate (Interval) */}}
+\DoxyCodeLine{00071 }
+\DoxyCodeLine{00072     \textcolor{comment}{/* Configure Accelerometer thread */}}
+\DoxyCodeLine{00073     \textcolor{comment}{// PROTOTHREADING::ThreadACCEL-\/>onRun(thread\_HIGHG);                         /*! Set the ThreadACCEL looping function for the ThreadController */}}
+\DoxyCodeLine{00074     \textcolor{comment}{// PROTOTHREADING::ThreadACCEL-\/>setInterval(PROTOTHREADING::interval\_ACCEL); /*! Set the ThreadACCEL refresh rate (Interval) */}}
+\DoxyCodeLine{00075 }
+\DoxyCodeLine{00076     \textcolor{comment}{/* Add threads to ThreadController */}}
+\DoxyCodeLine{00077     \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a835e1bc833505fb52669fa29fa1f6f80}{PROTOTHREADING::thread\_control}}.add(\mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a74187a4e49e5ec1475e7e748a7ef1e9c}{PROTOTHREADING::ThreadIMU}});            }
+\DoxyCodeLine{00078     \textcolor{comment}{// PROTOTHREADING::thread\_control.add(PROTOTHREADING::ThreadBAROM);          /*! Add the ThreadBAROM to the ThreadController for continous processing */}}
+\DoxyCodeLine{00079     \textcolor{comment}{// PROTOTHREADING::thread\_control.add(PROTOTHREADING::ThreadACCEL);          /*! Add the ThreadACCEL to the ThreadController for continous processing */}}
+\DoxyCodeLine{00080 }
+\DoxyCodeLine{00082     \mbox{\hyperlink{namespace_i_n_i_t_s_a5f1ffe3be225987efe9e0f5b5b318123}{INITS::berp}}.\mbox{\hyperlink{class_beepy_b_o_i_a28194438ff9615a94b16f5924bb10470}{bombBeep}}();}
+\DoxyCodeLine{00083 }
+\DoxyCodeLine{00084     \textcolor{comment}{// START LOOP AFTER THIS IN VOID() LOOP}}
+\DoxyCodeLine{00085 \}}
+\DoxyCodeLine{00086 }
+\DoxyCodeLine{\Hypertarget{main_8cpp_source_l00087}\mbox{\hyperlink{main_8cpp_afe461d27b9c48d5921c00d521181f12f}{00087}} \textcolor{keywordtype}{void} \mbox{\hyperlink{main_8cpp_afe461d27b9c48d5921c00d521181f12f}{loop}}() \{}
+\DoxyCodeLine{00089     \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a835e1bc833505fb52669fa29fa1f6f80}{PROTOTHREADING::thread\_control}}.run();}
+\DoxyCodeLine{00090 \}}
+
+\end{DoxyCode}

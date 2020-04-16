@@ -1,3 +1,7 @@
+/**
+ * @file DigitalIMU.cpp
+ * @brief The main source file for the DigitalIMU class
+ */
 #include "yonics.hpp"
 
 DigitalIMU::DigitalIMU() {
@@ -32,6 +36,12 @@ void DigitalIMU::sample(IMUdata* data) {
     data->gyro_fused[0] = event.gyro.x;
     data->gyro_fused[1] = event.gyro.y;
     data->gyro_fused[2] = event.gyro.z;
+    // Serial.print("Gyro X: ");
+    // Serial.print(event.gyro.x);
+    // Serial.print(" Gyro Y: ");
+    // Serial.print(event.gyro.y);
+    // Serial.print(" Gyro Z: ");
+    // Serial.println(event.gyro.z);
 
     // Processed euler orientation vectors
     board.getEvent(&event,Adafruit_BNO055::VECTOR_EULER);

@@ -1,0 +1,83 @@
+\hypertarget{_namespaces_8cpp}{}\doxysection{src/src/\+Namespaces.cpp File Reference}
+\label{_namespaces_8cpp}\index{src/src/Namespaces.cpp@{src/src/Namespaces.cpp}}
+
+
+The namespace source file for the C\+U\+S\+R\+L\+\_\+\+Avionics Code Base.  
+
+
+{\ttfamily \#include \char`\"{}yonics.\+hpp\char`\"{}}\newline
+Include dependency graph for Namespaces.\+cpp\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d6/d26/_namespaces_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \mbox{\hyperlink{namespace_i_n_i_t_s}{I\+N\+I\+TS}}
+\item 
+ \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g}{P\+R\+O\+T\+O\+T\+H\+R\+E\+A\+D\+I\+NG}}
+\item 
+ \mbox{\hyperlink{namespace_i2_c}{I2C}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{namespace_i2_c_a58f9f273aee1f164d418113388636b71}{I2\+C\+::write\+\_\+reg}} (uint8\+\_\+t i2c, uint8\+\_\+t addr, uint8\+\_\+t val)
+\item 
+bool \mbox{\hyperlink{namespace_i2_c_aadebed13d47a15472baeb0f430a8f932}{I2\+C\+::read\+\_\+regs}} (uint8\+\_\+t i2c, uint8\+\_\+t addr, uint8\+\_\+t $\ast$data, uint8\+\_\+t num)
+\item 
+bool \mbox{\hyperlink{namespace_i2_c_a1ef8795a059c81070d3c714b3af55001}{I2\+C\+::read\+\_\+regs}} (uint8\+\_\+t i2c, uint8\+\_\+t $\ast$data, uint8\+\_\+t num)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{namespace_i_n_i_t_s_a1f025845c806415d58a3bc101cbbaa45}{I\+N\+I\+T\+S\+::speaker\+Pin}} = 2
+\item 
+int \mbox{\hyperlink{namespace_i_n_i_t_s_a5d30e7ae47dca499ef70abc0b7cff4ef}{I\+N\+I\+T\+S\+::high\+G\+\_\+x\+Pin}} = 33
+\item 
+int \mbox{\hyperlink{namespace_i_n_i_t_s_ae8b36d880fccf8008ec5382c8516bd63}{I\+N\+I\+T\+S\+::high\+G\+\_\+y\+Pin}} = 34
+\item 
+int \mbox{\hyperlink{namespace_i_n_i_t_s_a4cba28b03e09c2f8e967ab1339e19d40}{I\+N\+I\+T\+S\+::high\+G\+\_\+z\+Pin}} = 35
+\item 
+\mbox{\hyperlink{class_digital_i_m_u}{Digital\+I\+MU}} \mbox{\hyperlink{namespace_i_n_i_t_s_ac9da1547f5a699c7f46f56b920d43fb6}{I\+N\+I\+T\+S\+::\+I\+MU}} = \mbox{\hyperlink{class_digital_i_m_u}{Digital\+I\+MU}}(55,0x28)
+\item 
+\mbox{\hyperlink{class_digital_b_a_r_o_m}{Digital\+B\+A\+R\+OM}} \mbox{\hyperlink{namespace_i_n_i_t_s_a4086c662375b91ff0dd841d408fec0fd}{I\+N\+I\+T\+S\+::\+B\+A\+R\+OM}}
+\item 
+\mbox{\hyperlink{class_h_i_g_h_g___a_c_c_e_l}{H\+I\+G\+H\+G\+\_\+\+A\+C\+C\+EL}} \mbox{\hyperlink{namespace_i_n_i_t_s_afc9e0b0d6a7afbfb3ea91ffae32f54f6}{I\+N\+I\+T\+S\+::\+H\+I\+G\+HG}} = \mbox{\hyperlink{class_h_i_g_h_g___a_c_c_e_l}{H\+I\+G\+H\+G\+\_\+\+A\+C\+C\+EL}}(high\+G\+\_\+x\+Pin,high\+G\+\_\+y\+Pin,high\+G\+\_\+z\+Pin,true)
+\item 
+\mbox{\hyperlink{class_beepy_b_o_i}{Beepy\+B\+OI}} \mbox{\hyperlink{namespace_i_n_i_t_s_a5f1ffe3be225987efe9e0f5b5b318123}{I\+N\+I\+T\+S\+::berp}} = \mbox{\hyperlink{class_beepy_b_o_i}{Beepy\+B\+OI}}(speaker\+Pin)
+\item 
+\mbox{\hyperlink{class_d_l_lflash}{D\+L\+Lflash}} $\ast$ \mbox{\hyperlink{namespace_i_n_i_t_s_a96dd29db36c81773e3922717ae9ef869}{I\+N\+I\+T\+S\+::flash}} = nullptr
+\item 
+\mbox{\hyperlink{struct_i_m_udata}{I\+M\+Udata}} \mbox{\hyperlink{namespace_i_n_i_t_s_ac1b9c4cb67bd8af1eb8a216f3ad8df9c}{I\+N\+I\+T\+S\+::imu\+\_\+data}}
+\item 
+\mbox{\hyperlink{struct_b_a_r_o_mdata}{B\+A\+R\+O\+Mdata}} \mbox{\hyperlink{namespace_i_n_i_t_s_aee91897642dd46037641d2119d740123}{I\+N\+I\+T\+S\+::barom\+\_\+data}}
+\item 
+\mbox{\hyperlink{struct_a_c_c_e_ldata}{A\+C\+C\+E\+Ldata}} \mbox{\hyperlink{namespace_i_n_i_t_s_abdffaa8c4b6dda37a2b92665dab31eb4}{I\+N\+I\+T\+S\+::accel\+\_\+data}}
+\item 
+int \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a4bf5dee68a42f69a5b4413aad7f4da73}{P\+R\+O\+T\+O\+T\+H\+R\+E\+A\+D\+I\+N\+G\+::interval\+\_\+\+I\+MU}} = 45
+\item 
+int \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a0263f929d0bde77e2cf156748d912f52}{P\+R\+O\+T\+O\+T\+H\+R\+E\+A\+D\+I\+N\+G\+::interval\+\_\+\+B\+A\+R\+OM}} = 2000
+\item 
+int \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_ad9e0d8c1cc58c135abcb6553b2da35b8}{P\+R\+O\+T\+O\+T\+H\+R\+E\+A\+D\+I\+N\+G\+::interval\+\_\+\+A\+C\+C\+EL}} = 50
+\item 
+Thread\+Controller \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a835e1bc833505fb52669fa29fa1f6f80}{P\+R\+O\+T\+O\+T\+H\+R\+E\+A\+D\+I\+N\+G\+::thread\+\_\+control}} = Thread\+Controller()
+\item 
+Thread $\ast$ \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a74187a4e49e5ec1475e7e748a7ef1e9c}{P\+R\+O\+T\+O\+T\+H\+R\+E\+A\+D\+I\+N\+G\+::\+Thread\+I\+MU}} = new Thread()
+\item 
+Thread $\ast$ \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a22cb9e6fa249e40307fa4da319712c43}{P\+R\+O\+T\+O\+T\+H\+R\+E\+A\+D\+I\+N\+G\+::\+Thread\+B\+A\+R\+OM}} = new Thread()
+\item 
+Thread $\ast$ \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_ad274ec96024e09ea8bdd90bd37bf7447}{P\+R\+O\+T\+O\+T\+H\+R\+E\+A\+D\+I\+N\+G\+::\+Thread\+A\+C\+C\+EL}} = new Thread()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The namespace source file for the C\+U\+S\+R\+L\+\_\+\+Avionics Code Base. 
+
+This source file defines all the namespaces and their member variables 
+
+Definition in file \mbox{\hyperlink{_namespaces_8cpp_source}{Namespaces.\+cpp}}.
+

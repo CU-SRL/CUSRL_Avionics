@@ -1,0 +1,58 @@
+\hypertarget{_beepy_b_o_i_8cpp_source}{}\doxysection{Beepy\+B\+O\+I.\+cpp}
+\label{_beepy_b_o_i_8cpp_source}\index{src/src/BeepyBOI.cpp@{src/src/BeepyBOI.cpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 }
+\DoxyCodeLine{00005 \textcolor{preprocessor}{\#include "\mbox{\hyperlink{yonics_8hpp}{yonics.hpp}}"}}
+\DoxyCodeLine{00006 }
+\DoxyCodeLine{\Hypertarget{_beepy_b_o_i_8cpp_source_l00007}\mbox{\hyperlink{class_beepy_b_o_i_afc31895831dc1ddd29e774e26154a110}{00007}} \mbox{\hyperlink{class_beepy_b_o_i_afc31895831dc1ddd29e774e26154a110}{BeepyBOI::BeepyBOI}}() \{}
+\DoxyCodeLine{00008     pin = 2;}
+\DoxyCodeLine{00009 \}}
+\DoxyCodeLine{00010 }
+\DoxyCodeLine{\Hypertarget{_beepy_b_o_i_8cpp_source_l00011}\mbox{\hyperlink{class_beepy_b_o_i_a7b57497a6110bdf13ef5db90fb4110a6}{00011}} \mbox{\hyperlink{class_beepy_b_o_i_afc31895831dc1ddd29e774e26154a110}{BeepyBOI::BeepyBOI}}(\textcolor{keywordtype}{int} pin) \{}
+\DoxyCodeLine{00012     this-\/>pin = pin;}
+\DoxyCodeLine{00013 \}}
+\DoxyCodeLine{00014 }
+\DoxyCodeLine{\Hypertarget{_beepy_b_o_i_8cpp_source_l00015}\mbox{\hyperlink{class_beepy_b_o_i_aeb6de1f9cf9b2de375997ff67e3d592a}{00015}} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_beepy_b_o_i_aeb6de1f9cf9b2de375997ff67e3d592a}{BeepyBOI::hello}}() \{}
+\DoxyCodeLine{00016     tone(pin,midTone,200); \textcolor{comment}{// hehe concert A}}
+\DoxyCodeLine{00017     delay(1000);}
+\DoxyCodeLine{00018 \}}
+\DoxyCodeLine{00019 }
+\DoxyCodeLine{\Hypertarget{_beepy_b_o_i_8cpp_source_l00020}\mbox{\hyperlink{class_beepy_b_o_i_af6f9d615d16c35d390994b02f359d11b}{00020}} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_beepy_b_o_i_af6f9d615d16c35d390994b02f359d11b}{BeepyBOI::error}}() \{}
+\DoxyCodeLine{00021     tone(pin,errTone,4000);}
+\DoxyCodeLine{00022     delay(5000);}
+\DoxyCodeLine{00023 \}}
+\DoxyCodeLine{00024 }
+\DoxyCodeLine{\Hypertarget{_beepy_b_o_i_8cpp_source_l00025}\mbox{\hyperlink{class_beepy_b_o_i_af3f5a1bc7e2ae70bba356f193fefb2de}{00025}} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_beepy_b_o_i_af3f5a1bc7e2ae70bba356f193fefb2de}{BeepyBOI::countdown}}(\textcolor{keywordtype}{int} s) \{}
+\DoxyCodeLine{00026     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<s;i++) \{}
+\DoxyCodeLine{00027         tone(pin,midTone,20);}
+\DoxyCodeLine{00028         delay(1000);}
+\DoxyCodeLine{00029     \}}
+\DoxyCodeLine{00030 \}}
+\DoxyCodeLine{00031 }
+\DoxyCodeLine{\Hypertarget{_beepy_b_o_i_8cpp_source_l00032}\mbox{\hyperlink{class_beepy_b_o_i_ab51c9558963125b0b58128d54a88984c}{00032}} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_beepy_b_o_i_ab51c9558963125b0b58128d54a88984c}{BeepyBOI::lowBeep}}() \{}
+\DoxyCodeLine{00033     tone(pin,lowTone,500);}
+\DoxyCodeLine{00034     delay(500);}
+\DoxyCodeLine{00035 \}}
+\DoxyCodeLine{00036 }
+\DoxyCodeLine{\Hypertarget{_beepy_b_o_i_8cpp_source_l00037}\mbox{\hyperlink{class_beepy_b_o_i_a79ecb0b0cac1f51323f87ccff8bbb831}{00037}} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_beepy_b_o_i_a79ecb0b0cac1f51323f87ccff8bbb831}{BeepyBOI::midBeep}}() \{}
+\DoxyCodeLine{00038     tone(pin,midTone,500);}
+\DoxyCodeLine{00039     delay(500);}
+\DoxyCodeLine{00040 \}}
+\DoxyCodeLine{00041 }
+\DoxyCodeLine{\Hypertarget{_beepy_b_o_i_8cpp_source_l00042}\mbox{\hyperlink{class_beepy_b_o_i_a115d999a0990ac7a6ae3b00fdc7ece80}{00042}} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_beepy_b_o_i_a115d999a0990ac7a6ae3b00fdc7ece80}{BeepyBOI::hiBeep}}() \{}
+\DoxyCodeLine{00043     tone(pin,hiTone,500);}
+\DoxyCodeLine{00044     delay(500);}
+\DoxyCodeLine{00045 \}}
+\DoxyCodeLine{00046 }
+\DoxyCodeLine{\Hypertarget{_beepy_b_o_i_8cpp_source_l00047}\mbox{\hyperlink{class_beepy_b_o_i_a28194438ff9615a94b16f5924bb10470}{00047}} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_beepy_b_o_i_a28194438ff9615a94b16f5924bb10470}{BeepyBOI::bombBeep}}() \{}
+\DoxyCodeLine{00048     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<25;i++) \{}
+\DoxyCodeLine{00049         tone(pin,hiTone,25);}
+\DoxyCodeLine{00050         delay(50);}
+\DoxyCodeLine{00051     \}}
+\DoxyCodeLine{00052     delay(250);}
+\DoxyCodeLine{00053     tone(pin,2*hiTone,250);}
+\DoxyCodeLine{00054     delay(250);}
+\DoxyCodeLine{00055 \}}
+
+\end{DoxyCode}

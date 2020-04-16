@@ -1,5 +1,33 @@
 #include "yonics.hpp"
 
+class SaveSD {
+    private:
+        bool running = false;
+        SdFatSdio sd;
+        File of;
+        char foldername[10];
+
+        void printIMU(IMUdata* data);
+        void printBAROM(BAROMdata* data);
+        void printACCEL(ACCELdata* data);
+        void printGPS(GPSdata* data);
+
+        bool openIMU();
+        bool openBAROM();
+        bool openACCEL();
+        bool openGPS();
+
+    public:
+        SaveSD();
+
+        bool initFolder();
+        
+        bool sampleIMU(IMUdata* data);
+        bool sampleBAROM(BAROMdata* data);
+        bool sampleACCEL(ACCELdata* data);
+        bool sampleGPS(GPSdata* data);
+};
+
 SaveSD::SaveSD() {
     if (sd.begin()) {
         running = true;

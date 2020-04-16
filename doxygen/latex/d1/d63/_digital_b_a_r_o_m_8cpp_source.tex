@@ -1,0 +1,86 @@
+\hypertarget{_digital_b_a_r_o_m_8cpp_source}{}\doxysection{Digital\+B\+A\+R\+O\+M.\+cpp}
+\label{_digital_b_a_r_o_m_8cpp_source}\index{src/src/DigitalBAROM.cpp@{src/src/DigitalBAROM.cpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 }
+\DoxyCodeLine{00005 \textcolor{preprocessor}{\#include "\mbox{\hyperlink{yonics_8hpp}{yonics.hpp}}"}}
+\DoxyCodeLine{00006 }
+\DoxyCodeLine{\Hypertarget{_digital_b_a_r_o_m_8cpp_source_l00007}\mbox{\hyperlink{class_digital_b_a_r_o_m_a9841b4779c0ace7302c3245fd1fc8865}{00007}} \mbox{\hyperlink{class_digital_b_a_r_o_m_a9841b4779c0ace7302c3245fd1fc8865}{DigitalBAROM::DigitalBAROM}}() \{\}}
+\DoxyCodeLine{00008 }
+\DoxyCodeLine{\Hypertarget{_digital_b_a_r_o_m_8cpp_source_l00009}\mbox{\hyperlink{class_digital_b_a_r_o_m_a0ee0077d47b0a68d200d875a125af6eb}{00009}} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_digital_b_a_r_o_m_a0ee0077d47b0a68d200d875a125af6eb}{DigitalBAROM::begin}}() }
+\DoxyCodeLine{00010 \{}
+\DoxyCodeLine{00011     \textcolor{keyword}{const} uint8\_t i2c\_addr = \mbox{\hyperlink{register_8hpp_adec31513f28aceda1b78b1dba2f161fb}{MPL3115\_I2C\_ADDR}};}
+\DoxyCodeLine{00012     uint8\_t b;}
+\DoxyCodeLine{00013 }
+\DoxyCodeLine{00014     \textcolor{comment}{// Make sure we are talking to the correct device}}
+\DoxyCodeLine{00015     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{namespace_i2_c_aadebed13d47a15472baeb0f430a8f932}{I2C::read\_regs}}(i2c\_addr, \mbox{\hyperlink{register_8hpp_a4cba6c8e318bde8fc30512996a1ee213}{MPL3115\_WHO\_AM\_I}}, \&b, 1)) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00016     \textcolor{keywordflow}{if} (b != 0xC4) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00017 }
+\DoxyCodeLine{00018     \textcolor{comment}{// place into standby mode}}
+\DoxyCodeLine{00019     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{namespace_i2_c_a58f9f273aee1f164d418113388636b71}{I2C::write\_reg}}(i2c\_addr, \mbox{\hyperlink{register_8hpp_a7c1284a4cdf8e9c0e04360af67d85c8d}{MPL3115\_CTRL\_REG1}}, 0)) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00020 }
+\DoxyCodeLine{00021     \textcolor{comment}{// switch to 34ms}}
+\DoxyCodeLine{00022     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{namespace_i2_c_a58f9f273aee1f164d418113388636b71}{I2C::write\_reg}}(i2c\_addr, \mbox{\hyperlink{register_8hpp_a7c1284a4cdf8e9c0e04360af67d85c8d}{MPL3115\_CTRL\_REG1}}, 0x98)) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00023 }
+\DoxyCodeLine{00024     \textcolor{comment}{// switch to active, set altimeter mode, set polling mode}}
+\DoxyCodeLine{00025     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{namespace_i2_c_a58f9f273aee1f164d418113388636b71}{I2C::write\_reg}}(i2c\_addr, \mbox{\hyperlink{register_8hpp_a7c1284a4cdf8e9c0e04360af67d85c8d}{MPL3115\_CTRL\_REG1}}, 0xB9)) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00026 }
+\DoxyCodeLine{00027     \textcolor{comment}{// enable events}}
+\DoxyCodeLine{00028     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{namespace_i2_c_a58f9f273aee1f164d418113388636b71}{I2C::write\_reg}}(i2c\_addr, \mbox{\hyperlink{register_8hpp_a9e3cea9f277859aa5c4ed9682f6275b3}{MPL3115\_PT\_DATA\_CFG}}, 0x07)) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00029     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00030 \}}
+\DoxyCodeLine{00031 }
+\DoxyCodeLine{\Hypertarget{_digital_b_a_r_o_m_8cpp_source_l00032}\mbox{\hyperlink{class_digital_b_a_r_o_m_adbdff826bd6d799d9b88862c2d80c067}{00032}} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_digital_b_a_r_o_m_adbdff826bd6d799d9b88862c2d80c067}{DigitalBAROM::sample}}(\mbox{\hyperlink{struct_b_a_r_o_mdata}{BAROMdata}}* data) \{}
+\DoxyCodeLine{00033 }
+\DoxyCodeLine{00034     \textcolor{keyword}{static} elapsedMicros usec\_since;}
+\DoxyCodeLine{00035     \textcolor{keyword}{static} int32\_t usec\_history = 980000;}
+\DoxyCodeLine{00036     \textcolor{keyword}{const} uint8\_t i2c\_addr = \mbox{\hyperlink{register_8hpp_adec31513f28aceda1b78b1dba2f161fb}{MPL3115\_I2C\_ADDR}};}
+\DoxyCodeLine{00037     uint8\_t buf[6];}
+\DoxyCodeLine{00038 }
+\DoxyCodeLine{00039     \textcolor{comment}{// KEEPS TIME BECAUSE MPL3115A2 times out after 512ms}}
+\DoxyCodeLine{00040     int32\_t usec = usec\_since;}
+\DoxyCodeLine{00041     \textcolor{keywordflow}{if} (usec + 500 < usec\_history) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00042 }
+\DoxyCodeLine{00043     \textcolor{comment}{// GET THE DATA FROM THE STATUS REGISTER}}
+\DoxyCodeLine{00044     \textcolor{comment}{// The Status register lets us know if there is data to be read.}}
+\DoxyCodeLine{00045     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{namespace_i2_c_aadebed13d47a15472baeb0f430a8f932}{I2C::read\_regs}}(i2c\_addr, \mbox{\hyperlink{register_8hpp_a1781a503fdaee59973c4d60b389aad8b}{MPL3115\_STATUS}}, buf, 1))}
+\DoxyCodeLine{00046     \{}
+\DoxyCodeLine{00047         \textcolor{keywordflow}{return} \textcolor{keyword}{false}; \textcolor{comment}{// If we fail to read that register, return false}}
+\DoxyCodeLine{00048     \}}
+\DoxyCodeLine{00049     \textcolor{keywordflow}{if} (buf[0] == 0)}
+\DoxyCodeLine{00050     \{}
+\DoxyCodeLine{00051         \textcolor{keywordflow}{return} \textcolor{keyword}{false}; \textcolor{comment}{// If no data to read, return false}}
+\DoxyCodeLine{00052     \}}
+\DoxyCodeLine{00053 }
+\DoxyCodeLine{00054     \textcolor{comment}{// Grab all the data that is ready to be read from the MPL3115A2 and stick it into the buffer}}
+\DoxyCodeLine{00055     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{namespace_i2_c_aadebed13d47a15472baeb0f430a8f932}{I2C::read\_regs}}(i2c\_addr, buf, 6))}
+\DoxyCodeLine{00056     \{}
+\DoxyCodeLine{00057         \textcolor{keywordflow}{return} \textcolor{keyword}{false}; \textcolor{comment}{// If that fails for some reason, return false}}
+\DoxyCodeLine{00058     \}}
+\DoxyCodeLine{00059 }
+\DoxyCodeLine{00060     \textcolor{comment}{// Updating time.}}
+\DoxyCodeLine{00061     usec\_since -\/= usec;}
+\DoxyCodeLine{00062     \textcolor{keywordtype}{int} diff = (usec -\/ usec\_history) >> 3;}
+\DoxyCodeLine{00063     \textcolor{keywordflow}{if} (diff < -\/1000) diff = -\/1000;}
+\DoxyCodeLine{00064     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (diff > 1000) diff = 1000;}
+\DoxyCodeLine{00065     usec\_history += diff;}
+\DoxyCodeLine{00066 }
+\DoxyCodeLine{00067     \textcolor{comment}{// Get altitude from buffer and stick into altitude in struct}}
+\DoxyCodeLine{00068     \textcolor{comment}{// Bit shifting according to the MPL3115A2 Datasheet}}
+\DoxyCodeLine{00069     int32\_t a = ((uint32\_t)buf[1] << 12) | ((uint16\_t)buf[2] << 4) | (buf[3] >> 4);}
+\DoxyCodeLine{00070     \textcolor{keywordflow}{if} (a \& 0x00080000) a |= 0xFFF00000;}
+\DoxyCodeLine{00071     data-\/>\mbox{\hyperlink{struct_b_a_r_o_mdata_ad9d347997a99fce14a6685af477367f2}{altitude}} = a;}
+\DoxyCodeLine{00072 }
+\DoxyCodeLine{00073     \textcolor{comment}{// Get temperature from buffer and stick in temperature in struct}}
+\DoxyCodeLine{00074     data-\/>\mbox{\hyperlink{struct_b_a_r_o_mdata_ac39f6e914bb18438c1e0c30cdff682c3}{temperature}} = (int16\_t)((buf[4] << 8) | buf[5]);}
+\DoxyCodeLine{00075 }
+\DoxyCodeLine{00076     \textcolor{comment}{// Serial.print(data-\/>altitude);}}
+\DoxyCodeLine{00077     \textcolor{comment}{// Serial.print(" ");}}
+\DoxyCodeLine{00078     \textcolor{comment}{// Serial.println(data-\/>temperature);}}
+\DoxyCodeLine{00079 }
+\DoxyCodeLine{00080     data-\/>\mbox{\hyperlink{struct_b_a_r_o_mdata_aaac87b3e94b6fa8108b01fef42c204d1}{t}} = millis(); \textcolor{comment}{// Place the time data into the struct}}
+\DoxyCodeLine{00081 }
+\DoxyCodeLine{00082     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00083 \}}
+
+\end{DoxyCode}
