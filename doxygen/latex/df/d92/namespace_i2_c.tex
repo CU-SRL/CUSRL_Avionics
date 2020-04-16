@@ -1,0 +1,92 @@
+\hypertarget{namespace_i2_c}{}\doxysection{I2C Namespace Reference}
+\label{namespace_i2_c}\index{I2C@{I2C}}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{namespace_i2_c_a58f9f273aee1f164d418113388636b71}{write\+\_\+reg}} (uint8\+\_\+t i2c, uint8\+\_\+t addr, uint8\+\_\+t val)
+\item 
+bool \mbox{\hyperlink{namespace_i2_c_aadebed13d47a15472baeb0f430a8f932}{read\+\_\+regs}} (uint8\+\_\+t i2c, uint8\+\_\+t addr, uint8\+\_\+t $\ast$data, uint8\+\_\+t num)
+\item 
+bool \mbox{\hyperlink{namespace_i2_c_a1ef8795a059c81070d3c714b3af55001}{read\+\_\+regs}} (uint8\+\_\+t i2c, uint8\+\_\+t $\ast$data, uint8\+\_\+t num)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+In this namespace the \mbox{\hyperlink{namespace_i2_c}{I2C}} drivers are declared and then defined for use with the \mbox{\hyperlink{namespace_i2_c}{I2C}} protocol In order to achieve \mbox{\hyperlink{namespace_i2_c}{I2C}} communication, the Arduino Wire library is used to simplify the complexity of the functions.
+
+T\+H\+E\+SE F\+U\+N\+C\+T\+I\+O\+NS O\+N\+LY W\+O\+RK ON \mbox{\hyperlink{namespace_i2_c}{I2C}} B\+US 0 (W\+IP to work on all buses, simple fix but need to find a way of making it dynamic) 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespace_i2_c_a1ef8795a059c81070d3c714b3af55001}\label{namespace_i2_c_a1ef8795a059c81070d3c714b3af55001}} 
+\index{I2C@{I2C}!read\_regs@{read\_regs}}
+\index{read\_regs@{read\_regs}!I2C@{I2C}}
+\doxysubsubsection{\texorpdfstring{read\_regs()}{read\_regs()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily bool I2\+C\+::read\+\_\+regs (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{i2c,  }\item[{uint8\+\_\+t $\ast$}]{data,  }\item[{uint8\+\_\+t}]{num }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{namespace_i2_c}{I2C}} -\/ Second read from registry function that takes in the \mbox{\hyperlink{namespace_i2_c}{I2C}} device address, a data buffer to write to, and the amount of bytes to read. The difference with the first read\+\_\+regs function is that this function does not request data from a specific register on the device 
+\begin{DoxyParams}{Parameters}
+{\em i2c} & \mbox{\hyperlink{namespace_i2_c}{I2C}} Device Address \\
+\hline
+{\em data} & The data buffer you will place incoming data into for processing \\
+\hline
+{\em num} & The number of bytes you are grabbing from the device. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_namespaces_8cpp_source_l00094}{94}} of file \mbox{\hyperlink{_namespaces_8cpp_source}{Namespaces.\+cpp}}.
+
+\mbox{\Hypertarget{namespace_i2_c_aadebed13d47a15472baeb0f430a8f932}\label{namespace_i2_c_aadebed13d47a15472baeb0f430a8f932}} 
+\index{I2C@{I2C}!read\_regs@{read\_regs}}
+\index{read\_regs@{read\_regs}!I2C@{I2C}}
+\doxysubsubsection{\texorpdfstring{read\_regs()}{read\_regs()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool I2\+C\+::read\+\_\+regs (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{i2c,  }\item[{uint8\+\_\+t}]{addr,  }\item[{uint8\+\_\+t $\ast$}]{data,  }\item[{uint8\+\_\+t}]{num }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{namespace_i2_c}{I2C}} -\/ First read from registry function that takes in the \mbox{\hyperlink{namespace_i2_c}{I2C}} device address, Device Registry Address to read from, a data buffer to write to, and the amount of bytes to read. The difference with the second read\+\_\+regs function is that this function requests data from a specific register on the device 
+\begin{DoxyParams}{Parameters}
+{\em i2c} & \mbox{\hyperlink{namespace_i2_c}{I2C}} Device Address \\
+\hline
+{\em addr} & \mbox{\hyperlink{namespace_i2_c}{I2C}} Device Registry Address you are attempting to read from \\
+\hline
+{\em data} & The data buffer you will place incoming data into for processing \\
+\hline
+{\em num} & The number of bytes you are grabbing from the device. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_namespaces_8cpp_source_l00072}{72}} of file \mbox{\hyperlink{_namespaces_8cpp_source}{Namespaces.\+cpp}}.
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{df/d92/namespace_i2_c_aadebed13d47a15472baeb0f430a8f932_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{namespace_i2_c_a58f9f273aee1f164d418113388636b71}\label{namespace_i2_c_a58f9f273aee1f164d418113388636b71}} 
+\index{I2C@{I2C}!write\_reg@{write\_reg}}
+\index{write\_reg@{write\_reg}!I2C@{I2C}}
+\doxysubsubsection{\texorpdfstring{write\_reg()}{write\_reg()}}
+{\footnotesize\ttfamily bool I2\+C\+::write\+\_\+reg (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{i2c,  }\item[{uint8\+\_\+t}]{addr,  }\item[{uint8\+\_\+t}]{val }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{namespace_i2_c}{I2C}} -\/ Write to registry function that takes in the \mbox{\hyperlink{namespace_i2_c}{I2C}} device address, Device Registry Address to write to, and the data to write 
+\begin{DoxyParams}{Parameters}
+{\em i2c} & \mbox{\hyperlink{namespace_i2_c}{I2C}} Device Address \\
+\hline
+{\em addr} & \mbox{\hyperlink{namespace_i2_c}{I2C}} Device Registry Address you are attempting to write to \\
+\hline
+{\em val} & The data you are trying to write \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_namespaces_8cpp_source_l00063}{63}} of file \mbox{\hyperlink{_namespaces_8cpp_source}{Namespaces.\+cpp}}.
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=305pt]{df/d92/namespace_i2_c_a58f9f273aee1f164d418113388636b71_icgraph}
+\end{center}
+\end{figure}

@@ -1,10 +1,7 @@
-/*
-==================================================
-================    Carter Mak   =================
-================ CU SRL Avionics =================
-================  November, 2019 =================
-==================================================
-*/
+/**
+ * @file DLLflash.hpp
+ * @brief The header file for the flash chip classes
+ */
 
 #include <Arduino.h>
 #include<vector>

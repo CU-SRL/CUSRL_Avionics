@@ -1,0 +1,71 @@
+\hypertarget{_analog_i_m_u_8cpp_source}{}\doxysection{Analog\+I\+M\+U.\+cpp}
+\label{_analog_i_m_u_8cpp_source}\index{src/src/AnalogIMU.cpp@{src/src/AnalogIMU.cpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 }
+\DoxyCodeLine{00005 \textcolor{preprocessor}{\#include "\mbox{\hyperlink{yonics_8hpp}{yonics.hpp}}"}}
+\DoxyCodeLine{00006 }
+\DoxyCodeLine{\Hypertarget{_analog_i_m_u_8cpp_source_l00007}\mbox{\hyperlink{class_h_i_g_h_g___a_c_c_e_l_a05c8730371e545771306ccd65a48c627}{00007}} \mbox{\hyperlink{class_h_i_g_h_g___a_c_c_e_l_a05c8730371e545771306ccd65a48c627}{HIGHG\_ACCEL::HIGHG\_ACCEL}}() \{}
+\DoxyCodeLine{00008     xPin = 0;}
+\DoxyCodeLine{00009     yPin = 1;}
+\DoxyCodeLine{00010     zPin = 2;}
+\DoxyCodeLine{00011     bitDepth = 10;}
+\DoxyCodeLine{00012 }
+\DoxyCodeLine{00013     init();}
+\DoxyCodeLine{00014 \}}
+\DoxyCodeLine{00015 }
+\DoxyCodeLine{\Hypertarget{_analog_i_m_u_8cpp_source_l00016}\mbox{\hyperlink{class_h_i_g_h_g___a_c_c_e_l_a93a1efc2a9832183004fa16a4cac8542}{00016}} \mbox{\hyperlink{class_h_i_g_h_g___a_c_c_e_l_a05c8730371e545771306ccd65a48c627}{HIGHG\_ACCEL::HIGHG\_ACCEL}}(\textcolor{keywordtype}{int} xPin, \textcolor{keywordtype}{int} yPin, \textcolor{keywordtype}{int} zPin) \{}
+\DoxyCodeLine{00017     \textcolor{comment}{// Define the x y z pin assignments and set the class members}}
+\DoxyCodeLine{00018     this-\/>xPin = xPin;}
+\DoxyCodeLine{00019     this-\/>yPin = yPin;}
+\DoxyCodeLine{00020     this-\/>zPin = zPin;}
+\DoxyCodeLine{00021 }
+\DoxyCodeLine{00022     \textcolor{comment}{// Define the bit Depth at 10}}
+\DoxyCodeLine{00023     bitDepth = 10;}
+\DoxyCodeLine{00024 }
+\DoxyCodeLine{00025     \textcolor{comment}{// Set offset and ratio based on bitDepth}}
+\DoxyCodeLine{00026     init();}
+\DoxyCodeLine{00027 \}}
+\DoxyCodeLine{00028 }
+\DoxyCodeLine{\Hypertarget{_analog_i_m_u_8cpp_source_l00029}\mbox{\hyperlink{class_h_i_g_h_g___a_c_c_e_l_ad4716ac46302d8a5500921e627540551}{00029}} \mbox{\hyperlink{class_h_i_g_h_g___a_c_c_e_l_a05c8730371e545771306ccd65a48c627}{HIGHG\_ACCEL::HIGHG\_ACCEL}}(\textcolor{keywordtype}{int} xPin, \textcolor{keywordtype}{int} yPin, \textcolor{keywordtype}{int} zPin, \textcolor{keywordtype}{bool} highBitDepth) \{}
+\DoxyCodeLine{00030     \textcolor{comment}{// Define the x y z pin assignments and set the class members}}
+\DoxyCodeLine{00031     this-\/>xPin = xPin;}
+\DoxyCodeLine{00032     this-\/>yPin = yPin;}
+\DoxyCodeLine{00033     this-\/>zPin = zPin;}
+\DoxyCodeLine{00034 }
+\DoxyCodeLine{00035     \textcolor{comment}{// Define the bit depth at 16}}
+\DoxyCodeLine{00036     bitDepth = 16;}
+\DoxyCodeLine{00037 }
+\DoxyCodeLine{00038     \textcolor{comment}{// If highBitDepth set the analog read resolution to 16 (MAX)}}
+\DoxyCodeLine{00039     \textcolor{keywordflow}{if} (highBitDepth) \{analogReadRes(16);\}}
+\DoxyCodeLine{00040 }
+\DoxyCodeLine{00041     \textcolor{comment}{// Set offset and ratio based on bitDepth}}
+\DoxyCodeLine{00042     init();}
+\DoxyCodeLine{00043 \}}
+\DoxyCodeLine{00044 }
+\DoxyCodeLine{00045 \textcolor{keywordtype}{void} HIGHG\_ACCEL::init() \{}
+\DoxyCodeLine{00046     offset = 0.5*(2\string^bitDepth);}
+\DoxyCodeLine{00047     ratio = (float)offset/(\textcolor{keywordtype}{float})(2*maxG);}
+\DoxyCodeLine{00048 \}}
+\DoxyCodeLine{00049 }
+\DoxyCodeLine{\Hypertarget{_analog_i_m_u_8cpp_source_l00050}\mbox{\hyperlink{class_h_i_g_h_g___a_c_c_e_l_ac7e36216f735ba04207be91118315e25}{00050}} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_h_i_g_h_g___a_c_c_e_l_ac7e36216f735ba04207be91118315e25}{HIGHG\_ACCEL::sample}}(\mbox{\hyperlink{struct_a_c_c_e_ldata}{ACCELdata}}* data) \{}
+\DoxyCodeLine{00051     data-\/>\mbox{\hyperlink{struct_a_c_c_e_ldata_a41591e5a60814f6adcb5b5d1d6631f0e}{t}} = millis();}
+\DoxyCodeLine{00052     data-\/>\mbox{\hyperlink{struct_a_c_c_e_ldata_a20029fa6c5aa627506bf25bb9628917c}{x}} = formatVal(analogRead(xPin));}
+\DoxyCodeLine{00053     data-\/>\mbox{\hyperlink{struct_a_c_c_e_ldata_a73cebc590cbbc675dcc5142e8159c968}{y}} = formatVal(analogRead(yPin));}
+\DoxyCodeLine{00054     data-\/>\mbox{\hyperlink{struct_a_c_c_e_ldata_afba4af39591962fd20ae12a34ed1accc}{z}} = formatVal(analogRead(zPin));}
+\DoxyCodeLine{00055 }
+\DoxyCodeLine{00056 }
+\DoxyCodeLine{00057     \textcolor{comment}{/*Serial.print(formatVal(analogRead(xPin)));}}
+\DoxyCodeLine{00058 \textcolor{comment}{    Serial.print(" ");}}
+\DoxyCodeLine{00059 \textcolor{comment}{    Serial.print(formatVal(analogRead(yPin)));}}
+\DoxyCodeLine{00060 \textcolor{comment}{    Serial.print(" ");}}
+\DoxyCodeLine{00061 \textcolor{comment}{    Serial.print(formatVal(analogRead(zPin)));}}
+\DoxyCodeLine{00062 \textcolor{comment}{    Serial.println(" ");*/}}
+\DoxyCodeLine{00063 \}}
+\DoxyCodeLine{00064 }
+\DoxyCodeLine{00065 \textcolor{keywordtype}{float} HIGHG\_ACCEL::formatVal(\textcolor{keywordtype}{int} rawVal) \{}
+\DoxyCodeLine{00066     rawVal = rawVal -\/ offset;}
+\DoxyCodeLine{00067     \textcolor{keywordflow}{return} (\textcolor{keywordtype}{float})rawVal*ratio;}
+\DoxyCodeLine{00068 \}}
+
+\end{DoxyCode}

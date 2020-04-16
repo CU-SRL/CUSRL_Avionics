@@ -1,0 +1,107 @@
+\hypertarget{_namespaces_8cpp_source}{}\doxysection{Namespaces.\+cpp}
+\label{_namespaces_8cpp_source}\index{src/src/Namespaces.cpp@{src/src/Namespaces.cpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 }
+\DoxyCodeLine{00009 \textcolor{comment}{/***************************************************************/}}
+\DoxyCodeLine{00010 \textcolor{comment}{/*                                                             */}}
+\DoxyCodeLine{00011 \textcolor{comment}{/*                                                             */}}
+\DoxyCodeLine{00012 \textcolor{comment}{/*                    CU-\/SRL AVIONICS TEAM                     */}}
+\DoxyCodeLine{00013 \textcolor{comment}{/*                   Namespace Definitions                     */}}
+\DoxyCodeLine{00014 \textcolor{comment}{/*                                                             */}}
+\DoxyCodeLine{00015 \textcolor{comment}{/*                       Jason Popich                          */}}
+\DoxyCodeLine{00016 \textcolor{comment}{/*                       Lyon Foster                           */}}
+\DoxyCodeLine{00017 \textcolor{comment}{/*                       Carter Mak                            */}}
+\DoxyCodeLine{00018 \textcolor{comment}{/*                       Giselle Koo                           */}}
+\DoxyCodeLine{00019 \textcolor{comment}{/*                                                             */}}
+\DoxyCodeLine{00020 \textcolor{comment}{/***************************************************************/}}
+\DoxyCodeLine{00021 }
+\DoxyCodeLine{00022 \textcolor{preprocessor}{\#include "\mbox{\hyperlink{yonics_8hpp}{yonics.hpp}}"}}
+\DoxyCodeLine{00023 }
+\DoxyCodeLine{00024 \textcolor{comment}{// INITS Namespace Definitions}}
+\DoxyCodeLine{\Hypertarget{_namespaces_8cpp_source_l00025}\mbox{\hyperlink{namespace_i_n_i_t_s}{00025}} \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_i_n_i_t_s}{INITS}}}
+\DoxyCodeLine{00026 \{}
+\DoxyCodeLine{00027     \textcolor{comment}{// ALL PIN ASSIGNMENTS ARE ON A BOARD BY BOARD CASE}}
+\DoxyCodeLine{\Hypertarget{_namespaces_8cpp_source_l00028}\mbox{\hyperlink{namespace_i_n_i_t_s_a1f025845c806415d58a3bc101cbbaa45}{00028}}     \textcolor{keywordtype}{int} \mbox{\hyperlink{namespace_i_n_i_t_s_a1f025845c806415d58a3bc101cbbaa45}{speakerPin}} = 2;     \textcolor{comment}{// Board speakerPin definition}}
+\DoxyCodeLine{\Hypertarget{_namespaces_8cpp_source_l00029}\mbox{\hyperlink{namespace_i_n_i_t_s_a5d30e7ae47dca499ef70abc0b7cff4ef}{00029}}     \textcolor{keywordtype}{int} \mbox{\hyperlink{namespace_i_n_i_t_s_a5d30e7ae47dca499ef70abc0b7cff4ef}{highG\_xPin}} = 33;    \textcolor{comment}{// Board highG\_xPin defintion}}
+\DoxyCodeLine{\Hypertarget{_namespaces_8cpp_source_l00030}\mbox{\hyperlink{namespace_i_n_i_t_s_ae8b36d880fccf8008ec5382c8516bd63}{00030}}     \textcolor{keywordtype}{int} \mbox{\hyperlink{namespace_i_n_i_t_s_ae8b36d880fccf8008ec5382c8516bd63}{highG\_yPin}} = 34;    \textcolor{comment}{// Board highG\_yPin defintion}}
+\DoxyCodeLine{\Hypertarget{_namespaces_8cpp_source_l00031}\mbox{\hyperlink{namespace_i_n_i_t_s_a4cba28b03e09c2f8e967ab1339e19d40}{00031}}     \textcolor{keywordtype}{int} \mbox{\hyperlink{namespace_i_n_i_t_s_a4cba28b03e09c2f8e967ab1339e19d40}{highG\_zPin}} = 35;    \textcolor{comment}{// Board highG\_zPin defintion}}
+\DoxyCodeLine{00032 }
+\DoxyCodeLine{\Hypertarget{_namespaces_8cpp_source_l00033}\mbox{\hyperlink{namespace_i_n_i_t_s_ac9da1547f5a699c7f46f56b920d43fb6}{00033}}     \mbox{\hyperlink{class_digital_i_m_u}{DigitalIMU}} \mbox{\hyperlink{namespace_i_n_i_t_s_ac9da1547f5a699c7f46f56b920d43fb6}{IMU}} = \mbox{\hyperlink{class_digital_i_m_u}{DigitalIMU}}(55,0x28);                                   \textcolor{comment}{// Define the DigitalIMU object and set it equal to the DigitalIMU instance}}
+\DoxyCodeLine{\Hypertarget{_namespaces_8cpp_source_l00034}\mbox{\hyperlink{namespace_i_n_i_t_s_a4086c662375b91ff0dd841d408fec0fd}{00034}}     \mbox{\hyperlink{class_digital_b_a_r_o_m}{DigitalBAROM}} \mbox{\hyperlink{namespace_i_n_i_t_s_a4086c662375b91ff0dd841d408fec0fd}{BAROM}};                                                     \textcolor{comment}{// Create the DigitalBAROM class object}}
+\DoxyCodeLine{\Hypertarget{_namespaces_8cpp_source_l00035}\mbox{\hyperlink{namespace_i_n_i_t_s_afc9e0b0d6a7afbfb3ea91ffae32f54f6}{00035}}     \mbox{\hyperlink{class_h_i_g_h_g___a_c_c_e_l}{HIGHG\_ACCEL}} \mbox{\hyperlink{namespace_i_n_i_t_s_afc9e0b0d6a7afbfb3ea91ffae32f54f6}{HIGHG}} = \mbox{\hyperlink{class_h_i_g_h_g___a_c_c_e_l}{HIGHG\_ACCEL}}(\mbox{\hyperlink{namespace_i_n_i_t_s_a5d30e7ae47dca499ef70abc0b7cff4ef}{highG\_xPin}},\mbox{\hyperlink{namespace_i_n_i_t_s_ae8b36d880fccf8008ec5382c8516bd63}{highG\_yPin}},\mbox{\hyperlink{namespace_i_n_i_t_s_a4cba28b03e09c2f8e967ab1339e19d40}{highG\_zPin}},\textcolor{keyword}{true}); \textcolor{comment}{// Define the AnalogIMU object and set it equal to the AnalogIMU instance}}
+\DoxyCodeLine{\Hypertarget{_namespaces_8cpp_source_l00036}\mbox{\hyperlink{namespace_i_n_i_t_s_a5f1ffe3be225987efe9e0f5b5b318123}{00036}}     \mbox{\hyperlink{class_beepy_b_o_i}{BeepyBOI}} \mbox{\hyperlink{namespace_i_n_i_t_s_a5f1ffe3be225987efe9e0f5b5b318123}{berp}} = \mbox{\hyperlink{class_beepy_b_o_i}{BeepyBOI}}(\mbox{\hyperlink{namespace_i_n_i_t_s_a1f025845c806415d58a3bc101cbbaa45}{speakerPin}});                                   \textcolor{comment}{// Define the BeepyBOI object and set it equal to the BeepBOI instance}}
+\DoxyCodeLine{00037     }
+\DoxyCodeLine{\Hypertarget{_namespaces_8cpp_source_l00038}\mbox{\hyperlink{namespace_i_n_i_t_s_a96dd29db36c81773e3922717ae9ef869}{00038}}     \mbox{\hyperlink{class_d_l_lflash}{DLLflash}}* \mbox{\hyperlink{namespace_i_n_i_t_s_a96dd29db36c81773e3922717ae9ef869}{flash}} = \textcolor{keyword}{nullptr};                                              \textcolor{comment}{// Define the DLLflash object and set it equal to nullptr b/c it doesn't point to anything yet}}
+\DoxyCodeLine{00039                                                 }
+\DoxyCodeLine{\Hypertarget{_namespaces_8cpp_source_l00040}\mbox{\hyperlink{namespace_i_n_i_t_s_ac1b9c4cb67bd8af1eb8a216f3ad8df9c}{00040}}     \mbox{\hyperlink{struct_i_m_udata}{IMUdata}} \mbox{\hyperlink{namespace_i_n_i_t_s_ac1b9c4cb67bd8af1eb8a216f3ad8df9c}{imu\_data}};                                                       \textcolor{comment}{// Create the IMUData struct object}}
+\DoxyCodeLine{\Hypertarget{_namespaces_8cpp_source_l00041}\mbox{\hyperlink{namespace_i_n_i_t_s_aee91897642dd46037641d2119d740123}{00041}}     \mbox{\hyperlink{struct_b_a_r_o_mdata}{BAROMdata}} \mbox{\hyperlink{namespace_i_n_i_t_s_aee91897642dd46037641d2119d740123}{barom\_data}};                                                   \textcolor{comment}{// Create the BAROMdata struct object}}
+\DoxyCodeLine{\Hypertarget{_namespaces_8cpp_source_l00042}\mbox{\hyperlink{namespace_i_n_i_t_s_abdffaa8c4b6dda37a2b92665dab31eb4}{00042}}     \mbox{\hyperlink{struct_a_c_c_e_ldata}{ACCELdata}} \mbox{\hyperlink{namespace_i_n_i_t_s_abdffaa8c4b6dda37a2b92665dab31eb4}{accel\_data}};                                                   \textcolor{comment}{// Create the ACCELdata struct object}}
+\DoxyCodeLine{00043 \};}
+\DoxyCodeLine{00044 }
+\DoxyCodeLine{00045 \textcolor{comment}{// PROTOTHREADING Namespace Definitions}}
+\DoxyCodeLine{\Hypertarget{_namespaces_8cpp_source_l00046}\mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g}{00046}} \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g}{PROTOTHREADING}}}
+\DoxyCodeLine{00047 \{}
+\DoxyCodeLine{\Hypertarget{_namespaces_8cpp_source_l00048}\mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a4bf5dee68a42f69a5b4413aad7f4da73}{00048}}     \textcolor{keywordtype}{int} \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a4bf5dee68a42f69a5b4413aad7f4da73}{interval\_IMU}} = 45;      \textcolor{comment}{// Define the interval at which to sample the IMU in milliseconds}}
+\DoxyCodeLine{\Hypertarget{_namespaces_8cpp_source_l00049}\mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a0263f929d0bde77e2cf156748d912f52}{00049}}     \textcolor{keywordtype}{int} \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a0263f929d0bde77e2cf156748d912f52}{interval\_BAROM}} = 2000;  \textcolor{comment}{// Define the interval at which to sample the BAROM in milliseconds}}
+\DoxyCodeLine{\Hypertarget{_namespaces_8cpp_source_l00050}\mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_ad9e0d8c1cc58c135abcb6553b2da35b8}{00050}}     \textcolor{keywordtype}{int} \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_ad9e0d8c1cc58c135abcb6553b2da35b8}{interval\_ACCEL}} = 50;    \textcolor{comment}{// Define the interval at which to sample the High-\/G ACCEL in milliseconds}}
+\DoxyCodeLine{00051 }
+\DoxyCodeLine{\Hypertarget{_namespaces_8cpp_source_l00052}\mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a835e1bc833505fb52669fa29fa1f6f80}{00052}}     ThreadController \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a835e1bc833505fb52669fa29fa1f6f80}{thread\_control}} = ThreadController(); \textcolor{comment}{// Create a new ThreadController instance for the ThreadController and set thread\_control pointer equal to it}}
+\DoxyCodeLine{00053 }
+\DoxyCodeLine{\Hypertarget{_namespaces_8cpp_source_l00054}\mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a74187a4e49e5ec1475e7e748a7ef1e9c}{00054}}     Thread* \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a74187a4e49e5ec1475e7e748a7ef1e9c}{ThreadIMU}} = \textcolor{keyword}{new} Thread();       \textcolor{comment}{// Create a new Thread instance for ThreadIMU and set ThreadIMU pointer equal to it}}
+\DoxyCodeLine{\Hypertarget{_namespaces_8cpp_source_l00055}\mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a22cb9e6fa249e40307fa4da319712c43}{00055}}     Thread* \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_a22cb9e6fa249e40307fa4da319712c43}{ThreadBAROM}} = \textcolor{keyword}{new} Thread();     \textcolor{comment}{// Create a new Thread instance for ThreadBAROM and set ThreadBAROM pointer equal to it}}
+\DoxyCodeLine{\Hypertarget{_namespaces_8cpp_source_l00056}\mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_ad274ec96024e09ea8bdd90bd37bf7447}{00056}}     Thread* \mbox{\hyperlink{namespace_p_r_o_t_o_t_h_r_e_a_d_i_n_g_ad274ec96024e09ea8bdd90bd37bf7447}{ThreadACCEL}} = \textcolor{keyword}{new} Thread();     \textcolor{comment}{// Create a new Thread instance for ThreadACCEL and set ThreadACCEL pointer equal to it}}
+\DoxyCodeLine{00057 \};}
+\DoxyCodeLine{00058 }
+\DoxyCodeLine{00059 \textcolor{comment}{// I2C Namespace Definitions}}
+\DoxyCodeLine{\Hypertarget{_namespaces_8cpp_source_l00060}\mbox{\hyperlink{namespace_i2_c}{00060}} \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_i2_c}{I2C}}}
+\DoxyCodeLine{00061 \{}
+\DoxyCodeLine{00062     \textcolor{comment}{// I2C -\/ Write to Registry function}}
+\DoxyCodeLine{\Hypertarget{_namespaces_8cpp_source_l00063}\mbox{\hyperlink{namespace_i2_c_a58f9f273aee1f164d418113388636b71}{00063}}     \textcolor{keywordtype}{bool} \mbox{\hyperlink{namespace_i2_c_a58f9f273aee1f164d418113388636b71}{write\_reg}}(uint8\_t i2c, uint8\_t addr, uint8\_t val)}
+\DoxyCodeLine{00064     \{}
+\DoxyCodeLine{00065         Wire.beginTransmission(i2c);            \textcolor{comment}{// Signal beginning of I2C transmission at i2c device}}
+\DoxyCodeLine{00066         Wire.write(addr);                       \textcolor{comment}{// Place the register address we want to write to in the transmission buffer}}
+\DoxyCodeLine{00067         Wire.write(val);                        \textcolor{comment}{// Place the value we want written in the transmission buffer}}
+\DoxyCodeLine{00068         \textcolor{keywordflow}{return} Wire.endTransmission() == 0;     \textcolor{comment}{// Executes the buffer and signals end of MASTER transmission}}
+\DoxyCodeLine{00069     \}}
+\DoxyCodeLine{00070 }
+\DoxyCodeLine{00071     \textcolor{comment}{// I2C -\/ First Read from Registry function}}
+\DoxyCodeLine{\Hypertarget{_namespaces_8cpp_source_l00072}\mbox{\hyperlink{namespace_i2_c_aadebed13d47a15472baeb0f430a8f932}{00072}}     \textcolor{keywordtype}{bool} \mbox{\hyperlink{namespace_i2_c_aadebed13d47a15472baeb0f430a8f932}{read\_regs}}(uint8\_t i2c, uint8\_t addr, uint8\_t *data, uint8\_t num)}
+\DoxyCodeLine{00073     \{}
+\DoxyCodeLine{00074         Wire.beginTransmission(i2c);            \textcolor{comment}{// Signal beginning of I2C transmission at i2c device}}
+\DoxyCodeLine{00075         Wire.write(addr);                       \textcolor{comment}{// Place the register address we want to read from in the transmission buffer}}
+\DoxyCodeLine{00076         \textcolor{keywordflow}{if} (Wire.endTransmission(\textcolor{keyword}{false}) != 0)   \textcolor{comment}{// Execute the buffer and but DO NOT signal end of transmission because we want to read from the device}}
+\DoxyCodeLine{00077         \{}
+\DoxyCodeLine{00078             \textcolor{keywordflow}{return} \textcolor{keyword}{false};                       \textcolor{comment}{// If failed, return false}}
+\DoxyCodeLine{00079         \}}
+\DoxyCodeLine{00080         Wire.requestFrom(i2c, num);             \textcolor{comment}{// Request, from the address we specified above, a certain amount of bytes}}
+\DoxyCodeLine{00081         \textcolor{keywordflow}{if} (Wire.available() != num)            \textcolor{comment}{// Make sure we have that amount of bytes available to read}}
+\DoxyCodeLine{00082         \{}
+\DoxyCodeLine{00083             \textcolor{keywordflow}{return} \textcolor{keyword}{false};                       \textcolor{comment}{// If we dont have that amount of bytes, return false}}
+\DoxyCodeLine{00084         \}}
+\DoxyCodeLine{00085         \textcolor{keywordflow}{while} (num > 0)}
+\DoxyCodeLine{00086         \{}
+\DoxyCodeLine{00087             *data++ = Wire.read();              \textcolor{comment}{// Read every byte and place into data buffer}}
+\DoxyCodeLine{00088             num-\/-\/;                              \textcolor{comment}{// Reduce by one num of bytes left to read}}
+\DoxyCodeLine{00089         \}}
+\DoxyCodeLine{00090         \textcolor{keywordflow}{return} \textcolor{keyword}{true};                            \textcolor{comment}{// Return Success after reading}}
+\DoxyCodeLine{00091     \}}
+\DoxyCodeLine{00092 }
+\DoxyCodeLine{00093     \textcolor{comment}{// I2C -\/ Second Read from Registry function}}
+\DoxyCodeLine{\Hypertarget{_namespaces_8cpp_source_l00094}\mbox{\hyperlink{namespace_i2_c_a1ef8795a059c81070d3c714b3af55001}{00094}}     \textcolor{keywordtype}{bool} \mbox{\hyperlink{namespace_i2_c_aadebed13d47a15472baeb0f430a8f932}{read\_regs}}(uint8\_t i2c, uint8\_t *data, uint8\_t num)}
+\DoxyCodeLine{00095     \{}
+\DoxyCodeLine{00096         Wire.requestFrom(i2c, num);             \textcolor{comment}{// Request, from the i2c device, a certain amount of bytes}}
+\DoxyCodeLine{00097         \textcolor{keywordflow}{if} (Wire.available() != num)            \textcolor{comment}{// Make sure we have that amount of bytes available to read}}
+\DoxyCodeLine{00098         \{       }
+\DoxyCodeLine{00099             \textcolor{keywordflow}{return} \textcolor{keyword}{false};                       \textcolor{comment}{// If we dont have that amount of bytes, return false}}
+\DoxyCodeLine{00100         \}       }
+\DoxyCodeLine{00101         \textcolor{keywordflow}{while} (num > 0)     }
+\DoxyCodeLine{00102         \{       }
+\DoxyCodeLine{00103             *data++ = Wire.read();              \textcolor{comment}{// Read every byte and place into data buffer}}
+\DoxyCodeLine{00104             num-\/-\/;                              \textcolor{comment}{// Reduce by one num of bytes left to read}}
+\DoxyCodeLine{00105         \}       }
+\DoxyCodeLine{00106         \textcolor{keywordflow}{return} \textcolor{keyword}{true};                            \textcolor{comment}{// Return Success after reading}}
+\DoxyCodeLine{00107     \}}
+\DoxyCodeLine{00108 \};}
+
+\end{DoxyCode}

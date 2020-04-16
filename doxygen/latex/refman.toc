@@ -1,0 +1,297 @@
+\@ifundefined {etoctocstyle}{\let \etoc@startlocaltoc \@gobble \let \etoc@settocdepth \@gobble \let \etoc@depthtag \@gobble \let \etoc@setlocaltop \@gobble }{}
+\contentsline {chapter}{\numberline {1}Namespace Index}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Namespace List}{1}{section.1.1}%
+\contentsline {chapter}{\numberline {2}Class Index}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Class List}{3}{section.2.1}%
+\contentsline {chapter}{\numberline {3}File Index}{5}{chapter.3}%
+\contentsline {section}{\numberline {3.1}File List}{5}{section.3.1}%
+\contentsline {chapter}{\numberline {4}Namespace Documentation}{7}{chapter.4}%
+\contentsline {section}{\numberline {4.1}I2C Namespace Reference}{7}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Detailed Description}{7}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Function Documentation}{7}{subsection.4.1.2}%
+\contentsline {subsubsection}{\numberline {4.1.2.1}read\_regs()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{7}{subsubsection.4.1.2.1}%
+\contentsline {subsubsection}{\numberline {4.1.2.2}read\_regs()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{8}{subsubsection.4.1.2.2}%
+\contentsline {subsubsection}{\numberline {4.1.2.3}write\_reg()}{8}{subsubsection.4.1.2.3}%
+\contentsline {section}{\numberline {4.2}I\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}N\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}I\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TS Namespace Reference}{9}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Detailed Description}{9}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Variable Documentation}{9}{subsection.4.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.2.1}accel\_data}{10}{subsubsection.4.2.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2.2}BAROM}{10}{subsubsection.4.2.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.2.3}barom\_data}{10}{subsubsection.4.2.2.3}%
+\contentsline {subsubsection}{\numberline {4.2.2.4}berp}{10}{subsubsection.4.2.2.4}%
+\contentsline {subsubsection}{\numberline {4.2.2.5}flash}{10}{subsubsection.4.2.2.5}%
+\contentsline {subsubsection}{\numberline {4.2.2.6}HIGHG}{11}{subsubsection.4.2.2.6}%
+\contentsline {subsubsection}{\numberline {4.2.2.7}highG\_xPin}{11}{subsubsection.4.2.2.7}%
+\contentsline {subsubsection}{\numberline {4.2.2.8}highG\_yPin}{11}{subsubsection.4.2.2.8}%
+\contentsline {subsubsection}{\numberline {4.2.2.9}highG\_zPin}{11}{subsubsection.4.2.2.9}%
+\contentsline {subsubsection}{\numberline {4.2.2.10}IMU}{11}{subsubsection.4.2.2.10}%
+\contentsline {subsubsection}{\numberline {4.2.2.11}imu\_data}{12}{subsubsection.4.2.2.11}%
+\contentsline {subsubsection}{\numberline {4.2.2.12}speakerPin}{12}{subsubsection.4.2.2.12}%
+\contentsline {section}{\numberline {4.3}P\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}R\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}O\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}T\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}O\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}T\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}H\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}R\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}E\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}A\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}D\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}I\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}NG Namespace Reference}{12}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Detailed Description}{12}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Variable Documentation}{13}{subsection.4.3.2}%
+\contentsline {subsubsection}{\numberline {4.3.2.1}interval\_ACCEL}{13}{subsubsection.4.3.2.1}%
+\contentsline {subsubsection}{\numberline {4.3.2.2}interval\_BAROM}{13}{subsubsection.4.3.2.2}%
+\contentsline {subsubsection}{\numberline {4.3.2.3}interval\_IMU}{13}{subsubsection.4.3.2.3}%
+\contentsline {subsubsection}{\numberline {4.3.2.4}thread\_control}{13}{subsubsection.4.3.2.4}%
+\contentsline {subsubsection}{\numberline {4.3.2.5}ThreadACCEL}{13}{subsubsection.4.3.2.5}%
+\contentsline {subsubsection}{\numberline {4.3.2.6}ThreadBAROM}{14}{subsubsection.4.3.2.6}%
+\contentsline {subsubsection}{\numberline {4.3.2.7}ThreadIMU}{14}{subsubsection.4.3.2.7}%
+\contentsline {chapter}{\numberline {5}Class Documentation}{15}{chapter.5}%
+\contentsline {section}{\numberline {5.1}A\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}C\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}C\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}E\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Ldata Struct Reference}{15}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Detailed Description}{15}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Member Data Documentation}{15}{subsection.5.1.2}%
+\contentsline {subsubsection}{\numberline {5.1.2.1}t}{15}{subsubsection.5.1.2.1}%
+\contentsline {subsubsection}{\numberline {5.1.2.2}x}{16}{subsubsection.5.1.2.2}%
+\contentsline {subsubsection}{\numberline {5.1.2.3}y}{16}{subsubsection.5.1.2.3}%
+\contentsline {subsubsection}{\numberline {5.1.2.4}z}{16}{subsubsection.5.1.2.4}%
+\contentsline {section}{\numberline {5.2}B\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}A\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}R\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}O\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Mdata Struct Reference}{16}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Detailed Description}{17}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Member Data Documentation}{17}{subsection.5.2.2}%
+\contentsline {subsubsection}{\numberline {5.2.2.1}altitude}{17}{subsubsection.5.2.2.1}%
+\contentsline {subsubsection}{\numberline {5.2.2.2}pressure}{17}{subsubsection.5.2.2.2}%
+\contentsline {subsubsection}{\numberline {5.2.2.3}t}{17}{subsubsection.5.2.2.3}%
+\contentsline {subsubsection}{\numberline {5.2.2.4}temperature}{17}{subsubsection.5.2.2.4}%
+\contentsline {section}{\numberline {5.3}Beepy\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}B\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}OI Class Reference}{18}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Detailed Description}{18}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Constructor \& Destructor Documentation}{18}{subsection.5.3.2}%
+\contentsline {subsubsection}{\numberline {5.3.2.1}BeepyBOI()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{18}{subsubsection.5.3.2.1}%
+\contentsline {subsubsection}{\numberline {5.3.2.2}BeepyBOI()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{18}{subsubsection.5.3.2.2}%
+\contentsline {subsection}{\numberline {5.3.3}Member Function Documentation}{19}{subsection.5.3.3}%
+\contentsline {subsubsection}{\numberline {5.3.3.1}bombBeep()}{19}{subsubsection.5.3.3.1}%
+\contentsline {subsubsection}{\numberline {5.3.3.2}countdown()}{19}{subsubsection.5.3.3.2}%
+\contentsline {subsubsection}{\numberline {5.3.3.3}error()}{19}{subsubsection.5.3.3.3}%
+\contentsline {subsubsection}{\numberline {5.3.3.4}hello()}{20}{subsubsection.5.3.3.4}%
+\contentsline {subsubsection}{\numberline {5.3.3.5}hiBeep()}{20}{subsubsection.5.3.3.5}%
+\contentsline {subsubsection}{\numberline {5.3.3.6}lowBeep()}{20}{subsubsection.5.3.3.6}%
+\contentsline {subsubsection}{\numberline {5.3.3.7}midBeep()}{20}{subsubsection.5.3.3.7}%
+\contentsline {section}{\numberline {5.4}Digital\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}B\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}A\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}R\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}OM Class Reference}{21}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}Detailed Description}{21}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.2}Constructor \& Destructor Documentation}{21}{subsection.5.4.2}%
+\contentsline {subsubsection}{\numberline {5.4.2.1}DigitalBAROM()}{21}{subsubsection.5.4.2.1}%
+\contentsline {subsection}{\numberline {5.4.3}Member Function Documentation}{21}{subsection.5.4.3}%
+\contentsline {subsubsection}{\numberline {5.4.3.1}begin()}{22}{subsubsection.5.4.3.1}%
+\contentsline {subsubsection}{\numberline {5.4.3.2}sample()}{22}{subsubsection.5.4.3.2}%
+\contentsline {section}{\numberline {5.5}Digital\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}I\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}MU Class Reference}{23}{section.5.5}%
+\contentsline {subsection}{\numberline {5.5.1}Detailed Description}{23}{subsection.5.5.1}%
+\contentsline {subsection}{\numberline {5.5.2}Constructor \& Destructor Documentation}{23}{subsection.5.5.2}%
+\contentsline {subsubsection}{\numberline {5.5.2.1}DigitalIMU()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{24}{subsubsection.5.5.2.1}%
+\contentsline {subsubsection}{\numberline {5.5.2.2}DigitalIMU()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{24}{subsubsection.5.5.2.2}%
+\contentsline {subsection}{\numberline {5.5.3}Member Function Documentation}{24}{subsection.5.5.3}%
+\contentsline {subsubsection}{\numberline {5.5.3.1}begin()}{24}{subsubsection.5.5.3.1}%
+\contentsline {subsubsection}{\numberline {5.5.3.2}sample()}{24}{subsubsection.5.5.3.2}%
+\contentsline {section}{\numberline {5.6}D\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}L\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Lflash Class Reference}{25}{section.5.6}%
+\contentsline {subsection}{\numberline {5.6.1}Detailed Description}{25}{subsection.5.6.1}%
+\contentsline {subsection}{\numberline {5.6.2}Constructor \& Destructor Documentation}{25}{subsection.5.6.2}%
+\contentsline {subsubsection}{\numberline {5.6.2.1}DLLflash()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{25}{subsubsection.5.6.2.1}%
+\contentsline {subsubsection}{\numberline {5.6.2.2}DLLflash()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{26}{subsubsection.5.6.2.2}%
+\contentsline {subsubsection}{\numberline {5.6.2.3}$\sim $DLLflash()}{26}{subsubsection.5.6.2.3}%
+\contentsline {subsection}{\numberline {5.6.3}Member Function Documentation}{26}{subsection.5.6.3}%
+\contentsline {subsubsection}{\numberline {5.6.3.1}addType()}{26}{subsubsection.5.6.3.1}%
+\contentsline {subsubsection}{\numberline {5.6.3.2}setToRead()}{26}{subsubsection.5.6.3.2}%
+\contentsline {subsubsection}{\numberline {5.6.3.3}setToWrite()}{26}{subsubsection.5.6.3.3}%
+\contentsline {subsubsection}{\numberline {5.6.3.4}writeSample()}{27}{subsubsection.5.6.3.4}%
+\contentsline {section}{\numberline {5.7}D\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}L\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Ltype Class Reference}{27}{section.5.7}%
+\contentsline {subsection}{\numberline {5.7.1}Detailed Description}{27}{subsection.5.7.1}%
+\contentsline {subsection}{\numberline {5.7.2}Constructor \& Destructor Documentation}{27}{subsection.5.7.2}%
+\contentsline {subsubsection}{\numberline {5.7.2.1}DLLtype()}{27}{subsubsection.5.7.2.1}%
+\contentsline {subsubsection}{\numberline {5.7.2.2}$\sim $DLLtype()}{28}{subsubsection.5.7.2.2}%
+\contentsline {subsection}{\numberline {5.7.3}Member Function Documentation}{28}{subsection.5.7.3}%
+\contentsline {subsubsection}{\numberline {5.7.3.1}getID()}{28}{subsubsection.5.7.3.1}%
+\contentsline {subsubsection}{\numberline {5.7.3.2}readSample()}{28}{subsubsection.5.7.3.2}%
+\contentsline {subsubsection}{\numberline {5.7.3.3}setType()}{28}{subsubsection.5.7.3.3}%
+\contentsline {subsubsection}{\numberline {5.7.3.4}writeSample()}{28}{subsubsection.5.7.3.4}%
+\contentsline {section}{\numberline {5.8}H\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}I\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}G\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}H\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}G\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}A\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}C\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}C\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}EL Class Reference}{29}{section.5.8}%
+\contentsline {subsection}{\numberline {5.8.1}Detailed Description}{29}{subsection.5.8.1}%
+\contentsline {subsection}{\numberline {5.8.2}Constructor \& Destructor Documentation}{29}{subsection.5.8.2}%
+\contentsline {subsubsection}{\numberline {5.8.2.1}HIGHG\_ACCEL()\hspace {0.1cm}{\footnotesize \ttfamily [1/3]}}{29}{subsubsection.5.8.2.1}%
+\contentsline {subsubsection}{\numberline {5.8.2.2}HIGHG\_ACCEL()\hspace {0.1cm}{\footnotesize \ttfamily [2/3]}}{29}{subsubsection.5.8.2.2}%
+\contentsline {subsubsection}{\numberline {5.8.2.3}HIGHG\_ACCEL()\hspace {0.1cm}{\footnotesize \ttfamily [3/3]}}{30}{subsubsection.5.8.2.3}%
+\contentsline {subsection}{\numberline {5.8.3}Member Function Documentation}{30}{subsection.5.8.3}%
+\contentsline {subsubsection}{\numberline {5.8.3.1}sample()}{30}{subsubsection.5.8.3.1}%
+\contentsline {section}{\numberline {5.9}I\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}M\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Udata Struct Reference}{31}{section.5.9}%
+\contentsline {subsection}{\numberline {5.9.1}Detailed Description}{31}{subsection.5.9.1}%
+\contentsline {subsection}{\numberline {5.9.2}Member Data Documentation}{31}{subsection.5.9.2}%
+\contentsline {subsubsection}{\numberline {5.9.2.1}accel\_fused}{31}{subsubsection.5.9.2.1}%
+\contentsline {subsubsection}{\numberline {5.9.2.2}accel\_raw}{31}{subsubsection.5.9.2.2}%
+\contentsline {subsubsection}{\numberline {5.9.2.3}gyro\_fused}{32}{subsubsection.5.9.2.3}%
+\contentsline {subsubsection}{\numberline {5.9.2.4}gyro\_raw}{32}{subsubsection.5.9.2.4}%
+\contentsline {subsubsection}{\numberline {5.9.2.5}magnetometer}{32}{subsubsection.5.9.2.5}%
+\contentsline {subsubsection}{\numberline {5.9.2.6}orient\_euler}{32}{subsubsection.5.9.2.6}%
+\contentsline {subsubsection}{\numberline {5.9.2.7}orient\_quat}{32}{subsubsection.5.9.2.7}%
+\contentsline {subsubsection}{\numberline {5.9.2.8}t}{32}{subsubsection.5.9.2.8}%
+\contentsline {chapter}{\numberline {6}File Documentation}{33}{chapter.6}%
+\contentsline {section}{\numberline {6.1}src/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analog\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}I\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}MU.cpp File Reference}{33}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Detailed Description}{33}{subsection.6.1.1}%
+\contentsline {section}{\numberline {6.2}Analog\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}I\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}M\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}U.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{33}{section.6.2}%
+\contentsline {section}{\numberline {6.3}src/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Beepy\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}B\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}OI.cpp File Reference}{34}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}Detailed Description}{34}{subsection.6.3.1}%
+\contentsline {section}{\numberline {6.4}Beepy\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}B\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}O\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}I.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{35}{section.6.4}%
+\contentsline {section}{\numberline {6.5}src/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Digital\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}B\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}A\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}R\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}OM.cpp File Reference}{35}{section.6.5}%
+\contentsline {subsection}{\numberline {6.5.1}Detailed Description}{35}{subsection.6.5.1}%
+\contentsline {section}{\numberline {6.6}Digital\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}B\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}A\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}R\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}O\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}M.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{36}{section.6.6}%
+\contentsline {section}{\numberline {6.7}src/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Digital\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}I\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}MU.cpp File Reference}{37}{section.6.7}%
+\contentsline {subsection}{\numberline {6.7.1}Detailed Description}{37}{subsection.6.7.1}%
+\contentsline {section}{\numberline {6.8}Digital\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}I\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}M\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}U.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{37}{section.6.8}%
+\contentsline {section}{\numberline {6.9}src/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}D\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}L\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Lflash.cpp File Reference}{38}{section.6.9}%
+\contentsline {subsection}{\numberline {6.9.1}Detailed Description}{38}{subsection.6.9.1}%
+\contentsline {section}{\numberline {6.10}D\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}L\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Lflash.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{39}{section.6.10}%
+\contentsline {section}{\numberline {6.11}src/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}D\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}L\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Lflash.hpp File Reference}{40}{section.6.11}%
+\contentsline {subsection}{\numberline {6.11.1}Detailed Description}{41}{subsection.6.11.1}%
+\contentsline {section}{\numberline {6.12}D\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}L\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Lflash.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}hpp}{41}{section.6.12}%
+\contentsline {section}{\numberline {6.13}src/src/main.cpp File Reference}{42}{section.6.13}%
+\contentsline {subsection}{\numberline {6.13.1}Detailed Description}{43}{subsection.6.13.1}%
+\contentsline {subsection}{\numberline {6.13.2}Function Documentation}{43}{subsection.6.13.2}%
+\contentsline {subsubsection}{\numberline {6.13.2.1}KILLSYSTEM()}{43}{subsubsection.6.13.2.1}%
+\contentsline {subsubsection}{\numberline {6.13.2.2}loop()}{44}{subsubsection.6.13.2.2}%
+\contentsline {subsubsection}{\numberline {6.13.2.3}setup()}{44}{subsubsection.6.13.2.3}%
+\contentsline {subsubsection}{\numberline {6.13.2.4}thread\_BAROM()}{45}{subsubsection.6.13.2.4}%
+\contentsline {subsubsection}{\numberline {6.13.2.5}thread\_HIGHG()}{45}{subsubsection.6.13.2.5}%
+\contentsline {subsubsection}{\numberline {6.13.2.6}thread\_IMU()}{46}{subsubsection.6.13.2.6}%
+\contentsline {section}{\numberline {6.14}main.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{46}{section.6.14}%
+\contentsline {section}{\numberline {6.15}src/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Namespaces.cpp File Reference}{47}{section.6.15}%
+\contentsline {subsection}{\numberline {6.15.1}Detailed Description}{48}{subsection.6.15.1}%
+\contentsline {section}{\numberline {6.16}Namespaces.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{48}{section.6.16}%
+\contentsline {section}{\numberline {6.17}src/src/register.hpp File Reference}{50}{section.6.17}%
+\contentsline {subsection}{\numberline {6.17.1}Detailed Description}{53}{subsection.6.17.1}%
+\contentsline {subsection}{\numberline {6.17.2}Macro Definition Documentation}{53}{subsection.6.17.2}%
+\contentsline {subsubsection}{\numberline {6.17.2.1}BNO055\_ACC\_DATA\_X\_MSB}{53}{subsubsection.6.17.2.1}%
+\contentsline {subsubsection}{\numberline {6.17.2.2}BNO055\_ACC\_DATA\_Y\_LSB}{53}{subsubsection.6.17.2.2}%
+\contentsline {subsubsection}{\numberline {6.17.2.3}BNO055\_ACC\_DATA\_Y\_MSB}{53}{subsubsection.6.17.2.3}%
+\contentsline {subsubsection}{\numberline {6.17.2.4}BNO055\_ACC\_DATA\_Z\_LSB}{53}{subsubsection.6.17.2.4}%
+\contentsline {subsubsection}{\numberline {6.17.2.5}BNO055\_ACC\_DATA\_Z\_MSB}{54}{subsubsection.6.17.2.5}%
+\contentsline {subsubsection}{\numberline {6.17.2.6}BNO055\_ACC\_ID}{54}{subsubsection.6.17.2.6}%
+\contentsline {subsubsection}{\numberline {6.17.2.7}BNO055\_ACC\_OFFSET\_X\_LSB}{54}{subsubsection.6.17.2.7}%
+\contentsline {subsubsection}{\numberline {6.17.2.8}BNO055\_ACC\_OFFSET\_X\_MSB}{54}{subsubsection.6.17.2.8}%
+\contentsline {subsubsection}{\numberline {6.17.2.9}BNO055\_ACC\_OFFSET\_Y\_LSB}{54}{subsubsection.6.17.2.9}%
+\contentsline {subsubsection}{\numberline {6.17.2.10}BNO055\_ACC\_OFFSET\_Y\_MSB}{54}{subsubsection.6.17.2.10}%
+\contentsline {subsubsection}{\numberline {6.17.2.11}BNO055\_ACC\_OFFSET\_Z\_LSB}{55}{subsubsection.6.17.2.11}%
+\contentsline {subsubsection}{\numberline {6.17.2.12}BNO055\_ACC\_OFFSET\_Z\_MSB}{55}{subsubsection.6.17.2.12}%
+\contentsline {subsubsection}{\numberline {6.17.2.13}BNO055\_ACC\_RADIUS\_LSB}{55}{subsubsection.6.17.2.13}%
+\contentsline {subsubsection}{\numberline {6.17.2.14}BNO055\_ACC\_RADIUS\_MSB}{55}{subsubsection.6.17.2.14}%
+\contentsline {subsubsection}{\numberline {6.17.2.15}BNO055\_AXIS\_MAP\_CONFIG}{55}{subsubsection.6.17.2.15}%
+\contentsline {subsubsection}{\numberline {6.17.2.16}BNO055\_AXIS\_MAP\_SIGN}{55}{subsubsection.6.17.2.16}%
+\contentsline {subsubsection}{\numberline {6.17.2.17}BNO055\_BL\_Rev\_ID}{56}{subsubsection.6.17.2.17}%
+\contentsline {subsubsection}{\numberline {6.17.2.18}BNO055\_CALIB\_STAT}{56}{subsubsection.6.17.2.18}%
+\contentsline {subsubsection}{\numberline {6.17.2.19}BNO055\_CHIP\_ID}{56}{subsubsection.6.17.2.19}%
+\contentsline {subsubsection}{\numberline {6.17.2.20}BNO055\_EUL\_Heading\_LSB}{56}{subsubsection.6.17.2.20}%
+\contentsline {subsubsection}{\numberline {6.17.2.21}BNO055\_EUL\_Heading\_MSB}{56}{subsubsection.6.17.2.21}%
+\contentsline {subsubsection}{\numberline {6.17.2.22}BNO055\_EUL\_Pitch\_LSB}{56}{subsubsection.6.17.2.22}%
+\contentsline {subsubsection}{\numberline {6.17.2.23}BNO055\_EUL\_Pitch\_MSB}{57}{subsubsection.6.17.2.23}%
+\contentsline {subsubsection}{\numberline {6.17.2.24}BNO055\_EUL\_Roll\_LSB}{57}{subsubsection.6.17.2.24}%
+\contentsline {subsubsection}{\numberline {6.17.2.25}BNO055\_EUL\_Roll\_MSB}{57}{subsubsection.6.17.2.25}%
+\contentsline {subsubsection}{\numberline {6.17.2.26}BNO055\_GRV\_Data\_X\_L}{57}{subsubsection.6.17.2.26}%
+\contentsline {subsubsection}{\numberline {6.17.2.27}BNO055\_GRV\_Data\_X\_M}{57}{subsubsection.6.17.2.27}%
+\contentsline {subsubsection}{\numberline {6.17.2.28}BNO055\_GRV\_Data\_Y\_L}{57}{subsubsection.6.17.2.28}%
+\contentsline {subsubsection}{\numberline {6.17.2.29}BNO055\_GRV\_Data\_Y\_M}{58}{subsubsection.6.17.2.29}%
+\contentsline {subsubsection}{\numberline {6.17.2.30}BNO055\_GRV\_Data\_Z\_L}{58}{subsubsection.6.17.2.30}%
+\contentsline {subsubsection}{\numberline {6.17.2.31}BNO055\_GRV\_Data\_Z\_M}{58}{subsubsection.6.17.2.31}%
+\contentsline {subsubsection}{\numberline {6.17.2.32}BNO055\_GYR\_DATA\_X\_LSB}{58}{subsubsection.6.17.2.32}%
+\contentsline {subsubsection}{\numberline {6.17.2.33}BNO055\_GYR\_DATA\_X\_MSB}{58}{subsubsection.6.17.2.33}%
+\contentsline {subsubsection}{\numberline {6.17.2.34}BNO055\_GYR\_DATA\_Y\_LSB}{58}{subsubsection.6.17.2.34}%
+\contentsline {subsubsection}{\numberline {6.17.2.35}BNO055\_GYR\_DATA\_Y\_MSB}{59}{subsubsection.6.17.2.35}%
+\contentsline {subsubsection}{\numberline {6.17.2.36}BNO055\_GYR\_DATA\_Z\_LSB}{59}{subsubsection.6.17.2.36}%
+\contentsline {subsubsection}{\numberline {6.17.2.37}BNO055\_GYR\_DATA\_Z\_MSB}{59}{subsubsection.6.17.2.37}%
+\contentsline {subsubsection}{\numberline {6.17.2.38}BNO055\_GYR\_ID}{59}{subsubsection.6.17.2.38}%
+\contentsline {subsubsection}{\numberline {6.17.2.39}BNO055\_GYR\_OFFSET\_X\_LSB}{59}{subsubsection.6.17.2.39}%
+\contentsline {subsubsection}{\numberline {6.17.2.40}BNO055\_GYR\_OFFSET\_X\_MSB}{59}{subsubsection.6.17.2.40}%
+\contentsline {subsubsection}{\numberline {6.17.2.41}BNO055\_GYR\_OFFSET\_Y\_LSB}{60}{subsubsection.6.17.2.41}%
+\contentsline {subsubsection}{\numberline {6.17.2.42}BNO055\_GYR\_OFFSET\_Y\_MSB}{60}{subsubsection.6.17.2.42}%
+\contentsline {subsubsection}{\numberline {6.17.2.43}BNO055\_GYR\_OFFSET\_Z\_LSB}{60}{subsubsection.6.17.2.43}%
+\contentsline {subsubsection}{\numberline {6.17.2.44}BNO055\_GYR\_OFFSET\_Z\_MSB}{60}{subsubsection.6.17.2.44}%
+\contentsline {subsubsection}{\numberline {6.17.2.45}BNO055\_INT\_STA}{60}{subsubsection.6.17.2.45}%
+\contentsline {subsubsection}{\numberline {6.17.2.46}BNO055\_LI}{60}{subsubsection.6.17.2.46}%
+\contentsline {subsubsection}{\numberline {6.17.2.47}BNO055\_LIA\_Data\_X\_LS}{61}{subsubsection.6.17.2.47}%
+\contentsline {subsubsection}{\numberline {6.17.2.48}BNO055\_LIA\_Data\_Y\_LS}{61}{subsubsection.6.17.2.48}%
+\contentsline {subsubsection}{\numberline {6.17.2.49}BNO055\_LIA\_Data\_Y\_MB}{61}{subsubsection.6.17.2.49}%
+\contentsline {subsubsection}{\numberline {6.17.2.50}BNO055\_LIA\_Data\_Z\_LS}{61}{subsubsection.6.17.2.50}%
+\contentsline {subsubsection}{\numberline {6.17.2.51}BNO055\_LIA\_Data\_Z\_MB}{61}{subsubsection.6.17.2.51}%
+\contentsline {subsubsection}{\numberline {6.17.2.52}BNO055\_MAG\_DATA\_X\_LSB}{61}{subsubsection.6.17.2.52}%
+\contentsline {subsubsection}{\numberline {6.17.2.53}BNO055\_MAG\_DATA\_X\_MSB}{62}{subsubsection.6.17.2.53}%
+\contentsline {subsubsection}{\numberline {6.17.2.54}BNO055\_MAG\_DATA\_Y\_LSB}{62}{subsubsection.6.17.2.54}%
+\contentsline {subsubsection}{\numberline {6.17.2.55}BNO055\_MAG\_DATA\_Y\_MSB}{62}{subsubsection.6.17.2.55}%
+\contentsline {subsubsection}{\numberline {6.17.2.56}BNO055\_MAG\_DATA\_Z\_LSB}{62}{subsubsection.6.17.2.56}%
+\contentsline {subsubsection}{\numberline {6.17.2.57}BNO055\_MAG\_DATA\_Z\_MSB}{62}{subsubsection.6.17.2.57}%
+\contentsline {subsubsection}{\numberline {6.17.2.58}BNO055\_MAG\_ID}{62}{subsubsection.6.17.2.58}%
+\contentsline {subsubsection}{\numberline {6.17.2.59}BNO055\_MAG\_OFFSET\_X\_LSB}{63}{subsubsection.6.17.2.59}%
+\contentsline {subsubsection}{\numberline {6.17.2.60}BNO055\_MAG\_OFFSET\_X\_MSB}{63}{subsubsection.6.17.2.60}%
+\contentsline {subsubsection}{\numberline {6.17.2.61}BNO055\_MAG\_OFFSET\_Y\_LSB}{63}{subsubsection.6.17.2.61}%
+\contentsline {subsubsection}{\numberline {6.17.2.62}BNO055\_MAG\_OFFSET\_Y\_MSB}{63}{subsubsection.6.17.2.62}%
+\contentsline {subsubsection}{\numberline {6.17.2.63}BNO055\_MAG\_OFFSET\_Z\_LSB}{63}{subsubsection.6.17.2.63}%
+\contentsline {subsubsection}{\numberline {6.17.2.64}BNO055\_MAG\_OFFSET\_Z\_MSB}{63}{subsubsection.6.17.2.64}%
+\contentsline {subsubsection}{\numberline {6.17.2.65}BNO055\_MAG\_RADIUS\_LSB}{64}{subsubsection.6.17.2.65}%
+\contentsline {subsubsection}{\numberline {6.17.2.66}BNO055\_MAG\_RADIUS\_MSB}{64}{subsubsection.6.17.2.66}%
+\contentsline {subsubsection}{\numberline {6.17.2.67}BNO055\_OPR\_MODE}{64}{subsubsection.6.17.2.67}%
+\contentsline {subsubsection}{\numberline {6.17.2.68}BNO055\_Page\_ID}{64}{subsubsection.6.17.2.68}%
+\contentsline {subsubsection}{\numberline {6.17.2.69}BNO055\_PWR\_ACC\_DATA\_X\_LSB}{64}{subsubsection.6.17.2.69}%
+\contentsline {subsubsection}{\numberline {6.17.2.70}BNO055\_PWR\_MODE}{64}{subsubsection.6.17.2.70}%
+\contentsline {subsubsection}{\numberline {6.17.2.71}BNO055\_QUA\_Data\_w\_L}{65}{subsubsection.6.17.2.71}%
+\contentsline {subsubsection}{\numberline {6.17.2.72}BNO055\_QUA\_Data\_w\_M}{65}{subsubsection.6.17.2.72}%
+\contentsline {subsubsection}{\numberline {6.17.2.73}BNO055\_QUA\_Data\_x\_LS}{65}{subsubsection.6.17.2.73}%
+\contentsline {subsubsection}{\numberline {6.17.2.74}BNO055\_QUA\_Data\_x\_M}{65}{subsubsection.6.17.2.74}%
+\contentsline {subsubsection}{\numberline {6.17.2.75}BNO055\_QUA\_Data\_y\_LS}{65}{subsubsection.6.17.2.75}%
+\contentsline {subsubsection}{\numberline {6.17.2.76}BNO055\_QUA\_Data\_y\_M}{65}{subsubsection.6.17.2.76}%
+\contentsline {subsubsection}{\numberline {6.17.2.77}BNO055\_QUA\_Data\_z\_LS}{66}{subsubsection.6.17.2.77}%
+\contentsline {subsubsection}{\numberline {6.17.2.78}BNO055\_QUA\_Data\_z\_M}{66}{subsubsection.6.17.2.78}%
+\contentsline {subsubsection}{\numberline {6.17.2.79}BNO055\_Reserved}{66}{subsubsection.6.17.2.79}%
+\contentsline {subsubsection}{\numberline {6.17.2.80}BNO055\_ST\_RESULT}{66}{subsubsection.6.17.2.80}%
+\contentsline {subsubsection}{\numberline {6.17.2.81}BNO055\_SW\_REV\_ID\_LSB}{66}{subsubsection.6.17.2.81}%
+\contentsline {subsubsection}{\numberline {6.17.2.82}BNO055\_SW\_REV\_ID\_MSB}{66}{subsubsection.6.17.2.82}%
+\contentsline {subsubsection}{\numberline {6.17.2.83}BNO055\_SYS\_CLK\_STA}{67}{subsubsection.6.17.2.83}%
+\contentsline {subsubsection}{\numberline {6.17.2.84}BNO055\_SYS\_ERR}{67}{subsubsection.6.17.2.84}%
+\contentsline {subsubsection}{\numberline {6.17.2.85}BNO055\_SYS\_STATUS}{67}{subsubsection.6.17.2.85}%
+\contentsline {subsubsection}{\numberline {6.17.2.86}BNO055\_SYS\_TRIGGER}{67}{subsubsection.6.17.2.86}%
+\contentsline {subsubsection}{\numberline {6.17.2.87}BNO055\_TEMP}{67}{subsubsection.6.17.2.87}%
+\contentsline {subsubsection}{\numberline {6.17.2.88}BNO055\_TEMP\_SOURCE}{67}{subsubsection.6.17.2.88}%
+\contentsline {subsubsection}{\numberline {6.17.2.89}BNO055\_UNIT\_SEL}{68}{subsubsection.6.17.2.89}%
+\contentsline {subsubsection}{\numberline {6.17.2.90}MPL3115\_BAR\_IN\_LSB}{68}{subsubsection.6.17.2.90}%
+\contentsline {subsubsection}{\numberline {6.17.2.91}MPL3115\_BAR\_IN\_MSB}{68}{subsubsection.6.17.2.91}%
+\contentsline {subsubsection}{\numberline {6.17.2.92}MPL3115\_CTRL\_REG1}{68}{subsubsection.6.17.2.92}%
+\contentsline {subsubsection}{\numberline {6.17.2.93}MPL3115\_CTRL\_REG2}{68}{subsubsection.6.17.2.93}%
+\contentsline {subsubsection}{\numberline {6.17.2.94}MPL3115\_CTRL\_REG3}{68}{subsubsection.6.17.2.94}%
+\contentsline {subsubsection}{\numberline {6.17.2.95}MPL3115\_CTRL\_REG4}{69}{subsubsection.6.17.2.95}%
+\contentsline {subsubsection}{\numberline {6.17.2.96}MPL3115\_CTRL\_REG5}{69}{subsubsection.6.17.2.96}%
+\contentsline {subsubsection}{\numberline {6.17.2.97}MPL3115\_DR\_STATUS}{69}{subsubsection.6.17.2.97}%
+\contentsline {subsubsection}{\numberline {6.17.2.98}MPL3115\_F\_DATA}{69}{subsubsection.6.17.2.98}%
+\contentsline {subsubsection}{\numberline {6.17.2.99}MPL3115\_F\_SETUP}{69}{subsubsection.6.17.2.99}%
+\contentsline {subsubsection}{\numberline {6.17.2.100}MPL3115\_F\_STATUS}{69}{subsubsection.6.17.2.100}%
+\contentsline {subsubsection}{\numberline {6.17.2.101}MPL3115\_I2C\_ADDR}{70}{subsubsection.6.17.2.101}%
+\contentsline {subsubsection}{\numberline {6.17.2.102}MPL3115\_INT\_SOURCE}{70}{subsubsection.6.17.2.102}%
+\contentsline {subsubsection}{\numberline {6.17.2.103}MPL3115\_OFF\_H}{70}{subsubsection.6.17.2.103}%
+\contentsline {subsubsection}{\numberline {6.17.2.104}MPL3115\_OFF\_P}{70}{subsubsection.6.17.2.104}%
+\contentsline {subsubsection}{\numberline {6.17.2.105}MPL3115\_OFF\_T}{70}{subsubsection.6.17.2.105}%
+\contentsline {subsubsection}{\numberline {6.17.2.106}MPL3115\_OUT\_P\_CSB}{70}{subsubsection.6.17.2.106}%
+\contentsline {subsubsection}{\numberline {6.17.2.107}MPL3115\_OUT\_P\_DELTA}{71}{subsubsection.6.17.2.107}%
+\contentsline {subsubsection}{\numberline {6.17.2.108}MPL3115\_OUT\_P\_DELTA\_CSB}{71}{subsubsection.6.17.2.108}%
+\contentsline {subsubsection}{\numberline {6.17.2.109}MPL3115\_OUT\_P\_DELTA\_LSB}{71}{subsubsection.6.17.2.109}%
+\contentsline {subsubsection}{\numberline {6.17.2.110}MPL3115\_OUT\_P\_LSB}{71}{subsubsection.6.17.2.110}%
+\contentsline {subsubsection}{\numberline {6.17.2.111}MPL3115\_OUT\_P\_MSB}{71}{subsubsection.6.17.2.111}%
+\contentsline {subsubsection}{\numberline {6.17.2.112}MPL3115\_OUT\_T\_DELTA\_LSB}{71}{subsubsection.6.17.2.112}%
+\contentsline {subsubsection}{\numberline {6.17.2.113}MPL3115\_OUT\_T\_DELTA\_MSB}{72}{subsubsection.6.17.2.113}%
+\contentsline {subsubsection}{\numberline {6.17.2.114}MPL3115\_OUT\_T\_LSB}{72}{subsubsection.6.17.2.114}%
+\contentsline {subsubsection}{\numberline {6.17.2.115}MPL3115\_OUT\_T\_MSB}{72}{subsubsection.6.17.2.115}%
+\contentsline {subsubsection}{\numberline {6.17.2.116}MPL3115\_P\_MAX\_CSB}{72}{subsubsection.6.17.2.116}%
+\contentsline {subsubsection}{\numberline {6.17.2.117}MPL3115\_P\_MAX\_LSB}{72}{subsubsection.6.17.2.117}%
+\contentsline {subsubsection}{\numberline {6.17.2.118}MPL3115\_P\_MAX\_MSB}{72}{subsubsection.6.17.2.118}%
+\contentsline {subsubsection}{\numberline {6.17.2.119}MPL3115\_P\_MIN\_CSB}{73}{subsubsection.6.17.2.119}%
+\contentsline {subsubsection}{\numberline {6.17.2.120}MPL3115\_P\_MIN\_LSB}{73}{subsubsection.6.17.2.120}%
+\contentsline {subsubsection}{\numberline {6.17.2.121}MPL3115\_P\_MIN\_MSB}{73}{subsubsection.6.17.2.121}%
+\contentsline {subsubsection}{\numberline {6.17.2.122}MPL3115\_P\_TGT\_LSB}{73}{subsubsection.6.17.2.122}%
+\contentsline {subsubsection}{\numberline {6.17.2.123}MPL3115\_P\_TGT\_MSB}{73}{subsubsection.6.17.2.123}%
+\contentsline {subsubsection}{\numberline {6.17.2.124}MPL3115\_P\_WND\_LSB}{73}{subsubsection.6.17.2.124}%
+\contentsline {subsubsection}{\numberline {6.17.2.125}MPL3115\_P\_WND\_MSB}{74}{subsubsection.6.17.2.125}%
+\contentsline {subsubsection}{\numberline {6.17.2.126}MPL3115\_PT\_DATA\_CFG}{74}{subsubsection.6.17.2.126}%
+\contentsline {subsubsection}{\numberline {6.17.2.127}MPL3115\_STATUS}{74}{subsubsection.6.17.2.127}%
+\contentsline {subsubsection}{\numberline {6.17.2.128}MPL3115\_SYSMOD}{74}{subsubsection.6.17.2.128}%
+\contentsline {subsubsection}{\numberline {6.17.2.129}MPL3115\_T\_MAX\_LSB}{74}{subsubsection.6.17.2.129}%
+\contentsline {subsubsection}{\numberline {6.17.2.130}MPL3115\_T\_MAX\_MSB}{74}{subsubsection.6.17.2.130}%
+\contentsline {subsubsection}{\numberline {6.17.2.131}MPL3115\_T\_MIN\_LSB}{75}{subsubsection.6.17.2.131}%
+\contentsline {subsubsection}{\numberline {6.17.2.132}MPL3115\_T\_MIN\_MSB}{75}{subsubsection.6.17.2.132}%
+\contentsline {subsubsection}{\numberline {6.17.2.133}MPL3115\_T\_TGT}{75}{subsubsection.6.17.2.133}%
+\contentsline {subsubsection}{\numberline {6.17.2.134}MPL3115\_T\_WND}{75}{subsubsection.6.17.2.134}%
+\contentsline {subsubsection}{\numberline {6.17.2.135}MPL3115\_TIME\_DLY}{75}{subsubsection.6.17.2.135}%
+\contentsline {subsubsection}{\numberline {6.17.2.136}MPL3115\_WHO\_AM\_I}{75}{subsubsection.6.17.2.136}%
+\contentsline {section}{\numberline {6.18}register.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}hpp}{76}{section.6.18}%
+\contentsline {section}{\numberline {6.19}src/src/yonics.hpp File Reference}{77}{section.6.19}%
+\contentsline {subsection}{\numberline {6.19.1}Detailed Description}{79}{subsection.6.19.1}%
+\contentsline {section}{\numberline {6.20}yonics.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}hpp}{79}{section.6.20}%
