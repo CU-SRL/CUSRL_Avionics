@@ -10,6 +10,8 @@ This is the repository for the Avionics team of the [Sounding Rocket Laboratory]
 * [Jason Popich](https://github.com/japopich "japopich")
 * [Carter Mak](https://github.com/cartermak "cartermak")
 * [Giselle Koo](https://github.com/gisellegk "gisellegk")
-* [Michael Pogrebitskiy](https://github.com/mipo9204 "mipo9204")
-* [Kyle Hashiro](https://github.com/KyleH57 "KyleH57")
-* [Nikolas Provost]("")
+* [Brendan Haines](https://github.com/brendanhaines "brendanhaines")
+
+---
+
+## Code Version Notes

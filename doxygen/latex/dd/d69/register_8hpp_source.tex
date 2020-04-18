@@ -1,0 +1,160 @@
+\hypertarget{register_8hpp_source}{}\doxysection{register.\+hpp}
+\label{register_8hpp_source}\index{src/src/register.hpp@{src/src/register.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 }
+\DoxyCodeLine{00009 \textcolor{preprocessor}{\#ifndef \_REGISTER\_HPP\_}}
+\DoxyCodeLine{00010 \textcolor{preprocessor}{\#define \_REGISTER\_HPP\_}}
+\DoxyCodeLine{00011 }
+\DoxyCodeLine{00012 \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00013 \textcolor{comment}{//                   BNO055 Registers}}
+\DoxyCodeLine{00014 \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00015 }
+\DoxyCodeLine{00016                                           \textcolor{comment}{// bit 7 || bit 6 || bit 5 || bit 4 || bit 3 || bit 2 || bit 1 || bit 0}}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00017}\mbox{\hyperlink{register_8hpp_a62eca85f4767fd736a5caf4ec07ce7fb}{00017}} \textcolor{preprocessor}{\#define BNO055\_MAG\_RADIUS\_MSB        0x6A }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00018}\mbox{\hyperlink{register_8hpp_a70d61bf4b86d4a9ccf6f9bde01b489db}{00018}} \textcolor{preprocessor}{\#define BNO055\_MAG\_RADIUS\_LSB        0x69 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00019}\mbox{\hyperlink{register_8hpp_ad6e8c236d539580b8354bea8ac50d4d6}{00019}} \textcolor{preprocessor}{\#define BNO055\_ACC\_RADIUS\_MSB        0x68 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00020}\mbox{\hyperlink{register_8hpp_a647f54c065bf5c9077b174ff3b3316f7}{00020}} \textcolor{preprocessor}{\#define BNO055\_ACC\_RADIUS\_LSB        0x67 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00021}\mbox{\hyperlink{register_8hpp_a04e142ef7a4d4f02cead758de3eb16d9}{00021}} \textcolor{preprocessor}{\#define BNO055\_GYR\_OFFSET\_Z\_MSB      0x66 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00022}\mbox{\hyperlink{register_8hpp_afd07d29d4a1fb984fd82594bf977f723}{00022}} \textcolor{preprocessor}{\#define BNO055\_GYR\_OFFSET\_Z\_LSB      0x65 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00023}\mbox{\hyperlink{register_8hpp_ad6dc11e105a66bb2cc51f43928002798}{00023}} \textcolor{preprocessor}{\#define BNO055\_GYR\_OFFSET\_Y\_MSB      0x64 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00024}\mbox{\hyperlink{register_8hpp_a650795608a5dce63346cc4461c1dd2bd}{00024}} \textcolor{preprocessor}{\#define BNO055\_GYR\_OFFSET\_Y\_LSB      0x63 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00025}\mbox{\hyperlink{register_8hpp_a541494ac20febfd4fb602fbc4981f0a0}{00025}} \textcolor{preprocessor}{\#define BNO055\_GYR\_OFFSET\_X\_MSB      0x62 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00026}\mbox{\hyperlink{register_8hpp_ad72b853b1e7ca739697d48520e82ddf0}{00026}} \textcolor{preprocessor}{\#define BNO055\_GYR\_OFFSET\_X\_LSB      0x61 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00027}\mbox{\hyperlink{register_8hpp_a02b5ebe78d60f26dfa67ee81c6039323}{00027}} \textcolor{preprocessor}{\#define BNO055\_MAG\_OFFSET\_Z\_MSB      0x60 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00028}\mbox{\hyperlink{register_8hpp_a32b22ab893e411065d46c065703ba19d}{00028}} \textcolor{preprocessor}{\#define BNO055\_MAG\_OFFSET\_Z\_LSB      0x5F }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00029}\mbox{\hyperlink{register_8hpp_a153c766f69a2b8ba4c27aedb94617c81}{00029}} \textcolor{preprocessor}{\#define BNO055\_MAG\_OFFSET\_Y\_MSB      0x5E }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00030}\mbox{\hyperlink{register_8hpp_afc24c2ebcbfedaca4a631d712ad3f5cb}{00030}} \textcolor{preprocessor}{\#define BNO055\_MAG\_OFFSET\_Y\_LSB      0x5D }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00031}\mbox{\hyperlink{register_8hpp_ac994e595f85cfa257bac7605322878af}{00031}} \textcolor{preprocessor}{\#define BNO055\_MAG\_OFFSET\_X\_MSB      0x5C }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00032}\mbox{\hyperlink{register_8hpp_a7c884d0c836077c7d8c1f3b052437c05}{00032}} \textcolor{preprocessor}{\#define BNO055\_MAG\_OFFSET\_X\_LSB      0x5B }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00033}\mbox{\hyperlink{register_8hpp_a4574805ca6e8840a9a45d35318e5e69e}{00033}} \textcolor{preprocessor}{\#define BNO055\_ACC\_OFFSET\_Z\_MSB      0x5A }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00034}\mbox{\hyperlink{register_8hpp_ac83f60a1bd4b762bdf814cb4bcfcfcc4}{00034}} \textcolor{preprocessor}{\#define BNO055\_ACC\_OFFSET\_Z\_LSB      0x59 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00035}\mbox{\hyperlink{register_8hpp_a3c6b5f434e6eb015c2cb61551f1fd1f9}{00035}} \textcolor{preprocessor}{\#define BNO055\_ACC\_OFFSET\_Y\_MSB      0x58 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00036}\mbox{\hyperlink{register_8hpp_a91065a4fe320e5599563c22742b292f2}{00036}} \textcolor{preprocessor}{\#define BNO055\_ACC\_OFFSET\_Y\_LSB      0x57 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00037}\mbox{\hyperlink{register_8hpp_a7a0ac816c80df461a54104bab20cce77}{00037}} \textcolor{preprocessor}{\#define BNO055\_ACC\_OFFSET\_X\_MSB      0x56 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00038}\mbox{\hyperlink{register_8hpp_a76847b72af9ab9ba75c1e644276c6c2a}{00038}} \textcolor{preprocessor}{\#define BNO055\_ACC\_OFFSET\_X\_LSB      0x55 }}
+\DoxyCodeLine{00039 \textcolor{preprocessor}{// WIP FINISH COMMENTS based on the BNO055 Datasheet}}
+\DoxyCodeLine{00040                                           \textcolor{comment}{// bit 7      ||      bit 6       ||      bit 5       ||      bit 4       ||      bit 3       ||      bit 2       ||      bit 1       ||      bit 0}}
+\DoxyCodeLine{00041 }
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00042}\mbox{\hyperlink{register_8hpp_a6fdde85aa749ff69988c70657a604f7c}{00042}} \textcolor{preprocessor}{\#define BNO055\_AXIS\_MAP\_SIGN         0x42 //                                                                                            ||Remapped X-\/Ax Sign||Remapped Y-\/Ax Sign||Remapped Z-\/Ax Sign}}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00043}\mbox{\hyperlink{register_8hpp_a17e03c843428f956745cd5a18c3de6b2}{00043}} \textcolor{preprocessor}{\#define BNO055\_AXIS\_MAP\_CONFIG       0x41 //                                ||        Remapped Z axis value         ||         Remapped Y axis value        ||        Remapped X axis value}}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00044}\mbox{\hyperlink{register_8hpp_a716068236aa72bedaede6721e8e32b0f}{00044}} \textcolor{preprocessor}{\#define BNO055\_TEMP\_SOURCE           0x40 //                                                                                                                ||          TEMP\_Source <1:0>}}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00045}\mbox{\hyperlink{register_8hpp_a33bc8388e7d63a2c8e5150f95dd77451}{00045}} \textcolor{preprocessor}{\#define BNO055\_SYS\_TRIGGER           0x3F // CLK\_SEL    ||     RST\_INT      ||      RST\_SYS     ||                                                                               ||    Self\_Test}}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00046}\mbox{\hyperlink{register_8hpp_a454a2c3a6e219c6b815874070b2e3224}{00046}} \textcolor{preprocessor}{\#define BNO055\_PWR\_MODE              0x3E // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00047}\mbox{\hyperlink{register_8hpp_a97c0fa2632f2d79c8bb4c8b738a1914f}{00047}} \textcolor{preprocessor}{\#define BNO055\_OPR\_MODE              0x3D // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00048}\mbox{\hyperlink{register_8hpp_ab0e32e475fa449834321db6bd2490af8}{00048}} \textcolor{preprocessor}{\#define BNO055\_Reserved              0x3C // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00049}\mbox{\hyperlink{register_8hpp_ae0b87fc9fb6a3dc8a15554676dca1387}{00049}} \textcolor{preprocessor}{\#define BNO055\_UNIT\_SEL              0x3B // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00050}\mbox{\hyperlink{register_8hpp_a9b799d31d0afab742ca41ef71ebb16b1}{00050}} \textcolor{preprocessor}{\#define BNO055\_SYS\_ERR               0x3A // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00051}\mbox{\hyperlink{register_8hpp_a520c223ae8da855d70abbd06af4ead08}{00051}} \textcolor{preprocessor}{\#define BNO055\_SYS\_STATUS            0x39 // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00052}\mbox{\hyperlink{register_8hpp_adfa9aba7d930aad08f89304f70ca48cc}{00052}} \textcolor{preprocessor}{\#define BNO055\_SYS\_CLK\_STA           0x38 // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00053}\mbox{\hyperlink{register_8hpp_a9f15c19dbc0e136e5e6989fad39d1ec7}{00053}} \textcolor{preprocessor}{\#define BNO055\_INT\_STA               0x37 // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00054}\mbox{\hyperlink{register_8hpp_abe639e0c6b1404a9ee3ce18f24710135}{00054}} \textcolor{preprocessor}{\#define BNO055\_ST\_RESULT             0x36 // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00055}\mbox{\hyperlink{register_8hpp_a8238b8e53c81cca65781b44a580e6dcd}{00055}} \textcolor{preprocessor}{\#define BNO055\_CALIB\_STAT            0x35 // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00056}\mbox{\hyperlink{register_8hpp_a1c1c01bcb2a06e2a70f0d899b54d93a5}{00056}} \textcolor{preprocessor}{\#define BNO055\_TEMP                  0x34 // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00057}\mbox{\hyperlink{register_8hpp_af0da7a0e29a1f4abac83e22dcae5eef2}{00057}} \textcolor{preprocessor}{\#define BNO055\_GRV\_Data\_Z\_M          0x33 // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00058}\mbox{\hyperlink{register_8hpp_a7ce2523a3317eea3fa895a4a511a032b}{00058}} \textcolor{preprocessor}{\#define BNO055\_GRV\_Data\_Z\_L          0x32 // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00059}\mbox{\hyperlink{register_8hpp_a3e5f9f4f3b5b7eac3ba9a34b4f20d6e9}{00059}} \textcolor{preprocessor}{\#define BNO055\_GRV\_Data\_Y\_M          0x31 // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00060}\mbox{\hyperlink{register_8hpp_a8fb53242c7aace191f923ac294999d92}{00060}} \textcolor{preprocessor}{\#define BNO055\_GRV\_Data\_Y\_L          0x30 // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00061}\mbox{\hyperlink{register_8hpp_abd88e57b201a5426a075a9b29fe2ed8d}{00061}} \textcolor{preprocessor}{\#define BNO055\_GRV\_Data\_X\_M          0x2F // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00062}\mbox{\hyperlink{register_8hpp_a760bdb1aa938f39629b4524b3237bcbf}{00062}} \textcolor{preprocessor}{\#define BNO055\_GRV\_Data\_X\_L          0x2E // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00063}\mbox{\hyperlink{register_8hpp_af7656bbcf0c53876cdc43b7dfa060f6a}{00063}} \textcolor{preprocessor}{\#define BNO055\_LIA\_Data\_Z\_MB         0x2D // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00064}\mbox{\hyperlink{register_8hpp_a99094b4c27c1ee676a5c560754104941}{00064}} \textcolor{preprocessor}{\#define BNO055\_LIA\_Data\_Z\_LS         0x2C // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00065}\mbox{\hyperlink{register_8hpp_a32ff54048e90e351c3646172ed156164}{00065}} \textcolor{preprocessor}{\#define BNO055\_LIA\_Data\_Y\_MB         0x2B // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00066}\mbox{\hyperlink{register_8hpp_ab309eb63ec433ed7fc5ff544a52a2ff7}{00066}} \textcolor{preprocessor}{\#define BNO055\_LIA\_Data\_Y\_LS         0x2A // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00067}\mbox{\hyperlink{register_8hpp_a637f299f68bedfb8c37d6709315b2da2}{00067}} \textcolor{preprocessor}{\#define BNO055\_LI A\_Data\_X\_MB        0x29 // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00068}\mbox{\hyperlink{register_8hpp_abb40103a0a58c5ad409277110c0e582b}{00068}} \textcolor{preprocessor}{\#define BNO055\_LIA\_Data\_X\_LS         0x28 // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00069}\mbox{\hyperlink{register_8hpp_a6ed10a27ecdcd46cdc027a3ccfef1ff2}{00069}} \textcolor{preprocessor}{\#define BNO055\_QUA\_Data\_z\_M          0x27 // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00070}\mbox{\hyperlink{register_8hpp_a55fbdc6d085eff4a354759024e1d40cc}{00070}} \textcolor{preprocessor}{\#define BNO055\_QUA\_Data\_z\_LS         0x26 // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00071}\mbox{\hyperlink{register_8hpp_a4a132e71840d147274bf6fc773826507}{00071}} \textcolor{preprocessor}{\#define BNO055\_QUA\_Data\_y\_M          0x25 // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00072}\mbox{\hyperlink{register_8hpp_aaa47dec022a8225650efbfb533dbc4c1}{00072}} \textcolor{preprocessor}{\#define BNO055\_QUA\_Data\_y\_LS         0x24 // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00073}\mbox{\hyperlink{register_8hpp_a1f25a6cd2dba37da8f7074b18af5de58}{00073}} \textcolor{preprocessor}{\#define BNO055\_QUA\_Data\_x\_M          0x23 // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00074}\mbox{\hyperlink{register_8hpp_aa8f162a7a67a41b1d8f5621329e7991d}{00074}} \textcolor{preprocessor}{\#define BNO055\_QUA\_Data\_x\_LS         0x22 // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00075}\mbox{\hyperlink{register_8hpp_a167bd25b8fc0632f48d64ad13293ec19}{00075}} \textcolor{preprocessor}{\#define BNO055\_QUA\_Data\_w\_M          0x21 // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00076}\mbox{\hyperlink{register_8hpp_ac04b6e394924a3902d4458e08610de27}{00076}} \textcolor{preprocessor}{\#define BNO055\_QUA\_Data\_w\_L          0x20 // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00077}\mbox{\hyperlink{register_8hpp_a7955d9d72997d47f835af3595988fe86}{00077}} \textcolor{preprocessor}{\#define BNO055\_EUL\_Pitch\_MSB         0x1F // }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00078}\mbox{\hyperlink{register_8hpp_a98d65a9da765c98271959ce1c3cb3389}{00078}} \textcolor{preprocessor}{\#define BNO055\_EUL\_Pitch\_LSB         0x1E // }}
+\DoxyCodeLine{00079 }
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00080}\mbox{\hyperlink{register_8hpp_a073f0cea270fdc250b1f3453dc6a192e}{00080}} \textcolor{preprocessor}{\#define BNO055\_EUL\_Roll\_MSB          0x1D }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00081}\mbox{\hyperlink{register_8hpp_a79c816a27663ee7adfebb4ca6dc9a91c}{00081}} \textcolor{preprocessor}{\#define BNO055\_EUL\_Roll\_LSB          0x1C }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00082}\mbox{\hyperlink{register_8hpp_ab1603a4cc06abed2017ed871bddbc644}{00082}} \textcolor{preprocessor}{\#define BNO055\_EUL\_Heading\_MSB       0x1B }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00083}\mbox{\hyperlink{register_8hpp_af5f7f517df0e608174d56016ce4e4e9f}{00083}} \textcolor{preprocessor}{\#define BNO055\_EUL\_Heading\_LSB       0x1A }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00084}\mbox{\hyperlink{register_8hpp_a98e9d6116a981546a1d3b1aec2d628ce}{00084}} \textcolor{preprocessor}{\#define BNO055\_GYR\_DATA\_Z\_MSB        0x19 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00085}\mbox{\hyperlink{register_8hpp_a122c058d68e7f7cd26a5d8e065ffdd08}{00085}} \textcolor{preprocessor}{\#define BNO055\_GYR\_DATA\_Z\_LSB        0x18 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00086}\mbox{\hyperlink{register_8hpp_aa25f12e3b8089b87683136dac52e230d}{00086}} \textcolor{preprocessor}{\#define BNO055\_GYR\_DATA\_Y\_MSB        0x17 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00087}\mbox{\hyperlink{register_8hpp_aad0fe6fdf499092be6e830df61da5bea}{00087}} \textcolor{preprocessor}{\#define BNO055\_GYR\_DATA\_Y\_LSB        0x16 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00088}\mbox{\hyperlink{register_8hpp_a1d05e27b72a3264bac5774e4176d7bf0}{00088}} \textcolor{preprocessor}{\#define BNO055\_GYR\_DATA\_X\_MSB        0x15 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00089}\mbox{\hyperlink{register_8hpp_a6fcc9d66a8dba9588406349ab87fd029}{00089}} \textcolor{preprocessor}{\#define BNO055\_GYR\_DATA\_X\_LSB        0x14 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00090}\mbox{\hyperlink{register_8hpp_acdad02c155e8188d2c3f5ebba0fc50b2}{00090}} \textcolor{preprocessor}{\#define BNO055\_MAG\_DATA\_Z\_MSB        0x13 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00091}\mbox{\hyperlink{register_8hpp_a80e0ab17bf9b3356645d6eee99da9161}{00091}} \textcolor{preprocessor}{\#define BNO055\_MAG\_DATA\_Z\_LSB        0x12 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00092}\mbox{\hyperlink{register_8hpp_a0f29b8bb238fd1f41ad76a280cbb58ed}{00092}} \textcolor{preprocessor}{\#define BNO055\_MAG\_DATA\_Y\_MSB        0x11 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00093}\mbox{\hyperlink{register_8hpp_a4d1b9bb1e403f6eafbe0985ac5f5c037}{00093}} \textcolor{preprocessor}{\#define BNO055\_MAG\_DATA\_Y\_LSB        0x10 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00094}\mbox{\hyperlink{register_8hpp_aedc621eca294b78c1c69fddfe69e832f}{00094}} \textcolor{preprocessor}{\#define BNO055\_MAG\_DATA\_X\_MSB        0x0F }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00095}\mbox{\hyperlink{register_8hpp_a478c555272bf00c9a6d1ee586c23f1d6}{00095}} \textcolor{preprocessor}{\#define BNO055\_MAG\_DATA\_X\_LSB        0x0E }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00096}\mbox{\hyperlink{register_8hpp_a6746608a37d5d67e57e023a40a6b4225}{00096}} \textcolor{preprocessor}{\#define BNO055\_ACC\_DATA\_Z\_MSB        0x0D }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00097}\mbox{\hyperlink{register_8hpp_a434db0eeb844b58f689b2654bca4dceb}{00097}} \textcolor{preprocessor}{\#define BNO055\_ACC\_DATA\_Z\_LSB        0x0C }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00098}\mbox{\hyperlink{register_8hpp_a0100d85d38059eb241a1e31e509abdf7}{00098}} \textcolor{preprocessor}{\#define BNO055\_ACC\_DATA\_Y\_MSB        0x0B }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00099}\mbox{\hyperlink{register_8hpp_a76c115a7a4c5605cc0cf43448f74babc}{00099}} \textcolor{preprocessor}{\#define BNO055\_ACC\_DATA\_Y\_LSB        0x0A }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00100}\mbox{\hyperlink{register_8hpp_a155558d41c7a99efc3b997236a1dd64e}{00100}} \textcolor{preprocessor}{\#define BNO055\_ACC\_DATA\_X\_MSB        0x09 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00101}\mbox{\hyperlink{register_8hpp_ac157207d84c3005c48df655a360e9b91}{00101}} \textcolor{preprocessor}{\#define BNO055\_PWR\_ACC\_DATA\_X\_LSB    0x08 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00102}\mbox{\hyperlink{register_8hpp_ad82f975f1d522fb66f0901fc89a88b98}{00102}} \textcolor{preprocessor}{\#define BNO055\_Page\_ID               0x07 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00103}\mbox{\hyperlink{register_8hpp_af37a5454d2fd9c07eda5957b6b658c1e}{00103}} \textcolor{preprocessor}{\#define BNO055\_BL\_Rev\_ID             0x06 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00104}\mbox{\hyperlink{register_8hpp_a4240f0691425ce4e6be5eba008734e45}{00104}} \textcolor{preprocessor}{\#define BNO055\_SW\_REV\_ID\_MSB         0x05 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00105}\mbox{\hyperlink{register_8hpp_a1440fc4723912da3df5c84c4eff92f00}{00105}} \textcolor{preprocessor}{\#define BNO055\_SW\_REV\_ID\_LSB         0x04 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00106}\mbox{\hyperlink{register_8hpp_a714a44f264f8eea94b76f18f5f94088c}{00106}} \textcolor{preprocessor}{\#define BNO055\_GYR\_ID                0x03 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00107}\mbox{\hyperlink{register_8hpp_a66d4b44525b38669cd99790750d06c44}{00107}} \textcolor{preprocessor}{\#define BNO055\_MAG\_ID                0x02 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00108}\mbox{\hyperlink{register_8hpp_abb5c59213091f4292fe9d2b65445f86c}{00108}} \textcolor{preprocessor}{\#define BNO055\_ACC\_ID                0x01 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00109}\mbox{\hyperlink{register_8hpp_aa436e304f6a25fadbed033489334eab7}{00109}} \textcolor{preprocessor}{\#define BNO055\_CHIP\_ID               0x00 }}
+\DoxyCodeLine{00114 \textcolor{preprocessor}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00115 \textcolor{comment}{//                  MPL3115A2 Registers}}
+\DoxyCodeLine{00116 \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00117 }
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00118}\mbox{\hyperlink{register_8hpp_adec31513f28aceda1b78b1dba2f161fb}{00118}} \textcolor{preprocessor}{\#define MPL3115\_I2C\_ADDR             0x60 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00119}\mbox{\hyperlink{register_8hpp_a1781a503fdaee59973c4d60b389aad8b}{00119}} \textcolor{preprocessor}{\#define MPL3115\_STATUS               0x00 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00120}\mbox{\hyperlink{register_8hpp_acb8ae66eebce96676557e2dbc9d35b3b}{00120}} \textcolor{preprocessor}{\#define MPL3115\_OUT\_P\_MSB            0x01 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00121}\mbox{\hyperlink{register_8hpp_abb83b9906c6ee359a97b2969c03609ac}{00121}} \textcolor{preprocessor}{\#define MPL3115\_OUT\_P\_CSB            0x02 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00122}\mbox{\hyperlink{register_8hpp_a818b6d21eebf9b7e704dd685b7fda51b}{00122}} \textcolor{preprocessor}{\#define MPL3115\_OUT\_P\_LSB            0x03 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00123}\mbox{\hyperlink{register_8hpp_a5b482d074e7f374ff92017dc477538a1}{00123}} \textcolor{preprocessor}{\#define MPL3115\_OUT\_T\_MSB            0x04 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00124}\mbox{\hyperlink{register_8hpp_af418e476c8b8839c5f19465c612e64b1}{00124}} \textcolor{preprocessor}{\#define MPL3115\_OUT\_T\_LSB            0x05 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00125}\mbox{\hyperlink{register_8hpp_a9c7fe1cd462ea394e220b8c2f914a2e0}{00125}} \textcolor{preprocessor}{\#define MPL3115\_DR\_STATUS            0x06 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00126}\mbox{\hyperlink{register_8hpp_a4334ae8d8e873e32c7040d7d7d65d718}{00126}} \textcolor{preprocessor}{\#define MPL3115\_OUT\_P\_DELTA MSB      0x07 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00127}\mbox{\hyperlink{register_8hpp_a33e7aea961af3ecb50c4af2ef5e8a53a}{00127}} \textcolor{preprocessor}{\#define MPL3115\_OUT\_P\_DELTA\_CSB      0x08 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00128}\mbox{\hyperlink{register_8hpp_a4066667db0be37e153113cbfbf2d238f}{00128}} \textcolor{preprocessor}{\#define MPL3115\_OUT\_P\_DELTA\_LSB      0x09 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00129}\mbox{\hyperlink{register_8hpp_a4745895efaa0eefbf65dade1617f15b8}{00129}} \textcolor{preprocessor}{\#define MPL3115\_OUT\_T\_DELTA\_MSB      0x0A }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00130}\mbox{\hyperlink{register_8hpp_ac6dc77b249f17236e9b5383c4723c5cb}{00130}} \textcolor{preprocessor}{\#define MPL3115\_OUT\_T\_DELTA\_LSB      0x0B }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00131}\mbox{\hyperlink{register_8hpp_a4cba6c8e318bde8fc30512996a1ee213}{00131}} \textcolor{preprocessor}{\#define MPL3115\_WHO\_AM\_I             0x0C }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00132}\mbox{\hyperlink{register_8hpp_aa38f98b49a6706a84e8459345132f8b0}{00132}} \textcolor{preprocessor}{\#define MPL3115\_F\_STATUS             0x0D }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00133}\mbox{\hyperlink{register_8hpp_abe02ded446671f1c92fcaa006725b3c3}{00133}} \textcolor{preprocessor}{\#define MPL3115\_F\_DATA               0X0E }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00134}\mbox{\hyperlink{register_8hpp_a049dbfd317625124c6d5c59522e49e44}{00134}} \textcolor{preprocessor}{\#define MPL3115\_F\_SETUP              0x0F }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00135}\mbox{\hyperlink{register_8hpp_a11680d63bc31c810ae730c2c3391d868}{00135}} \textcolor{preprocessor}{\#define MPL3115\_TIME\_DLY             0x10 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00136}\mbox{\hyperlink{register_8hpp_afe7e7a42dc39250b249d0e03e58d2284}{00136}} \textcolor{preprocessor}{\#define MPL3115\_SYSMOD               0x11 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00137}\mbox{\hyperlink{register_8hpp_a04c7997636f0d66dfe060e31c93db682}{00137}} \textcolor{preprocessor}{\#define MPL3115\_INT\_SOURCE           0x12 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00138}\mbox{\hyperlink{register_8hpp_a9e3cea9f277859aa5c4ed9682f6275b3}{00138}} \textcolor{preprocessor}{\#define MPL3115\_PT\_DATA\_CFG          0x13 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00139}\mbox{\hyperlink{register_8hpp_aa0f444fcfc26f198bdfb2433147200f1}{00139}} \textcolor{preprocessor}{\#define MPL3115\_BAR\_IN\_MSB           0x14 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00140}\mbox{\hyperlink{register_8hpp_a03a290ca9997de64e4cb2a1f47bbc009}{00140}} \textcolor{preprocessor}{\#define MPL3115\_BAR\_IN\_LSB           0x15 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00141}\mbox{\hyperlink{register_8hpp_a1b9d8d794f65754b25e45db51fbc9099}{00141}} \textcolor{preprocessor}{\#define MPL3115\_P\_TGT\_MSB            0x16 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00142}\mbox{\hyperlink{register_8hpp_ae75df93fe3c5d591c0103f197af1470e}{00142}} \textcolor{preprocessor}{\#define MPL3115\_P\_TGT\_LSB            0x17 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00143}\mbox{\hyperlink{register_8hpp_a8621ba609c6d60e107b422d29dc25792}{00143}} \textcolor{preprocessor}{\#define MPL3115\_T\_TGT                0x18 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00144}\mbox{\hyperlink{register_8hpp_ac264085cee20a34fbc6f2658563068b2}{00144}} \textcolor{preprocessor}{\#define MPL3115\_P\_WND\_MSB            0x19 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00145}\mbox{\hyperlink{register_8hpp_af17a3d225bd94dbe712485793c1f585e}{00145}} \textcolor{preprocessor}{\#define MPL3115\_P\_WND\_LSB            0x1A }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00146}\mbox{\hyperlink{register_8hpp_a500609edc841213bab1e01c870369a22}{00146}} \textcolor{preprocessor}{\#define MPL3115\_T\_WND                0X1B }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00147}\mbox{\hyperlink{register_8hpp_a0e112e93e528b86e2124b0e4e10f2c0c}{00147}} \textcolor{preprocessor}{\#define MPL3115\_P\_MIN\_MSB            0x1C }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00148}\mbox{\hyperlink{register_8hpp_a057630102cf1fd29bbe42123c2d19842}{00148}} \textcolor{preprocessor}{\#define MPL3115\_P\_MIN\_CSB            0x1D }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00149}\mbox{\hyperlink{register_8hpp_a37c4c972e08afc9955a4acfbc81e9c2e}{00149}} \textcolor{preprocessor}{\#define MPL3115\_P\_MIN\_LSB            0x1E }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00150}\mbox{\hyperlink{register_8hpp_acbf26d8a6c2a3549588a22d5ecb86744}{00150}} \textcolor{preprocessor}{\#define MPL3115\_T\_MIN\_MSB            0x1F }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00151}\mbox{\hyperlink{register_8hpp_a1f2036c3094e0edab2875f73daeba803}{00151}} \textcolor{preprocessor}{\#define MPL3115\_T\_MIN\_LSB            0x20 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00152}\mbox{\hyperlink{register_8hpp_aea0eea53624bcda3d854849a27a2877d}{00152}} \textcolor{preprocessor}{\#define MPL3115\_P\_MAX\_MSB            0x21 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00153}\mbox{\hyperlink{register_8hpp_a071386b184275f19dd184d9221b742b7}{00153}} \textcolor{preprocessor}{\#define MPL3115\_P\_MAX\_CSB            0x22 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00154}\mbox{\hyperlink{register_8hpp_abeaa4b73a1e9e93f1fb1322047aded73}{00154}} \textcolor{preprocessor}{\#define MPL3115\_P\_MAX\_LSB            0x23 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00155}\mbox{\hyperlink{register_8hpp_ad92df6019bb5783320923e822574e8b1}{00155}} \textcolor{preprocessor}{\#define MPL3115\_T\_MAX\_MSB            0X24 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00156}\mbox{\hyperlink{register_8hpp_ac121617c3ec273ef356cb925db33f7a3}{00156}} \textcolor{preprocessor}{\#define MPL3115\_T\_MAX\_LSB            0x25 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00157}\mbox{\hyperlink{register_8hpp_a7c1284a4cdf8e9c0e04360af67d85c8d}{00157}} \textcolor{preprocessor}{\#define MPL3115\_CTRL\_REG1            0x26 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00158}\mbox{\hyperlink{register_8hpp_a5a6813c904cd2d40d1b035e6edfc6c0c}{00158}} \textcolor{preprocessor}{\#define MPL3115\_CTRL\_REG2            0x27 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00159}\mbox{\hyperlink{register_8hpp_a143bea3bdc240e45e60cd2776e0b2b76}{00159}} \textcolor{preprocessor}{\#define MPL3115\_CTRL\_REG3            0x28 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00160}\mbox{\hyperlink{register_8hpp_aa286bf76911911ec322ffb20929aeb8f}{00160}} \textcolor{preprocessor}{\#define MPL3115\_CTRL\_REG4            0x29 }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00161}\mbox{\hyperlink{register_8hpp_a3a7bd28241eb949ff6926a1c0f35783a}{00161}} \textcolor{preprocessor}{\#define MPL3115\_CTRL\_REG5            0x2A }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00162}\mbox{\hyperlink{register_8hpp_a4d7c0830591d10391d940938b4d78abb}{00162}} \textcolor{preprocessor}{\#define MPL3115\_OFF\_P                0x2B }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00163}\mbox{\hyperlink{register_8hpp_a0dff9a4d1e8a6cd27454ae6684861ec3}{00163}} \textcolor{preprocessor}{\#define MPL3115\_OFF\_T                0x2C }}
+\DoxyCodeLine{\Hypertarget{register_8hpp_source_l00164}\mbox{\hyperlink{register_8hpp_a16b3e0d173e496784b56180fecc63cbe}{00164}} \textcolor{preprocessor}{\#define MPL3115\_OFF\_H                0x2D }}
+\DoxyCodeLine{00166 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

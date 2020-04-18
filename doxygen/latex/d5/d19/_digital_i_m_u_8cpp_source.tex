@@ -1,0 +1,86 @@
+\hypertarget{_digital_i_m_u_8cpp_source}{}\doxysection{Digital\+I\+M\+U.\+cpp}
+\label{_digital_i_m_u_8cpp_source}\index{src/src/DigitalIMU.cpp@{src/src/DigitalIMU.cpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 }
+\DoxyCodeLine{00005 \textcolor{preprocessor}{\#include "\mbox{\hyperlink{yonics_8hpp}{yonics.hpp}}"}}
+\DoxyCodeLine{00006 }
+\DoxyCodeLine{\Hypertarget{_digital_i_m_u_8cpp_source_l00007}\mbox{\hyperlink{class_digital_i_m_u_aa70009e81d6e8c87a1e5a3d057ae3f17}{00007}} \mbox{\hyperlink{class_digital_i_m_u_aa70009e81d6e8c87a1e5a3d057ae3f17}{DigitalIMU::DigitalIMU}}() \{}
+\DoxyCodeLine{00008     board = Adafruit\_BNO055(55, 0x28);}
+\DoxyCodeLine{00009 \}}
+\DoxyCodeLine{00010 }
+\DoxyCodeLine{\Hypertarget{_digital_i_m_u_8cpp_source_l00011}\mbox{\hyperlink{class_digital_i_m_u_a8ba3d30c2df89d6f1a4077063cb71955}{00011}} \mbox{\hyperlink{class_digital_i_m_u_aa70009e81d6e8c87a1e5a3d057ae3f17}{DigitalIMU::DigitalIMU}}(int32\_t sensorID, uint8\_t address) \{}
+\DoxyCodeLine{00012     board = Adafruit\_BNO055(sensorID, address);}
+\DoxyCodeLine{00013 \}}
+\DoxyCodeLine{00014 }
+\DoxyCodeLine{\Hypertarget{_digital_i_m_u_8cpp_source_l00015}\mbox{\hyperlink{class_digital_i_m_u_a272fd8ba31b4ab932238a61287c30d3d}{00015}} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_digital_i_m_u_a272fd8ba31b4ab932238a61287c30d3d}{DigitalIMU::begin}}() \{}
+\DoxyCodeLine{00016     \textcolor{keywordflow}{if} (board.begin()) \{}
+\DoxyCodeLine{00017         board.enableAutoRange(\textcolor{keyword}{true}); \textcolor{comment}{// Hopefully this will enable more than +/-\/4g???}}
+\DoxyCodeLine{00018         \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00019     \}}
+\DoxyCodeLine{00020     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00021         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00022     \}}
+\DoxyCodeLine{00023 \}}
+\DoxyCodeLine{00024 }
+\DoxyCodeLine{\Hypertarget{_digital_i_m_u_8cpp_source_l00025}\mbox{\hyperlink{class_digital_i_m_u_aa7481cc820a5cd69c6a7e4b757214571}{00025}} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_digital_i_m_u_aa7481cc820a5cd69c6a7e4b757214571}{DigitalIMU::sample}}(\mbox{\hyperlink{struct_i_m_udata}{IMUdata}}* data) \{}
+\DoxyCodeLine{00026     \textcolor{comment}{// Get data and store it to the imu\_data struct}}
+\DoxyCodeLine{00027 }
+\DoxyCodeLine{00028     \textcolor{comment}{// Processed acceleration data}}
+\DoxyCodeLine{00029     board.getEvent(\&event,Adafruit\_BNO055::VECTOR\_LINEARACCEL);}
+\DoxyCodeLine{00030     data-\/>\mbox{\hyperlink{struct_i_m_udata_a762fabdfc8d8f1043b4b4c1979bb1ada}{accel\_fused}}[0] = \textcolor{keyword}{event}.acceleration.x;}
+\DoxyCodeLine{00031     data-\/>\mbox{\hyperlink{struct_i_m_udata_a762fabdfc8d8f1043b4b4c1979bb1ada}{accel\_fused}}[1] = \textcolor{keyword}{event}.acceleration.y;}
+\DoxyCodeLine{00032     data-\/>\mbox{\hyperlink{struct_i_m_udata_a762fabdfc8d8f1043b4b4c1979bb1ada}{accel\_fused}}[2] = \textcolor{keyword}{event}.acceleration.z;}
+\DoxyCodeLine{00033 }
+\DoxyCodeLine{00034     \textcolor{comment}{// Processed gyro data}}
+\DoxyCodeLine{00035     board.getEvent(\&event,Adafruit\_BNO055::VECTOR\_GYROSCOPE);}
+\DoxyCodeLine{00036     data-\/>\mbox{\hyperlink{struct_i_m_udata_abd15f4282a9725263dea36ff9678be6b}{gyro\_fused}}[0] = \textcolor{keyword}{event}.gyro.x;}
+\DoxyCodeLine{00037     data-\/>\mbox{\hyperlink{struct_i_m_udata_abd15f4282a9725263dea36ff9678be6b}{gyro\_fused}}[1] = \textcolor{keyword}{event}.gyro.y;}
+\DoxyCodeLine{00038     data-\/>\mbox{\hyperlink{struct_i_m_udata_abd15f4282a9725263dea36ff9678be6b}{gyro\_fused}}[2] = \textcolor{keyword}{event}.gyro.z;}
+\DoxyCodeLine{00039     \textcolor{comment}{// Serial.print("Gyro X: ");}}
+\DoxyCodeLine{00040     \textcolor{comment}{// Serial.print(event.gyro.x);}}
+\DoxyCodeLine{00041     \textcolor{comment}{// Serial.print(" Gyro Y: ");}}
+\DoxyCodeLine{00042     \textcolor{comment}{// Serial.print(event.gyro.y);}}
+\DoxyCodeLine{00043     \textcolor{comment}{// Serial.print(" Gyro Z: ");}}
+\DoxyCodeLine{00044     \textcolor{comment}{// Serial.println(event.gyro.z);}}
+\DoxyCodeLine{00045 }
+\DoxyCodeLine{00046     \textcolor{comment}{// Processed euler orientation vectors}}
+\DoxyCodeLine{00047     board.getEvent(\&event,Adafruit\_BNO055::VECTOR\_EULER);}
+\DoxyCodeLine{00048     data-\/>\mbox{\hyperlink{struct_i_m_udata_a3f04ab9b1bee702707bcbc245488f8f5}{orient\_euler}}[0] = \textcolor{keyword}{event}.orientation.x;}
+\DoxyCodeLine{00049     data-\/>\mbox{\hyperlink{struct_i_m_udata_a3f04ab9b1bee702707bcbc245488f8f5}{orient\_euler}}[1] = \textcolor{keyword}{event}.orientation.y;}
+\DoxyCodeLine{00050     data-\/>\mbox{\hyperlink{struct_i_m_udata_a3f04ab9b1bee702707bcbc245488f8f5}{orient\_euler}}[2] = \textcolor{keyword}{event}.orientation.z;}
+\DoxyCodeLine{00051 }
+\DoxyCodeLine{00052     \textcolor{comment}{// }}
+\DoxyCodeLine{00053     quat = board.getQuat();}
+\DoxyCodeLine{00054     data-\/>\mbox{\hyperlink{struct_i_m_udata_a4d03f2a7685a2e0632d826dd1ad56ff6}{orient\_quat}}[0] = quat.w();}
+\DoxyCodeLine{00055     data-\/>\mbox{\hyperlink{struct_i_m_udata_a4d03f2a7685a2e0632d826dd1ad56ff6}{orient\_quat}}[1] = quat.x();}
+\DoxyCodeLine{00056     data-\/>\mbox{\hyperlink{struct_i_m_udata_a4d03f2a7685a2e0632d826dd1ad56ff6}{orient\_quat}}[2] = quat.y();}
+\DoxyCodeLine{00057     data-\/>\mbox{\hyperlink{struct_i_m_udata_a4d03f2a7685a2e0632d826dd1ad56ff6}{orient\_quat}}[3] = quat.z();}
+\DoxyCodeLine{00058     }
+\DoxyCodeLine{00059     \textcolor{comment}{/*Serial.printf("w acceleration: \%.5f",quat.w());}}
+\DoxyCodeLine{00060 \textcolor{comment}{    Serial.printf("x acceleration: \%.5f",quat.x());}}
+\DoxyCodeLine{00061 \textcolor{comment}{    Serial.printf("y acceleration: \%.5f",quat.y());}}
+\DoxyCodeLine{00062 \textcolor{comment}{    Serial.printf("z acceleration: \%.5f",quat.z());*/}}
+\DoxyCodeLine{00063 }
+\DoxyCodeLine{00064     accel = board.getVector(Adafruit\_BNO055::VECTOR\_ACCELEROMETER);}
+\DoxyCodeLine{00065     data-\/>\mbox{\hyperlink{struct_i_m_udata_a2f09ec49063e496b209c9f1d1b46d4c6}{accel\_raw}}[0] = accel.x();}
+\DoxyCodeLine{00066     data-\/>\mbox{\hyperlink{struct_i_m_udata_a2f09ec49063e496b209c9f1d1b46d4c6}{accel\_raw}}[1] = accel.y();}
+\DoxyCodeLine{00067     data-\/>\mbox{\hyperlink{struct_i_m_udata_a2f09ec49063e496b209c9f1d1b46d4c6}{accel\_raw}}[2] = accel.z();}
+\DoxyCodeLine{00068 }
+\DoxyCodeLine{00069     \textcolor{comment}{/*Serial.printf("x acceleration: \%.5f",accel.x());}}
+\DoxyCodeLine{00070 \textcolor{comment}{    Serial.printf("y acceleration: \%.5f",accel.y());}}
+\DoxyCodeLine{00071 \textcolor{comment}{    Serial.printf("z acceleration: \%.5f",accel.z());*/}}
+\DoxyCodeLine{00072 }
+\DoxyCodeLine{00073     board.getEvent(\&event,Adafruit\_BNO055::VECTOR\_MAGNETOMETER);}
+\DoxyCodeLine{00074     data-\/>\mbox{\hyperlink{struct_i_m_udata_a342e46826ddc85e1ad57c4ebe3fe3f02}{magnetometer}}[0] = \textcolor{keyword}{event}.magnetic.x;}
+\DoxyCodeLine{00075     data-\/>\mbox{\hyperlink{struct_i_m_udata_a342e46826ddc85e1ad57c4ebe3fe3f02}{magnetometer}}[1] = \textcolor{keyword}{event}.magnetic.y;}
+\DoxyCodeLine{00076     data-\/>\mbox{\hyperlink{struct_i_m_udata_a342e46826ddc85e1ad57c4ebe3fe3f02}{magnetometer}}[2] = \textcolor{keyword}{event}.magnetic.z;}
+\DoxyCodeLine{00077 }
+\DoxyCodeLine{00078     \textcolor{comment}{/*Serial.printf("x Magnetometer: \%.5f",event.magnetic.x);}}
+\DoxyCodeLine{00079 \textcolor{comment}{    Serial.printf("y Magnetometer: \%.5f",event.magnetic.y);}}
+\DoxyCodeLine{00080 \textcolor{comment}{    Serial.printf("z Magnetometer: \%.5f\(\backslash\)n",event.magnetic.z);*/}}
+\DoxyCodeLine{00081 }
+\DoxyCodeLine{00082     data-\/>\mbox{\hyperlink{struct_i_m_udata_a0519905a9275654027c5ff42d4bcbbd1}{t}} = millis();}
+\DoxyCodeLine{00083 \}}
+
+\end{DoxyCode}

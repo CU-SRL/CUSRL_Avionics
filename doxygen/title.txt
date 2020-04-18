@@ -1,0 +1,18 @@
+\begin{titlepage}
+    \centering
+    \includegraphics[width=10cm]{SRL_Stylized.png} % also works with logo.pdf
+    \vfill
+    {\bfseries\Large
+        University of Colorado Boulder - Sounding Rocket Laboratory\\
+        Avionics Documentation - Rev. A\\
+        \bfseries\large
+        \vskip2cm
+        Jason Popich\\
+        Lyon Foster\\
+        Chava Friedman\\
+        Giselle Koo\\
+        Carter Mak\\
+    }
+    \vfill
+    \vfill
+\end{titlepage}
