@@ -2,7 +2,7 @@
 
 # CUSRL_Avionics
 
-This is the repository for the Avionics team of the [Sounding Rocket Laboratory](https://www.colorado.edu/studentgroups/cobra/ "CU Sounding Rocket Laboratory Website") at the University of Colorado, Boulder. 
+This is the OLD repository for the Avionics team of the [Sounding Rocket Laboratory](https://www.colorado.edu/studentgroups/cobra/ "CU Sounding Rocket Laboratory Website") at the University of Colorado, Boulder. Use the new repository for Flight Software, [SRL_CFS](https://github.com/CU-SRL/SRL_cFS)
 
 
 ## Team Members
